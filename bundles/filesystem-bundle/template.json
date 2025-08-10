@@ -1,0 +1,16 @@
+{
+  "description": "Essential filesystem operations with MCP server integration",
+  "mcpServers": {
+    "filesystem": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@latest",
+        "{{ .ROOT_PATH }}"
+      ],
+      "autoApprove": [],
+      "command": "npx",
+      "disabled": false
+    }
+  },
+  "name": "Filesystem Tools"
+}

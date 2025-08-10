@@ -1,0 +1,10 @@
+{
+  "name": "filesystem-updated",
+  "version": "1.0.0",
+  "description": "Essential filesystem operations with MCP server integration",
+  "author": "cloudshipai",
+  "license": "MIT",
+  "station_version": "\u003e=0.1.0",
+  "created_at": "2025-08-10T20:19:28.922366963Z",
+  "updated_at": "0001-01-01T00:00:00Z"
+}

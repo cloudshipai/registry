@@ -1,0 +1,48 @@
+{
+  "name": "Filesystem Tools",
+  "description": "Essential filesystem operations with intelligent file management agents",
+  "version": "1.0.0",
+  "author": "cloudshipai",
+  "license": "MIT",
+  "tags": ["filesystem", "file-management", "productivity"],
+  "station_version": ">=0.1.0",
+  "download_url": "./filesystem-bundle.tar.gz",
+  "file_size": 2123,
+  "checksum": "",
+  "created_at": "2025-08-10T19:33:00Z",
+  "updated_at": "2025-08-10T19:33:00Z",
+  "variables": {
+    "ROOT_PATH": {
+      "type": "string",
+      "description": "Root filesystem path for file operations",
+      "required": true,
+      "default": "/tmp"
+    }
+  },
+  "mcp_servers": [
+    {
+      "name": "filesystem",
+      "description": "MCP filesystem server with comprehensive file operations",
+      "command": "npx -y @modelcontextprotocol/server-filesystem@latest"
+    }
+  ],
+  "agents": [
+    {
+      "name": "fs-assistant",
+      "description": "General-purpose assistant agent for filesystem operations",
+      "model": "gpt-4o",
+      "max_steps": 5
+    },
+    {
+      "name": "fs-specialist", 
+      "description": "Specialized agent for focused filesystem tasks",
+      "model": "gpt-4o",
+      "max_steps": 3
+    }
+  ],
+  "tools_provided": [
+    "read_text_file", "write_file", "edit_file", "create_directory",
+    "list_directory", "directory_tree", "move_file", "search_files", 
+    "get_file_info", "list_allowed_directories"
+  ]
+}
