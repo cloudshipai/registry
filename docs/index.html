@@ -74,15 +74,23 @@
         async function loadBundles() {
             try {
                 const response = await fetch('./index.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
                 const data = await response.json();
-                bundles = data.bundles;
+                bundles = data.bundles || [];
                 filteredBundles = [...bundles];
+                
+                if (bundles.length === 0) {
+                    document.getElementById('bundleGrid').innerHTML = '<div class="no-results">No bundles available yet.</div>';
+                    return;
+                }
                 
                 renderFilters();
                 renderBundles();
             } catch (error) {
                 console.error('Error loading bundles:', error);
-                document.getElementById('bundleGrid').innerHTML = '<div class="no-results">Failed to load bundles. Please try again later.</div>';
+                document.getElementById('bundleGrid').innerHTML = '<div class="no-results">Failed to load bundles. Error: ' + error.message + '</div>';
             }
         }
 
