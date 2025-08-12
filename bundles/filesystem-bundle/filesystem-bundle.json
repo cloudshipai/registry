@@ -1,11 +1,11 @@
 {
   "name": "Filesystem Tools",
   "description": "Essential filesystem operations with intelligent file management agents",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "cloudshipai",
   "license": "MIT",
   "tags": ["filesystem", "file-management", "productivity"],
-  "station_version": ">=0.1.0",
+  "station_version": ">=0.2.6",
   "download_url": "./filesystem-bundle.tar.gz",
   "file_size": 2123,
   "checksum": "",
@@ -28,21 +28,21 @@
   ],
   "agents": [
     {
-      "name": "fs-assistant",
-      "description": "General-purpose assistant agent for filesystem operations",
-      "model": "gpt-4o",
+      "name": "assistant",
+      "description": "General-purpose assistant agent for filesystem operations with full tool access",
+      "model": "gemini-2.5-flash",
       "max_steps": 5
     },
     {
-      "name": "fs-specialist", 
-      "description": "Specialized agent for focused filesystem tasks",
-      "model": "gpt-4o",
+      "name": "specialist", 
+      "description": "Specialized agent for focused filesystem tasks with minimal steps",
+      "model": "gemini-2.5-flash",
       "max_steps": 3
     }
   ],
   "tools_provided": [
-    "read_text_file", "write_file", "edit_file", "create_directory",
-    "list_directory", "directory_tree", "move_file", "search_files", 
-    "get_file_info", "list_allowed_directories"
+    "__read_text_file", "__edit_file", "__create_directory",
+    "__list_directory", "__directory_tree", "__search_files", 
+    "__get_file_info", "__move_file", "__copy_file"
   ]
 }

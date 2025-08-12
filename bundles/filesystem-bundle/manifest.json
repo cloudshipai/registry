@@ -1,7 +1,7 @@
 {
   "name": "filesystem-updated",
-  "version": "1.0.0",
-  "description": "Essential filesystem operations with MCP server integration",
+  "version": "1.1.0",
+  "description": "Essential filesystem operations with working MCP tools and optimized agents",
   "author": "cloudshipai",
   "license": "MIT",
   "station_version": "\u003e=0.1.0",
