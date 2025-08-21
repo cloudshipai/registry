@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Tools - CloudShip Station Registry</title>
+    <meta name="description" content="Popular open source DevOps tools converted to MCPs for Station and universal use">
+    <style>
+        :root {
+            --color-primary: #000000;
+            --color-primary-hover: #2d2d2d;
+            --color-primary-light: #f0f7ff;
+            --color-accent: #00C896;
+            --color-warning: #FF6B35;
+            --color-success: #00D084;
+            --color-error: #E74C3C;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #6c757d;
+            --color-bg: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-border: #e5e7eb;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+
+        .nav-link.active {
+            color: var(--color-primary);
+        }
+
+        .nav-link-primary {
+            background: var(--color-primary);
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .nav-link-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--color-bg);
+                border-bottom: 1px solid var(--color-border);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.75rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .nav-link {
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: var(--radius-md);
+                justify-content: center;
+            }
+
+            .nav-link:hover {
+                background: var(--color-bg-secondary);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .brand-name {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 1.5rem;
+        }
+
+        .back-to-registry {
+            position: absolute;
+            left: 0;
+            top: 3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .back-to-registry:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            transform: translateX(-2px);
+        }
+
+        .back-to-registry svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            transform: rotate(180deg);
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .header-subtitle {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .back-to-registry {
+                position: static;
+                margin-bottom: 2rem;
+            }
+
+            .header {
+                padding: 1.5rem 0 1.25rem;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .header-subtitle {
+                font-size: 1rem;
+            }
+
+            .install-section {
+                margin-top: 1.5rem;
+            }
+
+            .mcp-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 1.25rem 0 1rem;
+            }
+
+            .header-title {
+                font-size: 1.75rem;
+            }
+
+            .header-subtitle {
+                font-size: 0.875rem;
+            }
+
+            .mcp-categories {
+                gap: 0.375rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .mcp-category-tab {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Install Section */
+        .install-section {
+            margin-top: 1.25rem;
+            padding: 1rem;
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .install-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .install-command-box {
+            position: relative;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .install-command-box pre {
+            margin: 0;
+            padding: 1rem 3rem 1rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: var(--color-text);
+            overflow-x: auto;
+        }
+
+        .install-command-box code {
+            white-space: pre;
+        }
+        
+        .install-command-box code:first-line {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .install-copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .install-copy-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .install-copy-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Categories */
+        .mcp-categories {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mcp-category-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .mcp-category-tab:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-text);
+        }
+
+        .mcp-category-tab.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* MCP Grid */
+        .mcp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* MCP Cards */
+        .mcp-card {
+            perspective: 1000px;
+            height: 340px;
+        }
+
+        .mcp-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .mcp-card.flipped .mcp-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .mcp-card-front, .mcp-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: var(--color-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mcp-card-back {
+            transform: rotateY(180deg);
+            justify-content: space-between;
+        }
+
+        .mcp-card:hover .mcp-card-front,
+        .mcp-card:hover .mcp-card-back {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .mcp-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .mcp-repo-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mcp-repo-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .mcp-repo-name:hover {
+            text-decoration: underline;
+        }
+
+        .mcp-repo-description {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mcp-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: auto;
+        }
+
+        .mcp-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .mcp-meta-item svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .mcp-flip-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px dashed #0969da;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #0969da;
+            white-space: nowrap;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .mcp-flip-btn:hover {
+            background: #f0f9ff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(9, 105, 218, 0.15);
+        }
+
+        .mcp-flip-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+        
+        .mcp-flip-btn-front {
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .mcp-flip-btn-back {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(41, 45, 62, 0.95);
+            color: white;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            width: auto;
+            height: auto;
+        }
+        
+        .mcp-flip-btn-back:hover {
+            background: rgba(41, 45, 62, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .mcp-back-header {
+            margin-bottom: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .mcp-back-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .mcp-back-title h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .mcp-config-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 0.5rem 0;
+            min-height: 0;
+        }
+
+        .mcp-config-section h4 {
+            margin: 0 0 0.375rem 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .mcp-config-code {
+            position: relative;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .mcp-config-code pre {
+            margin: 0;
+            padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            line-height: 1.3;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 120px;
+            white-space: pre;
+        }
+
+        .mcp-config-code code {
+            color: var(--color-text);
+        }
+
+        .mcp-copy-config-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .mcp-copy-config-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .mcp-copy-config-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .mcp-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .mcp-action-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.625rem 0.875rem;
+            border-radius: var(--radius-md);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+            white-space: nowrap;
+        }
+
+        .mcp-github-btn {
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+
+        .mcp-github-btn:hover {
+            background: var(--color-bg-secondary);
+            text-decoration: none;
+        }
+
+        .mcp-tools-btn {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .mcp-tools-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .mcp-action-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .mcp-github-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.3;
+            margin-bottom: 0.375rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Tools Modal */
+        .tools-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .tools-modal-content {
+            background: var(--color-bg);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .tools-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tools-modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .tools-modal-close {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tools-modal-close:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .tools-modal-close svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .tools-list {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .tool-item {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-item:hover {
+            border-color: var(--color-primary);
+        }
+
+        .tool-item.expanded {
+            background: var(--color-bg);
+            border-color: var(--color-primary);
+        }
+
+        .tool-header {
+            padding: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tool-header:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .tool-name {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .tool-expand-icon {
+            width: 16px;
+            height: 16px;
+            fill: var(--color-text-secondary);
+            transition: transform 0.2s ease;
+        }
+
+        .tool-item.expanded .tool-expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .tool-details {
+            display: none;
+            padding: 0 0.75rem 0.75rem 0.75rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .tool-item.expanded .tool-details {
+            display: block;
+        }
+
+        .tool-description {
+            font-size: 0.8125rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .tool-parameters {
+            margin-top: 0.5rem;
+        }
+
+        .tool-parameters-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .parameter-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        .parameter-name {
+            font-family: var(--font-mono);
+            color: var(--color-primary);
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .parameter-info {
+            flex: 1;
+            color: var(--color-text-secondary);
+        }
+
+        .parameter-type {
+            display: inline-block;
+            padding: 0.125rem 0.375rem;
+            background: var(--color-bg-tertiary);
+            border-radius: var(--radius-sm);
+            font-size: 0.6875rem;
+            color: var(--color-text);
+            margin-right: 0.25rem;
+        }
+
+        .parameter-required {
+            display: inline-block;
+            padding: 0.125rem 0.375rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(239, 68, 68);
+            border-radius: var(--radius-sm);
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .no-parameters {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--color-border);
+            margin-top: 4rem;
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                margin-top: 3rem;
+                padding: 1.5rem 0;
+                font-size: 0.8125rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                margin-top: 2rem;
+                padding: 1rem 0;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <img src="https://www.cloudshipai.com/icons/icon_512x512.png" alt="CloudShip AI" />
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">CloudShip AI</span>
+                    <span class="brand-subtitle">Station Registry</span>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Registry</a>
+                <a href="./mcps.html" class="nav-link active">MCPs</a>
+                <a href="https://github.com/cloudshipai/station" class="nav-link" target="_blank">
+                    Station CLI
+                    <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z"/>
+                    </svg>
+                </a>
+                <a href="https://cloudshipai.github.io/station/" class="nav-link" target="_blank">
+                    Documentation
+                    <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/cloudshipai/registry" class="nav-link nav-link-primary" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a42,42,0,0,1,6.85-22.81,8,8,0,0,0,1.07-6.33,44,44,0,0,1,3.29-33.62A44,44,0,0,1,120,64h16a44,44,0,0,1,36.79-22.76,44,44,0,0,1,3.29,33.62,8,8,0,0,0,1.07,6.33A42,42,0,0,1,184,104v8Z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <a href="/" class="back-to-registry">
+                <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/>
+                </svg>
+                Back to Registry
+            </a>
+            <h1 class="header-title">Individual MCP Tools</h1>
+            <p class="header-subtitle">We've converted the most popular open source DevOps tools into MCPs for you to use in Station or anywhere you want</p>
+            
+            <div class="install-section">
+                <h3 class="install-title">All MCPs under 1 binary</h3>
+                <div class="install-command-box">
+                    <pre><code style="font-size: 0.875rem; color: #64748b;"># Install Ship CLI with one command
+</code><code>curl -fsSL https://raw.githubusercontent.com/cloudshipai/ship/main/install.sh | bash</code></pre>
+                    <button class="install-copy-btn" onclick="copyInstallCommand(this)">
+                        <svg viewBox="0 0 256 256">
+                            <path fill="currentColor" d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="mcp-categories" id="mcpCategoryTabs">
+            <!-- Categories will be dynamically populated -->
+        </div>
+
+        <div class="mcp-grid" id="mcpGrid">
+            <!-- MCP cards will be rendered here -->
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 CloudShip AI - Open source MCP tools for Station</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load comprehensive MCP data
+        let mcpData = {};
+        let toolsDetailData = {};
+        
+        async function loadToolsDetailData() {
+            try {
+                const response = await fetch('./mcp_tools_complete.json');
+                const data = await response.json();
+                toolsDetailData = data.mcp_tools_documentation.modules;
+                return true;
+            } catch (error) {
+                console.error('Failed to load tools detail data:', error);
+                toolsDetailData = {};
+                return false;
+            }
+        }
+        
+        async function loadMcpData() {
+            try {
+                const response = await fetch('./mcp_modules_comprehensive.json');
+                const data = await response.json();
+                mcpData = data.ship_cli_mcp_modules.categories;
+                return true;
+            } catch (error) {
+                console.error('Failed to load MCP data:', error);
+                mcpData = {};
+                return false;
+            }
+        }
+
+        function renderMcpTools(category) {
+            const mcpGrid = document.getElementById('mcpGrid');
+            let tools = [];
+            
+            // Safety check for mcpData
+            if (!mcpData || Object.keys(mcpData).length === 0) {
+                mcpGrid.innerHTML = '<div class="loading-card">Loading MCP tools...</div>';
+                return;
+            }
+            
+            if (category === 'all') {
+                // Combine all tools from all categories
+                Object.values(mcpData).forEach(categoryData => {
+                    if (categoryData.modules) {
+                        tools = tools.concat(categoryData.modules);
+                    }
+                });
+            } else {
+                tools = mcpData[category]?.modules || [];
+            }
+            
+            mcpGrid.innerHTML = tools.map(tool => `
+                <div class="mcp-card">
+                    <div class="mcp-card-inner">
+                        <div class="mcp-card-front">
+                            <div class="mcp-card-header">
+                                <div class="mcp-repo-info">
+                                    <a href="${tool.github_url}" target="_blank" class="mcp-repo-name">${tool.name}</a>
+                                    <div class="mcp-repo-description">${tool.description}</div>
+                                </div>
+                            </div>
+                            <div class="mcp-meta">
+                                <div class="mcp-meta-item">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+                                    </svg>
+                                    ${(tool.stars / 1000).toFixed(1)}k
+                                </div>
+                                <div class="mcp-meta-item">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                                    </svg>
+                                    ${tool.tool_count} tools
+                                </div>
+                            </div>
+                            <button class="mcp-flip-btn mcp-flip-btn-front" onclick="event.stopPropagation(); flipCard(this.closest('.mcp-card'))">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="9" x2="15" y2="9"></line>
+                                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                                </svg>
+                                <span>View Configuration</span>
+                            </button>
+                        </div>
+                        <div class="mcp-card-back">
+                            <div class="mcp-back-header">
+                                <div class="mcp-back-title">
+                                    <h3>${tool.name}</h3>
+                                    <button class="mcp-flip-btn mcp-flip-btn-back" onclick="event.stopPropagation(); flipCard(this.closest('.mcp-card'))">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                        <span>Close</span>
+                                    </button>
+                                </div>
+                                <div class="mcp-github-desc">${tool.github_description}</div>
+                            </div>
+                            
+                            <div class="mcp-config-section">
+                                <h4>Configuration</h4>
+                                <div class="mcp-config-code">
+                                    <pre><code>${JSON.stringify(tool.config_example, null, 2)}</code></pre>
+                                    <button class="mcp-copy-config-btn" onclick="event.stopPropagation(); copyMcpConfig(this, '${tool.name}')">
+                                        <svg viewBox="0 0 16 16">
+                                            <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                                            <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mcp-actions">
+                                <a href="${tool.github_url}" target="_blank" class="mcp-action-btn mcp-github-btn">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                                    </svg>
+                                    GitHub
+                                </a>
+                                <button class="mcp-action-btn mcp-tools-btn" onclick="openToolsModal('${tool.name}', '${encodeURIComponent(JSON.stringify(tool.tools))}')">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                                    </svg>
+                                    View ${tool.tool_count} Tools
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        function copyInstallCommand(button) {
+            const command = 'curl -fsSL https://raw.githubusercontent.com/cloudshipai/ship/main/install.sh | bash';
+            navigator.clipboard.writeText(command).then(() => {
+                button.innerHTML = `
+                    <svg viewBox="0 0 16 16">
+                        <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                `;
+                setTimeout(() => {
+                    button.innerHTML = `
+                        <svg viewBox="0 0 256 256">
+                            <path fill="currentColor" d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+                        </svg>
+                    `;
+                }, 2000);
+            });
+        }
+
+        function copyMcpConfig(button, toolName) {
+            const configCode = button.parentNode.querySelector('code').textContent;
+            navigator.clipboard.writeText(configCode).then(() => {
+                button.innerHTML = `
+                    <svg viewBox="0 0 16 16">
+                        <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                `;
+                setTimeout(() => {
+                    button.innerHTML = `
+                        <svg viewBox="0 0 256 256">
+                            <path fill="currentColor" d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+                        </svg>
+                    `;
+                }, 2000);
+            });
+        }
+
+        function openToolsModal(toolName, encodedTools) {
+            const tools = JSON.parse(decodeURIComponent(encodedTools));
+            const moduleData = toolsDetailData[toolName] || {};
+            const toolsData = moduleData.tools || [];
+            
+            const modal = document.createElement('div');
+            modal.className = 'tools-modal';
+            modal.innerHTML = `
+                <div class="tools-modal-content">
+                    <div class="tools-modal-header">
+                        <h3>${toolName} Tools</h3>
+                        <button class="tools-modal-close" onclick="closeToolsModal(this)">
+                            <svg viewBox="0 0 16 16">
+                                <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="tools-list">
+                        ${tools.map(toolId => {
+                            const toolDetail = toolsData.find(t => t.name === toolId) || {};
+                            return `
+                            <div class="tool-item" data-tool="${toolId}">
+                                <div class="tool-header" onclick="toggleToolDetail(this)">
+                                    <span class="tool-name">${toolId}</span>
+                                    <svg class="tool-expand-icon" viewBox="0 0 256 256">
+                                        <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/>
+                                    </svg>
+                                </div>
+                                <div class="tool-details">
+                                    ${toolDetail.description ? `
+                                        <div class="tool-description">${toolDetail.description}</div>
+                                    ` : ''}
+                                    ${toolDetail.parameters && toolDetail.parameters.length > 0 ? `
+                                        <div class="tool-parameters">
+                                            <div class="tool-parameters-title">Parameters:</div>
+                                            ${toolDetail.parameters.map(param => `
+                                                <div class="parameter-item">
+                                                    <span class="parameter-name">${param.name}:</span>
+                                                    <span class="parameter-info">
+                                                        <span class="parameter-type">${param.type}</span>
+                                                        ${param.required ? '<span class="parameter-required">required</span>' : ''}
+                                                        ${param.description ? `<br><span>${param.description}</span>` : ''}
+                                                    </span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : `
+                                        <div class="tool-parameters">
+                                            <span class="no-parameters">No parameters required</span>
+                                        </div>
+                                    `}
+                                </div>
+                            </div>
+                        `}).join('')}
+                    </div>
+                </div>
+            `;
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeToolsModal(modal.querySelector('.tools-modal-close'));
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+        
+        function toggleToolDetail(header) {
+            const toolItem = header.parentElement;
+            toolItem.classList.toggle('expanded');
+        }
+
+        function closeToolsModal(button) {
+            const modal = button.closest('.tools-modal');
+            modal.remove();
+        }
+
+        function initializeMcpCategories() {
+            const categoryTabs = document.getElementById('mcpCategoryTabs');
+            if (!categoryTabs || !mcpData || Object.keys(mcpData).length === 0) return;
+            
+            // Create category tabs based on loaded data
+            const categories = [
+                { key: 'all', name: 'All', count: Object.values(mcpData).reduce((total, cat) => total + (cat.modules?.length || 0), 0) },
+                ...Object.entries(mcpData).map(([key, category]) => ({
+                    key,
+                    name: key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' '),
+                    count: category.modules?.length || 0
+                }))
+            ];
+            
+            categoryTabs.innerHTML = categories.map(cat => `
+                <button class="mcp-category-tab ${cat.key === 'all' ? 'active' : ''}" data-category="${cat.key}">
+                    ${cat.name} (${cat.count})
+                </button>
+            `).join('');
+            
+            // Render all tools by default
+            renderMcpTools('all');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (navLinks && navLinks.classList.contains('active')) {
+                if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await Promise.all([loadMcpData(), loadToolsDetailData()]);
+            initializeMcpCategories();
+            
+            // Add event listener for category tabs
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('mcp-category-tab')) {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.mcp-category-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    e.target.classList.add('active');
+                    
+                    // Render tools for selected category
+                    const category = e.target.getAttribute('data-category');
+                    renderMcpTools(category);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Station Registry - MCP Bundle Discovery</title>
+    <title>CloudShip Station Registry - Discover Security & DevOps Bundles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-primary: #6366f1;
-            --color-primary-hover: #5856eb;
-            --color-secondary: #f8fafc;
-            --color-accent: #10b981;
-            --color-warning: #f59e0b;
-            --color-error: #ef4444;
-            --color-text: #0f172a;
-            --color-text-secondary: #64748b;
-            --color-text-muted: #94a3b8;
-            --color-border: #e2e8f0;
-            --color-border-hover: #cbd5e1;
+            --color-primary: #000000;
+            --color-primary-hover: #2d2d2d;
+            --color-primary-light: #f8f9fa;
+            --color-secondary: #6b7280;
+            --color-accent: #000000;
+            --color-text: #111827;
+            --color-text-secondary: #6b7280;
+            --color-text-muted: #9ca3af;
+            --color-text-inverse: #ffffff;
+            --color-border: #e5e7eb;
+            --color-border-light: #f3f4f6;
             --color-bg: #ffffff;
-            --color-bg-secondary: #f8fafc;
-            --color-bg-elevated: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --color-bg-secondary: #f9fafb;
+            --color-bg-tertiary: #f3f4f6;
+            --color-bg-overlay: rgba(0, 0, 0, 0.5);
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --radius-xs: 0.25rem;
             --radius-sm: 0.375rem;
             --radius-md: 0.5rem;
             --radius-lg: 0.75rem;
             --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --transition-all: all 150ms ease;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
         }
 
         * {
@@ -40,17 +46,26 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
+            font-family: var(--font-sans);
+            line-height: 1.5;
             color: var(--color-text);
-            background: var(--color-bg-secondary);
-            font-feature-settings: 'cv11' 1, 'ss01' 1;
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            font-size: 16px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 24px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
         }
 
         /* Navigation */
@@ -60,17 +75,16 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(20px);
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 4rem;
+            height: 72px;
         }
 
         .nav-brand {
@@ -81,6 +95,14 @@
 
         .brand-logo {
             flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
         }
 
         .brand-text {
@@ -90,18 +112,18 @@
         }
 
         .brand-name {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--color-text);
-            letter-spacing: -0.025em;
+            letter-spacing: -0.01em;
         }
 
         .brand-subtitle {
-            font-size: 0.75rem;
+            font-size: 13px;
             font-weight: 500;
             color: var(--color-text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            text-transform: none;
+            letter-spacing: 0;
         }
 
         .nav-links {
@@ -113,45 +135,108 @@
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
-            font-size: 0.875rem;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
             font-weight: 500;
-            color: var(--color-text-secondary);
+            color: var(--color-text);
             text-decoration: none;
-            transition: all 0.2s ease;
-            position: relative;
+            transition: var(--transition-all);
         }
 
         .nav-link:hover {
-            color: var(--color-text);
             background: var(--color-bg-secondary);
         }
 
         .nav-link.active {
-            color: var(--color-primary);
-            background: rgba(99, 102, 241, 0.1);
+            color: var(--color-text);
+            background: var(--color-bg-tertiary);
         }
 
         .nav-link-primary {
             background: var(--color-primary) !important;
             color: white !important;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .nav-link-primary:hover {
             background: var(--color-primary-hover) !important;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 16px;
+                height: 60px;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--color-bg);
+                border-bottom: 1px solid var(--color-border);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .nav-link {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
         }
 
         /* Header */
         .header {
             background: var(--color-bg);
             border-bottom: 1px solid var(--color-border);
-            padding: 2rem 0 3rem;
-            margin-bottom: 2rem;
+            padding: 48px 0 40px;
+            margin-bottom: 32px;
         }
 
         .header-content {
@@ -160,59 +245,120 @@
             margin: 0 auto;
         }
 
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-secondary);
+            padding: 8px 16px;
+            border-radius: var(--radius-lg);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            border: 1px solid var(--color-border);
+        }
+
         .header-title {
-            font-size: 3.5rem;
+            font-size: 48px;
             font-weight: 700;
             color: var(--color-text);
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
-            background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 36px 0 32px;
+            }
+
+            .header-title {
+                font-size: 32px;
+            }
+
+            .header-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 28px 0 24px;
+            }
+
+            .header-title {
+                font-size: 28px;
+            }
+
+            .header-subtitle {
+                font-size: 15px;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
         }
 
         .header-subtitle {
-            font-size: 1.25rem;
+            font-size: 20px;
             color: var(--color-text-secondary);
             font-weight: 400;
-            margin-bottom: 2rem;
+            margin-bottom: 24px;
             line-height: 1.5;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .header-stats {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .header-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
             font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-all);
+            margin-top: 8px;
         }
+
+        .header-cta-btn:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-cta-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .header-cta-btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-cta-btn {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+        }
+
 
         /* Search Section */
         .search-section {
             background: var(--color-bg);
             border-radius: var(--radius-xl);
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            margin-bottom: 32px;
             border: 1px solid var(--color-border);
         }
 
@@ -229,22 +375,98 @@
         }
 
         .bundle-builder-btn {
-            background: linear-gradient(135deg, var(--color-accent), #059669);
+            background: var(--color-primary);
             color: white;
             border: none;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-lg);
-            font-size: 0.875rem;
-            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 8px;
+            transition: var(--transition-all);
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            position: relative;
-            overflow: hidden;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .search-section {
+                padding: 20px;
+                margin-bottom: 32px;
+            }
+
+            .search-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-box-container {
+                width: 100%;
+            }
+
+            .bundle-builder-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 20px;
+            }
+
+            .filters-container {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .filters-label {
+                min-width: fit-content;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-section {
+                padding: 16px;
+                border-radius: var(--radius-lg);
+                margin-bottom: 24px;
+            }
+
+            .search-header {
+                gap: 10px;
+            }
+
+            .search-box {
+                font-size: 14px;
+                padding: 10px 12px 10px 40px;
+            }
+
+            .search-icon {
+                width: 18px;
+                height: 18px;
+                left: 12px;
+            }
+
+            .bundle-builder-btn {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+
+            .bundle-builder-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .filters-container {
+                margin-top: 12px;
+            }
+
+            .filter-tag {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .filters-label {
+                font-size: 12px;
+            }
         }
 
         .bundle-builder-btn::before {
@@ -263,9 +485,7 @@
         }
 
         .bundle-builder-btn:hover {
-            background: linear-gradient(135deg, #059669, #047857);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            background: var(--color-primary-hover);
         }
 
         .bundle-builder-btn:active {
@@ -274,143 +494,165 @@
 
         .search-icon {
             position: absolute;
-            left: 1rem;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            width: 1.25rem;
-            height: 1.25rem;
+            width: 20px;
+            height: 20px;
             color: var(--color-text-muted);
         }
 
         .search-box {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            font-size: 1rem;
+            padding: 16px 16px 16px 48px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 16px;
             background: var(--color-bg);
-            transition: all 0.2s ease;
+            transition: var(--transition-all);
             outline: none;
         }
 
         .search-box:focus {
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+            outline: none;
         }
 
         .filters-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 1rem;
             align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+            margin: 0 -0.5rem;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filters-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .filters-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .filters-container::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: var(--radius-full);
         }
 
         .filters-label {
             font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--color-text-secondary);
+            font-weight: 600;
+            color: var(--color-text);
             margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        #filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-shrink: 0;
         }
 
         .filter-tag {
-            background: var(--color-bg-secondary);
+            background: var(--color-bg);
             color: var(--color-text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid var(--color-border);
-            font-size: 0.875rem;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .filter-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .filter-tag:hover::before {
-            left: 100%;
+        .filter-count {
+            background: #f8f9fa;
+            color: #6c757d;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
         }
 
         .filter-tag:hover {
-            border-color: var(--color-primary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            border-color: rgba(0, 0, 0, 0.12);
+            background: #f8f9fa;
         }
 
         .filter-tag.active {
             background: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
-            box-shadow: var(--shadow-md);
+        }
+
+        .filter-tag.active .filter-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         /* Bundle Grid */
         .bundle-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+            align-items: start;
         }
 
         .bundle-card {
             background: var(--color-bg);
-            border-radius: var(--radius-xl);
+            border-radius: 12px;
             overflow: visible;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--color-border);
+            transition: all var(--transition-base);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             position: relative;
-            cursor: pointer;
-        }
-
-        .bundle-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .bundle-card:hover::before {
-            opacity: 0.03;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
         }
 
         .bundle-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--color-border-hover);
+            border-color: rgba(0, 0, 0, 0.12);
         }
 
         .bundle-image {
-            height: 12rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 4rem;
+            background: #f8f9fa;
             position: relative;
             overflow: hidden;
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 12px 12px 0 0;
         }
 
-        .bundle-image::after {
-            content: '📦';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            opacity: 0.7;
+        .bundle-image-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--color-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bundle-image-icon svg {
+            width: 1rem;
+            height: 1rem;
+            color: white;
         }
 
         .bundle-badges {
@@ -422,117 +664,105 @@
             z-index: 2;
         }
 
-        .badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-lg);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .badge-verified {
-            background: var(--color-accent);
-            color: white;
-        }
-
-        .badge-popular {
-            background: var(--color-warning);
-            color: white;
-        }
 
         .bundle-content {
-            padding: 1.5rem;
+            padding: 16px;
             position: relative;
-            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .bundle-header {
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .bundle-title-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 12px;
         }
 
         .bundle-title {
-            font-size: 1.375rem;
-            font-weight: 600;
+            font-size: 1.125rem;
+            font-weight: 700;
             color: var(--color-text);
-            margin-bottom: 0.5rem;
             line-height: 1.3;
+            letter-spacing: -0.01em;
+            flex: 1;
+            min-width: 0;
         }
 
-        .bundle-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
 
         .bundle-version {
-            background: var(--color-bg-secondary);
-            color: var(--color-text-secondary);
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 600;
+            background: #f8f9fa;
+            color: #6c757d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .bundle-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: var(--color-warning);
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
 
         .bundle-description {
             color: var(--color-text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            font-size: 0.9375rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .bundle-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
         .tag {
-            background: var(--color-bg-secondary);
-            color: var(--color-text-muted);
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 500;
-            border: 1px solid var(--color-border);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         /* MCP Information */
         .bundle-mcps {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: relative;
         }
 
         .mcps-toggle {
             width: 100%;
             background: var(--color-bg-secondary);
-            border: 1px solid var(--color-border);
+            border: 2px solid var(--color-border);
             border-radius: var(--radius-lg);
-            padding: 1rem;
+            padding: 0.875rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.2s ease;
+            transition: all var(--transition-fast);
             text-align: left;
         }
 
         .mcps-toggle:hover {
             border-color: var(--color-primary);
             background: var(--color-bg);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
+        }
+
+        .mcps-toggle[aria-expanded="true"] {
+            border-color: var(--color-primary);
+            background: var(--color-bg);
         }
 
         .mcps-toggle-content {
@@ -550,8 +780,12 @@
 
         .mcps-summary {
             font-size: 0.75rem;
-            color: var(--color-text-secondary);
+            color: var(--color-text-muted);
             line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
         }
 
         .mcps-chevron {
@@ -565,30 +799,30 @@
         }
 
         .mcps-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
             background: var(--color-bg);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-lg);
-            margin-top: 0.25rem;
-            box-shadow: var(--shadow-lg);
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 0;
-            overflow: hidden;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+            position: relative;
+            z-index: 10;
         }
 
         .mcps-content.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            max-height: 400px;
-            overflow: visible;
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .mcps-list {
@@ -596,13 +830,31 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            max-height: 320px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .mcps-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .mcps-list::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: var(--radius-full);
         }
 
         .mcp-item {
             background: var(--color-bg-secondary);
-            padding: 0.75rem;
+            padding: 1rem;
             border-radius: var(--radius-md);
             border: 1px solid var(--color-border);
+            transition: all var(--transition-fast);
+        }
+
+        .mcp-item:hover {
+            background: var(--color-bg);
+            border-color: var(--color-primary);
         }
 
         .mcp-header {
@@ -619,35 +871,1093 @@
         }
 
         .mcp-tool-count {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--color-text-muted);
-            background: var(--color-bg-secondary);
-            padding: 0.125rem 0.5rem;
-            border-radius: var(--radius-sm);
+            background: var(--color-bg);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .mcp-description {
             font-size: 0.8125rem;
             color: var(--color-text-secondary);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
         }
 
         .mcp-tools {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.375rem;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
         }
 
         .tool-name {
             font-size: 0.6875rem;
             font-weight: 500;
-            color: var(--color-text-muted);
-            background: var(--color-bg-secondary);
-            padding: 0.125rem 0.5rem;
-            border-radius: var(--radius-sm);
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-full);
             border: 1px solid var(--color-border);
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+            font-family: var(--font-mono);
+            display: inline-block;
+        }
+
+        /* Agents Information */
+        .bundle-agents {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .agents-toggle {
+            width: 100%;
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all var(--transition-fast);
+            text-align: left;
+        }
+
+        .agents-toggle:hover {
+            border-color: var(--color-accent);
+            background: var(--color-bg);
+        }
+
+        .agents-toggle[aria-expanded="true"] {
+            border-color: var(--color-accent);
+            background: var(--color-bg);
+        }
+
+        .agents-toggle-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .agents-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .agents-summary {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        .agents-chevron {
+            color: var(--color-text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .agents-toggle[aria-expanded="true"] .agents-chevron {
+            transform: rotate(180deg);
+        }
+
+        .agents-content {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        .agents-content.active {
+            display: block;
+        }
+
+        .agents-list {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 320px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .agents-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .agents-list::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: var(--radius-full);
+        }
+
+        .agent-item {
+            background: var(--color-bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            transition: all var(--transition-fast);
+        }
+
+        .agent-item:hover {
+            background: var(--color-bg);
+            border-color: var(--color-accent);
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.375rem;
+        }
+
+        .agent-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        .agent-capability-count {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            background: var(--color-bg);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .agent-description {
+            font-size: 0.8125rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .agent-capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .capability-name {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            background: var(--color-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+            font-family: var(--font-mono);
+            display: inline-block;
+        }
+
+        /* Compact Bundle Details */
+        .bundle-details-compact {
+            background: #f8f9fa;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .detail-section-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+
+        /* MCP section - primary styling */
+        .detail-section-compact[onclick*="mcps"] {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-section-compact[onclick*="mcps"]:hover {
+            background: #f8f9fa;
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .detail-section-compact[onclick*="mcps"] .detail-label {
+            color: var(--color-text);
+            font-weight: 700;
+        }
+
+        /* Agent section - muted/secondary styling */
+        .detail-section-compact[onclick*="agents"] {
+            background: #f1f3f4;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .detail-section-compact[onclick*="agents"]:hover {
+            background: #e8eaed;
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .detail-section-compact[onclick*="agents"] .detail-label {
+            color: #5f6368;
+            font-weight: 600;
+        }
+
+        .detail-section-compact[onclick*="agents"] .detail-preview {
+            color: #80868b;
+        }
+
+        .detail-section-compact[onclick*="agents"] .detail-arrow {
+            color: #9aa0a6;
+        }
+
+        .detail-separator {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.06);
+            margin: 4px 8px;
+        }
+
+        .detail-section-clickable {
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .detail-arrow {
+            color: #6c757d;
+            flex-shrink: 0;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .detail-section-clickable:hover .detail-arrow {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.2s ease;
+        }
+
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: #f8f9fa;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--color-text);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary);
+            background: white;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-primary);
+        }
+
+        .tab-count {
+            font-size: 12px;
+            background: #e9ecef;
+            color: #495057;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .tab-button.active .tab-count {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .no-items {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #f8f9fa;
+            color: var(--color-text);
+        }
+
+        .modal-body {
+            padding: 16px 24px 24px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-item {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #fafbfc;
+        }
+
+        .modal-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+
+        .modal-item-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        .modal-item-count {
+            font-size: 12px;
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .modal-item-description {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .modal-item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .modal-tag {
+            background: white;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MCP Tools Section */
+        .mcp-section {
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mcp-categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .mcp-category-tab {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mcp-category-tab:hover {
+            border-color: rgba(0, 0, 0, 0.12);
+            background: #f8f9fa;
+        }
+
+        .mcp-category-tab.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .mcp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        /* Flippable MCP Cards */
+        .mcp-card {
+            perspective: 1000px;
+            height: 320px;
+        }
+
+        .mcp-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .mcp-card.flipped .mcp-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .mcp-card-front, .mcp-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: var(--color-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mcp-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .mcp-card:hover .mcp-card-front,
+        .mcp-card:hover .mcp-card-back {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .mcp-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .mcp-repo-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mcp-repo-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .mcp-repo-name:hover {
+            text-decoration: underline;
+        }
+
+        .mcp-repo-description {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mcp-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: auto;
+        }
+        
+        .mcp-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .mcp-meta-item svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+        
+        .mcp-flip-btn {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+        
+        .mcp-flip-btn:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .mcp-flip-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .mcp-back-header {
+            margin-bottom: 0.75rem;
+        }
+        
+        .mcp-back-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mcp-back-title h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        .mcp-config-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 0.75rem 0;
+        }
+        
+        .mcp-config-section h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        .mcp-config-code {
+            position: relative;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .mcp-config-code pre {
+            margin: 0;
+            padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            line-height: 1.3;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 100px;
+            white-space: pre;
+        }
+        
+        .mcp-config-code code {
+            color: var(--color-text);
+        }
+        
+        .mcp-copy-config-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .mcp-copy-config-btn:hover {
+            background: var(--color-primary-hover);
+        }
+        
+        .mcp-copy-config-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+        
+        .mcp-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
+        }
+        
+        .mcp-action-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.625rem 0.875rem;
+            border-radius: var(--radius-md);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+            white-space: nowrap;
+        }
+        
+        .mcp-github-btn {
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+        
+        .mcp-github-btn:hover {
+            background: var(--color-bg-secondary);
+            text-decoration: none;
+        }
+        
+        .mcp-tools-btn {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .mcp-tools-btn:hover {
+            background: var(--color-primary-hover);
+        }
+        
+        .mcp-action-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+        
+        .mcp-github-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mcp-card-back {
+            justify-content: space-between;
+        }
+        
+        /* Tools Modal */
+        .tools-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .tools-modal-content {
+            background: var(--color-bg);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .tools-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .tools-modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        .tools-modal-close {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tools-modal-close:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .tools-modal-close svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .tools-list {
+            display: grid;
+            gap: 0.5rem;
+        }
+        
+        .tool-item {
+            padding: 0.75rem;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+        
+        .tool-item:hover {
+            background: var(--color-bg);
+            border-color: var(--color-primary);
+        }
+        
+        .tool-name {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .mcp-front-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mcp-front-stat-number {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .mcp-front-stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mcp-card-back {
+            justify-content: space-between;
+        }
+
+        .mcp-back-header {
+            text-align: left;
+        }
+
+        .mcp-github-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .mcp-github-desc {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .mcp-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .mcp-stat {
+            text-align: center;
+        }
+
+        .mcp-stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-text);
+            display: block;
+        }
+
+        .mcp-stat-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mcp-install-cmd {
+            background: #f8f9fa;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--color-primary);
+            margin-top: auto;
+            word-break: break-all;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .detail-preview {
+            font-size: 13px;
+            text-align: right;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-btn-prominent:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .copy-btn-prominent.copied {
+            background: var(--color-success);
+            animation: successPulse 0.5s ease;
+        }
+
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+
+        /* Enhanced hover states */
+        .bundle-card {
+            will-change: transform;
+        }
+
+        /* Better focus states for accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline-offset: 4px;
+        }
+
+        /* Pulse animation for new/featured badges */
+        .badge-new {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Bundle Details Section */
+        .bundle-details-section {
+            margin: 1rem 0 0 0;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .details-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            padding: 0.625rem 0.875rem;
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+            font-size: 0.875rem;
+        }
+
+        .details-icon {
+            font-size: 1.125rem;
+        }
+
+        .details-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .tool-more {
@@ -660,58 +1970,196 @@
             border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
+        .bundle-info-row {
+            display: flex;
+            gap: 1rem;
+            margin: 0.75rem 0;
+            padding: 0.75rem;
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-lg);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .bundle-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .info-icon {
+            font-size: 1rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--color-text-muted);
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .info-expand-btn {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .info-expand-btn:hover {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .info-expand-btn svg {
+            transition: transform var(--transition-fast);
+        }
+
+        .bundle-details-dropdown {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .detail-item {
+            padding: 0.75rem;
+            background: var(--color-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+
+        .detail-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.375rem;
+        }
+
+        .detail-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .detail-count {
+            font-size: 0.6875rem;
+            color: var(--color-text-muted);
+            background: var(--color-bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-full);
+        }
+
+        .detail-description {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .detail-tag {
+            font-size: 0.625rem;
+            font-family: var(--font-mono);
+            background: var(--color-bg-secondary);
+            color: var(--color-text-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+        }
+
+        .detail-tag-more {
+            font-size: 0.625rem;
+            color: var(--color-primary);
+            padding: 0.125rem 0.375rem;
+            background: var(--color-primary-light);
+            border-radius: var(--radius-full);
+        }
+
         .bundle-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-border);
+            margin: 12px 0;
+            padding: 12px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .bundle-stat {
             display: flex;
             align-items: center;
-            gap: 0.375rem;
-            color: var(--color-text-muted);
-            font-size: 0.8125rem;
+            gap: 6px;
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .bundle-actions {
             display: flex;
-            gap: 0.75rem;
+            gap: 12px;
+            margin-top: auto;
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 12px 24px;
             border: none;
-            border-radius: var(--radius-lg);
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 14px;
             font-weight: 600;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            gap: 8px;
         }
 
         .btn-primary {
@@ -722,21 +2170,54 @@
 
         .btn-primary:hover {
             background: var(--color-primary-hover);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: var(--color-bg-secondary);
-            color: var(--color-text-secondary);
-            border: 1px solid var(--color-border);
-            padding: 0.75rem;
+            background: white;
+            color: #6c757d;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 12px;
         }
 
         .btn-secondary:hover {
-            background: var(--color-border);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            background: #f8f9fa;
+            border-color: rgba(0, 0, 0, 0.12);
+            color: var(--color-primary);
+        }
+
+        .copy-install-btn {
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+            min-height: 40px;
+            padding: 10px 16px;
+            line-height: 1.4;
+        }
+
+        .copy-install-btn.copied {
+            background: #28a745;
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .copy-install-btn.copied:hover {
+            background: #28a745;
+        }
+
+        .copy-install-btn .check-icon {
+            color: white;
+        }
+
+        .copy-install-btn .btn-text {
+            display: inline;
+            word-break: break-all;
+        }
+
+        @media (max-width: 768px) {
+            .copy-install-btn.copied {
+                font-size: 11px;
+            }
         }
 
         .install-dropdown {
@@ -774,7 +2255,6 @@
             border-radius: var(--radius-lg);
             padding: 1rem;
             margin-top: 0.25rem;
-            box-shadow: var(--shadow-xl);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -885,11 +2365,11 @@
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 4rem;
-            padding: 3rem 0;
-            color: var(--color-text-muted);
+            margin-top: 6rem;
+            padding: 4rem 0;
+            color: var(--color-text-secondary);
             border-top: 1px solid var(--color-border);
-            background: var(--color-bg);
+            background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%);
         }
 
         .footer-links {
@@ -897,17 +2377,64 @@
             justify-content: center;
             gap: 2rem;
             margin-top: 1rem;
+            flex-wrap: wrap;
         }
 
         .footer-link {
-            color: var(--color-primary);
+            color: var(--color-text);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
         }
 
         .footer-link:hover {
-            color: var(--color-primary-hover);
+            color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                margin-top: 4rem;
+                padding: 3rem 0;
+            }
+
+            .footer-links {
+                gap: 1rem;
+            }
+
+            .footer-link {
+                font-size: 14px;
+                padding: 0.375rem 0.75rem;
+            }
+
+            .footer p {
+                font-size: 14px;
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                margin-top: 3rem;
+                padding: 2rem 0;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .footer-link {
+                width: 200px;
+                text-align: center;
+            }
+
+            .footer p {
+                font-size: 12px;
+            }
         }
 
         /* Modal Styles */
@@ -919,8 +2446,9 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .modal.show {
@@ -932,14 +2460,24 @@
 
         .modal-content {
             background: var(--color-bg);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl);
+            border-radius: var(--radius-2xl);
             max-width: 600px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            border: 1px solid var(--color-border);
-            animation: scaleIn 0.3s ease;
+            border: none;
+            animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(20px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
         }
 
         @keyframes scaleIn {
@@ -1031,7 +2569,6 @@
         .form-input:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
         }
 
         .form-textarea {
@@ -1115,13 +2652,6 @@
                 gap: 1rem;
             }
 
-            .search-section {
-                padding: 1.5rem;
-            }
-
-            .filters-container {
-                justify-content: center;
-            }
 
             .bundle-actions {
                 flex-direction: column;
@@ -1153,14 +2683,14 @@
         /* Dark mode support */
         @media (prefers-color-scheme: dark) {
             :root {
-                --color-text: #f8fafc;
-                --color-text-secondary: #cbd5e1;
-                --color-text-muted: #64748b;
-                --color-bg: #0f172a;
-                --color-bg-secondary: #1e293b;
-                --color-bg-elevated: #334155;
-                --color-border: #334155;
-                --color-border-hover: #475569;
+                --color-text: #f9fafb;
+                --color-text-secondary: #9ca3af;
+                --color-text-muted: #6b7280;
+                --color-bg: #111827;
+                --color-bg-secondary: #1f2937;
+                --color-bg-tertiary: #374151;
+                --color-border: #374151;
+                --color-border-light: #4b5563;
             }
         }
 
@@ -1180,6 +2710,17 @@
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .stagger-children > * {
             animation: fadeIn 0.5s ease-out backwards;
         }
@@ -1190,24 +2731,64 @@
         .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
         .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
         .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+        .stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+        .stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+        .stagger-children > *:nth-child(9) { animation-delay: 0.9s; }
+        .stagger-children > *:nth-child(10) { animation-delay: 1.0s; }
+        .stagger-children > *:nth-child(11) { animation-delay: 1.1s; }
+        .stagger-children > *:nth-child(12) { animation-delay: 1.2s; }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: var(--radius-full);
+            border: 3px solid var(--color-bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-text-muted);
+        }
+
+        /* Loading shimmer effect */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .loading-card {
+            background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-bg) 50%, var(--color-bg-secondary) 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+            height: 400px;
+            border-radius: var(--radius-2xl);
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="main-nav">
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
                 <div class="brand-logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
-                        <path d="M8 12h16v2H8v-2zm0 4h12v2H8v-2zm0 4h16v2H8v-2z" fill="white"/>
-                        <defs>
-                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#6366f1"/>
-                                <stop offset="100%" style="stop-color:#8b5cf6"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
+                    <img src="https://www.cloudshipai.com/icons/icon_512x512.png" alt="CloudShip AI" />
                 </div>
                 <div class="brand-text">
                     <span class="brand-name">CloudShip AI</span>
@@ -1217,50 +2798,62 @@
             
             <div class="nav-links">
                 <a href="/" class="nav-link active">Registry</a>
+                <a href="./mcps.html" class="nav-link">MCPs</a>
                 <a href="https://github.com/cloudshipai/station" class="nav-link" target="_blank">
                     Station CLI
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                    <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z"/>
                     </svg>
                 </a>
-                <a href="https://docs.station.dev" class="nav-link" target="_blank">
+                <a href="https://cloudshipai.github.io/station/" class="nav-link" target="_blank">
                     Documentation
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                    <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z"/>
                     </svg>
                 </a>
                 <a href="https://github.com/cloudshipai/registry" class="nav-link nav-link-primary" target="_blank">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a42,42,0,0,1,6.85-22.81,8,8,0,0,0,1.07-6.33,44,44,0,0,1,3.29-33.62A44,44,0,0,1,120,64h16a44,44,0,0,1,36.79-22.76,44,44,0,0,1,3.29,33.62,8,8,0,0,0,1.07,6.33A42,42,0,0,1,184,104v8Z"/>
                     </svg>
                     GitHub
                 </a>
             </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/>
+                </svg>
+            </button>
         </div>
     </nav>
 
     <div class="container">
         <header class="header">
             <div class="header-content">
-                <h1 class="header-title">Station Registry</h1>
-                <p class="header-subtitle">Discover and install MCP bundles for instant productivity</p>
+                <h1 class="header-title">CloudShip Station Registry</h1>
+                <p class="header-subtitle">Pre-built workflows and actions for common DevOps tasks. These bundles package the same automations your team already runs manually - from security scanning to infrastructure checks - into reusable workflows.</p>
+                <a href="https://cloudshipai.github.io/station/en/mcp-quickstart/" class="header-cta-btn" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/>
+                    </svg>
+                    Get Started
+                </a>
             </div>
         </header>
 
         <div class="search-section">
             <div class="search-header">
                 <div class="search-box-container">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <svg class="search-icon" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
                     </svg>
-                    <input type="text" class="search-box" placeholder="Search bundles by name, description, or tags..." id="searchInput">
+                    <input type="text" class="search-box" placeholder="Search bundles by name, description, or tags..." id="searchInput" aria-label="Search bundles" autocomplete="off">
                 </div>
-                <button class="bundle-builder-btn" onclick="openBundleBuilder()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                <a href="./mcps.html" class="bundle-builder-btn">
+                    <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M247.43,117l-14-35A15.93,15.93,0,0,0,218.58,72H184V64a8,8,0,0,0-8-8H24A16,16,0,0,0,8,72V184a16,16,0,0,0,16,16H41a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.92,7.92,0,0,0,247.43,117ZM184,88h34.58l9.6,24H184ZM24,72H168v64H24ZM72,208a16,16,0,1,1,16-16A16,16,0,0,1,72,208Zm81-24H103a32,32,0,0,0-62,0H24V152H168v12.31A32.11,32.11,0,0,0,153,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,184,208Zm48-24H215a32.06,32.06,0,0,0-31-24V128h48Z"/>
                     </svg>
-                    Build Your Own Bundle
-                </button>
+                    <span>View Available MCPs</span>
+                </a>
             </div>
             <div class="filters-container">
                 <span class="filters-label">Categories:</span>
@@ -1273,26 +2866,29 @@
         <div class="bundle-grid stagger-children" id="bundleGrid">
             <div class="loading">
                 <div class="loading-spinner"></div>
-                <p>Loading amazing bundles...</p>
+                <p>Discovering amazing bundles...</p>
             </div>
         </div>
+    </div>
 
-        <footer class="footer">
-            <p>Station Registry - Open source MCP bundle distribution</p>
+
+    <div class="container">
+        <footer class="footer" role="contentinfo">
+            <p>&copy; 2025 CloudShip AI - Open source MCP bundle distribution for Station</p>
             <div class="footer-links">
                 <a href="https://github.com/cloudshipai/station-registry" class="footer-link">GitHub Repository</a>
                 <a href="https://github.com/cloudshipai/station" class="footer-link">Station CLI</a>
-                <a href="https://docs.station.dev" class="footer-link">Documentation</a>
+                <a href="https://cloudshipai.github.io/station/" class="footer-link">Documentation</a>
             </div>
         </footer>
     </div>
 
     <!-- Bundle Builder Modal -->
-    <div id="bundleBuilderModal" class="modal">
+    <div id="bundleBuilderModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>🛠️ Build Your Own Bundle</h2>
-                <button class="modal-close" onclick="closeBundleBuilder()">&times;</button>
+                <button class="modal-close" onclick="closeBundleBuilder()" aria-label="Close modal">&times;</button>
             </div>
             <div class="modal-body">
                 <p class="modal-description">
@@ -1312,7 +2908,7 @@
                 </div>
 
                 <div class="builder-section">
-                    <h3>🔌 Select MCPs</h3>
+                    <h3>MCPs Select MCPs</h3>
                     <div class="mcp-selector">
                         <div class="mcp-option">
                             <input type="checkbox" id="mcp-filesystem" value="filesystem">
@@ -1346,7 +2942,7 @@
                 </div>
 
                 <div class="builder-section">
-                    <h3>🤖 Add Agents (Optional)</h3>
+                    <h3>Agents Add Agents (Optional)</h3>
                     <div class="agent-selector">
                         <div class="agent-option">
                             <input type="checkbox" id="agent-filemanager" value="file-manager">
@@ -1380,23 +2976,112 @@
     <script>
         let bundles = [];
         let filteredBundles = [];
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (navLinks && navLinks.classList.contains('active')) {
+                if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            }
+        });
+        
+        function getGradientForCategory(tag) {
+            const gradients = {
+                'ci': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'kubernetes': 'linear-gradient(135deg, #0066FF 0%, #00C896 100%)',
+                'aws': 'linear-gradient(135deg, #FF9A00 0%, #FF6200 100%)',
+                'security': 'linear-gradient(135deg, #F93B1D 0%, #EA1E63 100%)',
+                'iac': 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)',
+                'finops': 'linear-gradient(135deg, #00C896 0%, #00E5FF 100%)',
+                'sbom': 'linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%)',
+                'secrets': 'linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%)',
+                'registry': 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                'default': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            };
+            return gradients[tag] || gradients.default;
+        }
+
+        function getIconForBundle(bundleId) {
+            const icons = {
+                // CI/CD & Pipeline Security - Using Phosphor CircuitBreaker, CheckCircle, Warning
+                'ci-guardrails-bundle': '<path d="M232,144a56,56,0,0,0-32-50.61V72a48,48,0,0,0-96,0V93.39a56,56,0,0,0,0,101.2V216a8,8,0,0,0,16,0V194.61A56.09,56.09,0,0,0,168,144v-8h48A8,8,0,0,0,216,120H168V104h48a8,8,0,0,0,0-16H165.64a32.06,32.06,0,0,0-28.24-28.24A32,32,0,0,1,120,72v48H104V72a32,32,0,0,0-64,0v48a8,8,0,0,0,8,8H88a8,8,0,0,0,0,16H48a8,8,0,0,0,0,16H88a8,8,0,0,0,0,16H48a8,8,0,0,0,0,16H88.39a56,56,0,0,0,101.2,0H216A8,8,0,0,0,216,176H168v-8h48A8,8,0,0,0,216,152H168Zm-64,40a40,40,0,1,1,40-40A40,40,0,0,1,168,184Z"/>',
+                'terraform-preplan-lint-bundle': '<path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>',
+                'dast-preprod-bundle': '<path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/>',
+                
+                // SBOM & Supply Chain - Using Phosphor FileText, Package, Lock
+                'dep-lic-sbom-bundle': '<path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/>',
+                'sbom-lifecycle-dtrack-bundle': '<path d="M223.68,66.15,135.68,18h0a15.94,15.94,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.78Z"/>',
+                'provenance-artifact-trust-bundle': '<path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-68-56a12,12,0,1,1-12-12A12,12,0,0,1,140,152Z"/>',
+                
+                // Infrastructure & Cloud - Using Phosphor Gear, GitBranch, Cloud, Lightning
+                'iac-guardrails-bundle': '<path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Z"/>',
+                'iac-live-drift-bundle': '<path d="M112,80a32,32,0,1,1,32,32A32,32,0,0,1,112,80Zm64,32a32,32,0,1,0,32,32A32,32,0,0,0,176,112Zm-96,0a32,32,0,1,0,32,32A32,32,0,0,0,80,112Z"/>',
+                'aws-misconfig-sweep-bundle': '<path d="M160,40A88.09,88.09,0,0,0,81.29,88.67,64,64,0,1,0,72,216h88a88,88,0,0,0,0-176Zm0,160H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.11A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,72,72Z"/>',
+                'serverless-least-priv-bundle': '<path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"/>',
+                
+                // Kubernetes - Using Phosphor Cube, Stack, Lock, FileText
+                'k8s-baseline-hardening-bundle': '<path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/>',
+                'k8s-multitenant-guardrails-bundle': '<path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a16,16,0,0,1,16-16H208A16,16,0,0,1,224,152ZM208,88H48a16,16,0,0,0-16,16v8a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16v-8A16,16,0,0,0,208,88Zm0-56H48A16,16,0,0,0,32,48V56A16,16,0,0,0,48,72H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Z"/>',
+                'tls-cert-rotation-bundle': '<path d="M48,56V192a8,8,0,0,1-16,0V56a8,8,0,0,1,16,0Zm140,64H152V80h36a12,12,0,0,0,0-24H152V44a12,12,0,0,0-19.5-9.37l-96,68a12,12,0,0,0,0,14.74l96,68A12,12,0,0,0,152,176V164h36a12,12,0,0,0,0-24Zm-52,33.56L72,107.93,136,62.3Z"/>',
+                'dr-smoke-tests-bundle': '<path d="M212.92,25.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,64V174.08A36,36,0,1,0,88,204V70.25l112-28v99.83A36,36,0,1,0,216,172V32A8,8,0,0,0,212.92,25.69ZM52,224a20,20,0,1,1,20-20A20,20,0,0,1,52,224Zm128,0a20,20,0,1,1,20-20A20,20,0,0,1,180,224Z"/>',
+                
+                // Cost & FinOps - Using Phosphor CurrencyDollar, ChartLine
+                'cost-waste-cleanup-bundle': '<path d="M152,128a40,40,0,0,1-40,40v16a8,8,0,0,1-16,0V168a40,40,0,0,1,0-80V72a8,8,0,0,1,16,0V88A40,40,0,0,1,152,128Zm-40-24a24,24,0,0,0,0,48V104Zm80,24A80,80,0,1,1,112,48a8,8,0,0,1,0,16,64,64,0,1,0,64,64,8,8,0,0,1,16,0Z"/>',
+                'openinfraquote-cost-gate-bundle': '<path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1-8-8V48a8,8,0,0,1,16,0v94.37L90.73,98a8,8,0,0,1,10.53,0l58.81,47.09,34.62-36.69a8,8,0,1,1,11.64,11l-40,42.4a8,8,0,0,1-11.64,0L96,115.06,40,160.4V200H224A8,8,0,0,1,232,208Z"/>',
+                
+                // Security & Secrets - Using Phosphor Lock, Shield, GitBranch
+                'secrets-hygiene-bundle': '<path d="M128,176a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h24A8,8,0,0,1,128,176Zm-8-32H96a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Zm40,32a8,8,0,0,1-8,8h-8a8,8,0,0,1,0-16h8A8,8,0,0,1,160,176Zm-8-32h-8a8,8,0,0,0,0,16h8a8,8,0,0,0,0-16Zm72-16v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V128a16,16,0,0,1,16-16H72V88a56,56,0,0,1,112,0v24h24A16,16,0,0,1,224,128ZM88,112h80V88a40,40,0,0,0-80,0ZM208,128H48v80H208Z"/>',
+                'sops-encryption-enforce-bundle': '<path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-68-56a12,12,0,1,1-12-12A12,12,0,0,1,140,152Z"/>',
+                'github-org-security-bundle': '<path d="M208,104v8a48,48,0,0,1-48,48H136a32,32,0,0,1,32,32v16h40a8,8,0,0,1,0,16H168a8,8,0,0,1-8-8V192a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v24a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H80V192a32,32,0,0,1,32-32H96a48,48,0,0,1-48-48v-8a49.28,49.28,0,0,1,8.51-27.3A51.92,51.92,0,0,1,56,32a52.1,52.1,0,0,1,43.83,24h32.34A52.1,52.1,0,0,1,176,32a51.92,51.92,0,0,1-.51,44.7A49.28,49.28,0,0,1,208,104Z"/>',
+                
+                // Container & Registry - Using Phosphor Package, Database
+                'golden-images-compliance-bundle': '<path d="M223.68,66.15,135.68,18h0a15.94,15.94,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.78Z"/>',
+                'registry-hygiene-bundle': '<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm0-144a56,56,0,1,0,56,56A56.06,56.06,0,0,0,128,72Zm0,96a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z"/>',
+                
+                // System & OS - Using Phosphor Desktop, Terminal
+                'os-patch-cis-fleet-bundle': '<path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/>',
+                
+                // Identity & IAM - Using Phosphor User
+                'cloud-identity-least-priv-bundle': '<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/>'
+            };
+            
+            // Default gear icon from Phosphor
+            const defaultIcon = '<path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Z"/>';
+            
+            return icons[bundleId] || defaultIcon;
+        }
 
         async function loadBundles() {
             try {
+                console.log('Loading bundles...');
                 const response = await fetch('./index.json');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 const data = await response.json();
+                console.log('Raw data received:', data);
                 bundles = data.bundles || [];
+                console.log('Bundles array:', bundles);
                 filteredBundles = [...bundles];
                 
+                
                 // Bundles loaded successfully
+                console.log(`Loaded ${bundles.length} bundles`);
                 
                 if (bundles.length === 0) {
                     document.getElementById('bundleGrid').innerHTML = `
                         <div class="no-results">
-                            <div class="no-results-icon">📦</div>
+                            <div class="no-results-icon">Size</div>
                             <h3>No bundles available yet</h3>
                             <p>Check back soon for amazing MCP bundles!</p>
                         </div>
@@ -1420,20 +3105,39 @@
 
         function renderFilters() {
             const filters = document.getElementById('filters');
-            const allTags = new Set(['all']);
+            const tagCounts = {};
             
+            // Count bundles per tag
             bundles.forEach(bundle => {
                 if (bundle.tags) {
-                    bundle.tags.forEach(tag => allTags.add(tag));
+                    bundle.tags.forEach(tag => {
+                        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                    });
                 }
             });
+
+            // Sort tags by count (descending)
+            const sortedTags = Object.entries(tagCounts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([tag]) => tag);
+
+            // Add 'all' at the beginning
+            const allTags = ['all', ...sortedTags];
 
             filters.innerHTML = '';
             allTags.forEach(tag => {
                 const button = document.createElement('button');
                 button.className = `filter-tag ${tag === 'all' ? 'active' : ''}`;
                 button.dataset.filter = tag;
-                button.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+                
+                const tagName = tag.charAt(0).toUpperCase() + tag.slice(1).replace('-', ' ');
+                const count = tag === 'all' ? bundles.length : tagCounts[tag];
+                
+                button.innerHTML = `
+                    <span>${tagName}</span>
+                    <span class="filter-count">${count}</span>
+                `;
+                
                 button.addEventListener('click', () => filterBundles(tag));
                 filters.appendChild(button);
             });
@@ -1473,12 +3177,15 @@
         }
 
         function renderBundles() {
+            console.log('Rendering bundles...');
+            console.log('Filtered bundles:', filteredBundles);
             const grid = document.getElementById('bundleGrid');
             
             if (filteredBundles.length === 0) {
+                console.log('No bundles to render');
                 grid.innerHTML = `
                     <div class="no-results fade-in">
-                        <div class="no-results-icon">🔍</div>
+                        <div class="no-results-icon">Details</div>
                         <h3>No bundles found</h3>
                         <p>Try adjusting your search or filter criteria</p>
                     </div>
@@ -1486,120 +3193,104 @@
                 return;
             }
 
+            console.log(`Rendering ${filteredBundles.length} bundles`);
             grid.innerHTML = filteredBundles.map((bundle, index) => {
                 const isVerified = bundle.verified || false;
                 const isPopular = bundle.popular || false;
                 
                 return `
                     <div class="bundle-card fade-in" style="animation-delay: ${index * 0.1}s">
-                        <div class="bundle-image">
-                            <div class="bundle-badges">
-                                ${isVerified ? '<span class="badge badge-verified">✓ Verified</span>' : ''}
-                                ${isPopular ? '<span class="badge badge-popular">🔥 Popular</span>' : ''}
+                        <div class="bundle-image" style="background: ${getGradientForCategory(bundle.tags?.[0] || 'default')};">
+                            <div class="bundle-image-icon">
+                                <svg viewBox="0 0 256 256" fill="currentColor">
+                                    ${getIconForBundle(bundle.id)}
+                                </svg>
                             </div>
                         </div>
                         <div class="bundle-content">
                             <div class="bundle-header">
-                                <h3 class="bundle-title">${bundle.name}</h3>
-                                <div class="bundle-meta">
+                                <div class="bundle-title-row">
+                                    <h3 class="bundle-title">${bundle.name}</h3>
                                     <span class="bundle-version">v${bundle.version}</span>
-                                    ${bundle.rating ? `
-                                    <div class="bundle-rating">
-                                        <span>⭐</span>
-                                        <span>${bundle.rating}</span>
-                                    </div>
-                                    ` : ''}
                                 </div>
+                                ${bundle.tags ? `
+                                <div class="bundle-tags">
+                                    ${bundle.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                                ` : ''}
                             </div>
-                            <p class="bundle-description">${bundle.description}</p>
-                            ${bundle.mcps && bundle.mcps.length > 0 ? `
-                            <div class="bundle-mcps">
-                                <button class="mcps-toggle" onclick="toggleMcpDropdown(this)">
-                                    <div class="mcps-toggle-content">
-                                        <span class="mcps-title">
-                                            🔌 Included MCPs (${bundle.mcps.length})
-                                        </span>
-                                        <span class="mcps-summary">
-                                            ${bundle.mcps.map(mcp => mcp.name).join(', ')}
-                                        </span>
-                                    </div>
-                                    <svg class="mcps-chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M6 9l6 6 6-6"/>
+                            <p class="bundle-description" title="${bundle.description}">${bundle.description}</p>
+                            
+                            <!-- Bundle Details - MCPs and Agents -->
+                            ${(bundle.mcps && bundle.mcps.length > 0) || (bundle.agents && bundle.agents.length > 0) ? `
+                            <div class="bundle-details-compact">
+                                ${bundle.mcps && bundle.mcps.length > 0 ? `
+                                <button class="detail-section-compact detail-section-clickable" onclick="openBundleDetailsModal(this, 'mcps')"
+                                    data-bundle-name="${bundle.name}"
+                                    data-mcps='${JSON.stringify(bundle.mcps)}'
+                                    data-agents='${JSON.stringify(bundle.agents || [])}'>
+                                    <span class="detail-label">MCPs (${bundle.mcps.length})</span>
+                                    <span class="detail-preview">${bundle.mcps.slice(0, 2).map(mcp => mcp.name).join(', ')}${bundle.mcps.length > 2 ? ` +${bundle.mcps.length - 2} more` : ''}</span>
+                                    <svg class="detail-arrow" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
                                     </svg>
                                 </button>
-                                <div class="mcps-content">
-                                    <div class="mcps-list">
-                                        ${bundle.mcps.map(mcp => `
-                                            <div class="mcp-item">
-                                                <div class="mcp-header">
-                                                    <span class="mcp-name">${mcp.name}</span>
-                                                    <span class="mcp-tool-count">${mcp.tools.length} tools</span>
-                                                </div>
-                                                <p class="mcp-description">${mcp.description}</p>
-                                                <div class="mcp-tools">
-                                                    ${mcp.tools.map(tool => `<span class="tool-name">${tool}</span>`).join('')}
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
+                                ` : ''}
+                                ${(bundle.mcps && bundle.mcps.length > 0) && (bundle.agents && bundle.agents.length > 0) ? `
+                                <div class="detail-separator"></div>
+                                ` : ''}
+                                ${bundle.agents && bundle.agents.length > 0 ? `
+                                <button class="detail-section-compact detail-section-clickable" onclick="openBundleDetailsModal(this, 'agents')"
+                                    data-bundle-name="${bundle.name}"
+                                    data-mcps='${JSON.stringify(bundle.mcps || [])}'
+                                    data-agents='${JSON.stringify(bundle.agents)}'>
+                                    <span class="detail-label">Agents (${bundle.agents.length})</span>
+                                    <span class="detail-preview">${bundle.agents.slice(0, 2).map(agent => agent.name).join(', ')}${bundle.agents.length > 2 ? ` +${bundle.agents.length - 2} more` : ''}</span>
+                                    <svg class="detail-arrow" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                                    </svg>
+                                </button>
+                                ` : ''}
                             </div>
                             ` : ''}
+
                             <div class="bundle-stats">
                                 <div class="bundle-stat">
-                                    <span>📦</span>
+                                    <span>Size</span>
                                     <span>${(bundle.file_size / 1024).toFixed(1)}KB</span>
                                 </div>
                                 ${bundle.agents ? `
                                 <div class="bundle-stat">
-                                    <span>🤖</span>
+                                    <span>Agents</span>
                                     <span>${bundle.agents.length} Agent${bundle.agents.length !== 1 ? 's' : ''}</span>
                                 </div>
                                 ` : ''}
                                 ${bundle.downloads ? `
                                 <div class="bundle-stat">
-                                    <span>📥</span>
+                                    <span>Downloads</span>
                                     <span>${bundle.downloads.toLocaleString()}</span>
                                 </div>
                                 ` : ''}
                                 <div class="bundle-stat">
-                                    <span>👤</span>
+                                    <span>Author</span>
                                     <span>${bundle.author}</span>
                                 </div>
                             </div>
                             <div class="bundle-actions">
-                                <a href="${bundle.download_url}" class="btn btn-primary" download>
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                                <button class="btn btn-primary copy-install-btn" onclick="copyInstallCommand('stn template install ${bundle.download_url}', this)" title="Copy install command" data-original-text="Copy Install">
+                                    <svg class="copy-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                                     </svg>
-                                    Install Bundle
-                                </a>
+                                    <svg class="check-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                    </svg>
+                                    <span class="btn-text">Copy Install</span>
+                                </button>
                                 <a href="${bundle.source_url}" class="btn btn-secondary" target="_blank" title="View Source">
                                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                                     </svg>
                                 </a>
-                            </div>
-                            <div class="install-dropdown">
-                                <button class="install-toggle" onclick="toggleInstallDropdown(this)">
-                                    <span>Installation Instructions</span>
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M6 9l6 6 6-6"/>
-                                    </svg>
-                                </button>
-                                <div class="install-content">
-                                    <div class="install-command">
-                                        stn template install ${bundle.download_url}
-                                        <button class="copy-btn" onclick="copyToClipboard('stn template install ${bundle.download_url}', this)" title="Copy to clipboard">
-                                            <svg class="copy-icon" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <p style="font-size: 0.8125rem; color: var(--color-text-muted);">
-                                        Run this command in your terminal to install the bundle
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1664,6 +3355,37 @@
             }
         }
 
+        function toggleAgentsDropdown(button) {
+            const content = button.nextElementSibling;
+            if (!content) {
+                console.error('No agents content element found');
+                return;
+            }
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all other agents dropdowns
+            document.querySelectorAll('.agents-content.active').forEach(el => {
+                if (el !== content) {
+                    el.classList.remove('active');
+                    // Also update aria-expanded for other buttons
+                    const otherButton = el.previousElementSibling;
+                    if (otherButton) {
+                        otherButton.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+            
+            // Toggle the current dropdown
+            if (isActive) {
+                content.classList.remove('active');
+                button.setAttribute('aria-expanded', 'false');
+            } else {
+                content.classList.add('active');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        }
+
         function copyToClipboard(text, button) {
             navigator.clipboard.writeText(text).then(() => {
                 // Change to success state
@@ -1706,6 +3428,17 @@
             
             if (!e.target.closest('.bundle-mcps')) {
                 document.querySelectorAll('.mcps-content.active').forEach(el => {
+                    el.classList.remove('active');
+                    // Also update aria-expanded for buttons
+                    const button = el.previousElementSibling;
+                    if (button) {
+                        button.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+            
+            if (!e.target.closest('.bundle-agents')) {
+                document.querySelectorAll('.agents-content.active').forEach(el => {
                     el.classList.remove('active');
                     // Also update aria-expanded for buttons
                     const button = el.previousElementSibling;
@@ -1791,8 +3524,419 @@
             searchBundles(e.target.value);
         });
 
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.main-nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Enhanced copy install command function
+        function copyInstallCommand(command, button) {
+            navigator.clipboard.writeText(command).then(() => {
+                const originalText = button.getAttribute('data-original-text');
+                const btnText = button.querySelector('.btn-text');
+                const copyIcon = button.querySelector('.copy-icon');
+                const checkIcon = button.querySelector('.check-icon');
+                
+                // Show success state with the actual command
+                button.classList.add('copied');
+                btnText.textContent = command;
+                copyIcon.style.display = 'none';
+                checkIcon.style.display = 'inline';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    btnText.textContent = originalText;
+                    copyIcon.style.display = 'inline';
+                    checkIcon.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = command;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Show success feedback even for fallback
+                const btnText = button.querySelector('.btn-text');
+                const originalText = button.getAttribute('data-original-text');
+                button.classList.add('copied');
+                btnText.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    btnText.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Unified modal functions
+        function openBundleDetailsModal(button, activeTab) {
+            const bundleName = button.getAttribute('data-bundle-name');
+            const mcpsData = button.getAttribute('data-mcps');
+            const agentsData = button.getAttribute('data-agents');
+            
+            let mcps = [];
+            let agents = [];
+            
+            try {
+                if (mcpsData) mcps = JSON.parse(mcpsData);
+                if (agentsData) agents = JSON.parse(agentsData);
+            } catch (e) {
+                console.error('Error parsing data:', e);
+                return;
+            }
+            
+            const modal = document.getElementById('bundleDetailsModal');
+            const title = document.getElementById('bundleDetailsTitle');
+            const mcpsContent = document.getElementById('mcpsContent');
+            const agentsContent = document.getElementById('agentsContent');
+            const mcpsCount = document.getElementById('mcpsCount');
+            const agentsCount = document.getElementById('agentsCount');
+            
+            // Set title and counts
+            title.textContent = `${bundleName} - Bundle Details`;
+            mcpsCount.textContent = `(${mcps.length})`;
+            agentsCount.textContent = `(${agents.length})`;
+            
+            // Populate MCP content
+            mcpsContent.innerHTML = mcps.length > 0 ? mcps.map(mcp => `
+                <div class="modal-item">
+                    <div class="modal-item-header">
+                        <div class="modal-item-name">${mcp.name}</div>
+                        <div class="modal-item-count">${mcp.tools.length} tools</div>
+                    </div>
+                    <div class="modal-item-description">${mcp.description}</div>
+                    <div class="modal-item-tags">
+                        ${mcp.tools.map(tool => `<span class="modal-tag">${tool}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('') : '<div class="no-items">No MCPs available for this bundle.</div>';
+            
+            // Populate Agent content
+            agentsContent.innerHTML = agents.length > 0 ? agents.map(agent => `
+                <div class="modal-item">
+                    <div class="modal-item-header">
+                        <div class="modal-item-name">${agent.name}</div>
+                        <div class="modal-item-count">${agent.capabilities.length} capabilities</div>
+                    </div>
+                    <div class="modal-item-description">${agent.description}</div>
+                    <div class="modal-item-tags">
+                        ${agent.capabilities.map(capability => `<span class="modal-tag">${capability}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('') : '<div class="no-items">No Agents available for this bundle.</div>';
+            
+            // Set active tab
+            switchTab(activeTab);
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            document.getElementById(tabName + 'Content').classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target.id);
+            }
+        });
+        
+        // Close modal with escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
+            }
+        });
+
+        // MCP Tools data
+        // Load comprehensive MCP data
+        let mcpData = {};
+        
+        // Load the comprehensive data
+        async function loadMcpData() {
+            try {
+                const response = await fetch('./mcp_modules_comprehensive.json');
+                const data = await response.json();
+                mcpData = data.ship_cli_mcp_modules.categories;
+            } catch (error) {
+                console.error('Failed to load MCP data:', error);
+                // Fallback to empty object
+                mcpData = {};
+            }
+        }
+        
+        let mcpSectionVisible = false;
+        
+        
+        function renderMcpTools(category) {
+            const mcpGrid = document.getElementById('mcpGrid');
+            let tools = [];
+            
+            // Safety check for mcpData
+            if (!mcpData || Object.keys(mcpData).length === 0) {
+                mcpGrid.innerHTML = '<div class="loading-card">Loading MCP tools...</div>';
+                return;
+            }
+            
+            if (category === 'all') {
+                // Combine all tools from all categories
+                Object.values(mcpData).forEach(categoryData => {
+                    if (categoryData.modules) {
+                        tools = tools.concat(categoryData.modules);
+                    }
+                });
+            } else {
+                tools = mcpData[category]?.modules || [];
+            }
+            
+            mcpGrid.innerHTML = tools.map(tool => `
+                <div class="mcp-card">
+                    <div class="mcp-card-inner">
+                        <div class="mcp-card-front">
+                            <div class="mcp-card-header">
+                                <div class="mcp-repo-info">
+                                    <a href="${tool.github_url}" target="_blank" class="mcp-repo-name">${tool.name}</a>
+                                    <div class="mcp-repo-description">${tool.description}</div>
+                                </div>
+                                <button class="mcp-flip-btn" onclick="event.stopPropagation(); flipCard(this.closest('.mcp-card'))">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M8 12a.75.75 0 01-.75-.75V3.56L5.03 5.78a.75.75 0 01-1.06-1.06l3.5-3.5a.75.75 0 011.06 0l3.5 3.5a.75.75 0 01-1.06 1.06L8.75 3.56v7.69A.75.75 0 018 12z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mcp-meta">
+                                <div class="mcp-meta-item">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+                                    </svg>
+                                    ${(tool.stars / 1000).toFixed(1)}k
+                                </div>
+                                <div class="mcp-meta-item">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                                    </svg>
+                                    ${tool.tool_count} tools
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mcp-card-back">
+                            <div class="mcp-back-header">
+                                <div class="mcp-back-title">
+                                    <h3>${tool.name}</h3>
+                                    <button class="mcp-flip-btn" onclick="event.stopPropagation(); flipCard(this.closest('.mcp-card'))">
+                                        <svg viewBox="0 0 16 16">
+                                            <path d="M8 4a.75.75 0 01.75.75v7.69l2.22-2.22a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 111.06-1.06L7.25 12.44V4.75A.75.75 0 018 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="mcp-github-desc">${tool.github_description}</div>
+                            </div>
+                            
+                            <div class="mcp-config-section">
+                                <h4>Configuration</h4>
+                                <div class="mcp-config-code">
+                                    <pre><code>${JSON.stringify(tool.config_example, null, 2)}</code></pre>
+                                    <button class="mcp-copy-config-btn" onclick="event.stopPropagation(); copyMcpConfig(this, '${tool.name}')">
+                                        <svg viewBox="0 0 16 16">
+                                            <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                                            <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mcp-actions">
+                                <a href="${tool.github_url}" target="_blank" class="mcp-action-btn mcp-github-btn">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                                    </svg>
+                                    GitHub
+                                </a>
+                                <button class="mcp-action-btn mcp-tools-btn" onclick="openToolsModal('${tool.name}', '${encodeURIComponent(JSON.stringify(tool.tools))}')">
+                                    <svg viewBox="0 0 16 16">
+                                        <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+                                    </svg>
+                                    View ${tool.tool_count} Tools
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+        
+        function copyMcpConfig(button, toolName) {
+            const configCode = button.parentNode.querySelector('code').textContent;
+            navigator.clipboard.writeText(configCode).then(() => {
+                button.innerHTML = `
+                    <svg viewBox="0 0 16 16">
+                        <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                `;
+                setTimeout(() => {
+                    button.innerHTML = `
+                        <svg viewBox="0 0 16 16">
+                            <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                            <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                        </svg>
+                    `;
+                }, 2000);
+            });
+        }
+        
+        function openToolsModal(toolName, encodedTools) {
+            const tools = JSON.parse(decodeURIComponent(encodedTools));
+            const modal = document.createElement('div');
+            modal.className = 'tools-modal';
+            modal.innerHTML = `
+                <div class="tools-modal-content">
+                    <div class="tools-modal-header">
+                        <h3>${toolName} Tools</h3>
+                        <button class="tools-modal-close" onclick="closeToolsModal(this)">
+                            <svg viewBox="0 0 16 16">
+                                <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="tools-list">
+                        ${tools.map(tool => `
+                            <div class="tool-item">
+                                <span class="tool-name">${tool}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeToolsModal(modal.querySelector('.tools-modal-close'));
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeToolsModal(button) {
+            const modal = button.closest('.tools-modal');
+            modal.remove();
+        }
+        
+        // Add event listeners for MCP category tabs
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load MCP data first
+            await loadMcpData();
+            
+            // Initialize category tabs with actual data
+            initializeMcpCategories();
+            
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('mcp-category-tab')) {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.mcp-category-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    e.target.classList.add('active');
+                    
+                    // Render tools for selected category
+                    const category = e.target.getAttribute('data-category');
+                    renderMcpTools(category);
+                }
+            });
+        });
+        
+        function initializeMcpCategories() {
+            const categoryTabs = document.getElementById('mcpCategoryTabs');
+            if (!categoryTabs || !mcpData || Object.keys(mcpData).length === 0) return;
+            
+            // Create category tabs based on loaded data
+            const categories = [
+                { key: 'all', name: 'All', count: Object.values(mcpData).reduce((total, cat) => total + (cat.modules?.length || 0), 0) },
+                ...Object.entries(mcpData).map(([key, category]) => ({
+                    key,
+                    name: key.charAt(0).toUpperCase() + key.slice(1),
+                    count: category.modules?.length || 0
+                }))
+            ];
+            
+            categoryTabs.innerHTML = categories.map(cat => `
+                <button class="mcp-category-tab ${cat.key === 'all' ? 'active' : ''}" data-category="${cat.key}">
+                    ${cat.name} (${cat.count})
+                </button>
+            `).join('');
+            
+            // Render all tools by default
+            renderMcpTools('all');
+        }
+
         // Load bundles on page load
         loadBundles();
     </script>
+
+    <!-- Bundle Details Modal -->
+    <div id="bundleDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="bundleDetailsTitle">Bundle Details</h2>
+                <button class="modal-close" onclick="closeModal('bundleDetailsModal')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-tabs">
+                <button class="tab-button active" onclick="switchTab('mcps')" id="mcpsTab">
+                    <span>MCPs</span>
+                    <span class="tab-count" id="mcpsCount">(0)</span>
+                </button>
+                <button class="tab-button" onclick="switchTab('agents')" id="agentsTab">
+                    <span>Agents</span>
+                    <span class="tab-count" id="agentsCount">(0)</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="mcpsContent" class="tab-content active">
+                    <!-- MCP details will be inserted here -->
+                </div>
+                <div id="agentsContent" class="tab-content">
+                    <!-- Agent details will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
