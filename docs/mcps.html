@@ -542,6 +542,272 @@
             fill: currentColor;
         }
 
+        .mcp-agent-count {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 4px 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .mcp-agent-count:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(9, 105, 218, 0.15);
+        }
+
+        .mcp-agent-count svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .agents-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .agents-modal-content {
+            background: var(--color-bg);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .agents-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .agents-modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .agents-modal-close {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .agents-modal-close:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .agents-modal-close svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .agent-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .agent-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .agent-description {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .agent-install-btn {
+            background: #f6f8fa;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-family: var(--font-mono);
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .agent-install-btn:hover {
+            background: #f0f9ff;
+            border-color: var(--color-primary);
+        }
+
+        .agent-install-btn .install-command {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .agent-install-btn svg {
+            flex-shrink: 0;
+        }
+
+        .bundle-details-toggle {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .bundle-details-toggle:hover {
+            background: var(--color-bg-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .bundle-details-toggle svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+            transition: transform 0.2s;
+        }
+
+        .agent-card.expanded .bundle-details-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .bundle-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .agent-card.expanded .bundle-details {
+            display: block;
+        }
+
+        .bundle-info-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .bundle-info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            min-width: 80px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bundle-info-value {
+            font-size: 0.875rem;
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        .bundle-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .bundle-tag {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .bundle-mcps-list {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .bundle-mcp-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .bundle-mcp-name {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .bundle-mcp-desc {
+            color: var(--color-text-secondary);
+            font-size: 0.75rem;
+        }
+
         .mcp-flip-btn {
             background: rgba(255, 255, 255, 0.95);
             border: 2px dashed #0969da;
@@ -1048,6 +1314,8 @@
         // Load comprehensive MCP data
         let mcpData = {};
         let toolsDetailData = {};
+        let bundlesData = {};
+        let mcpToAgentsMap = {};
         
         async function loadToolsDetailData() {
             try {
@@ -1071,6 +1339,38 @@
             } catch (error) {
                 console.error('Failed to load MCP data:', error);
                 mcpData = {};
+                return false;
+            }
+        }
+
+        async function loadBundlesData() {
+            try {
+                const response = await fetch('./index.json');
+                const data = await response.json();
+                bundlesData = data.bundles;
+                
+                // Build MCP to agents mapping
+                mcpToAgentsMap = {};
+                bundlesData.forEach(bundle => {
+                    bundle.mcps.forEach(mcp => {
+                        const mcpName = mcp.name.toLowerCase();
+                        if (!mcpToAgentsMap[mcpName]) {
+                            mcpToAgentsMap[mcpName] = [];
+                        }
+                        bundle.agents.forEach(agent => {
+                            mcpToAgentsMap[mcpName].push({
+                                agent: agent,
+                                bundle: bundle
+                            });
+                        });
+                    });
+                });
+                
+                return true;
+            } catch (error) {
+                console.error('Failed to load bundles data:', error);
+                bundlesData = [];
+                mcpToAgentsMap = {};
                 return false;
             }
         }
@@ -1100,6 +1400,20 @@
                 <div class="mcp-card">
                     <div class="mcp-card-inner">
                         <div class="mcp-card-front">
+                            ${(() => {
+                                const agentCount = mcpToAgentsMap[tool.name.toLowerCase()]?.length || 0;
+                                if (agentCount > 0) {
+                                    return `
+                                        <button class="mcp-agent-count" onclick="event.stopPropagation(); openAgentsModal('${tool.name}')">
+                                            <svg viewBox="0 0 256 256">
+                                                <path d="M232,120h-8V88a16,16,0,0,0-16-16H136V64a40,40,0,0,0-80,0v8H48A16,16,0,0,0,32,88v32h-8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16h56v8a40,40,0,0,0,80,0v-8h24a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM72,64a24,24,0,0,1,48,0v8H72ZM48,88H208v32H48Zm72,104a24,24,0,0,1-48,0v-8h48Zm88-24H48V136H208Z"/>
+                                            </svg>
+                                            ${agentCount}
+                                        </button>
+                                    `;
+                                }
+                                return '';
+                            })()}
                             <div class="mcp-card-header">
                                 <div class="mcp-repo-info">
                                     <a href="${tool.github_url}" target="_blank" class="mcp-repo-name">${tool.name}</a>
@@ -1294,6 +1608,126 @@
             modal.remove();
         }
 
+        function openAgentsModal(mcpName) {
+            const agents = mcpToAgentsMap[mcpName.toLowerCase()] || [];
+            
+            const modal = document.createElement('div');
+            modal.className = 'agents-modal';
+            modal.innerHTML = `
+                <div class="agents-modal-content">
+                    <div class="agents-modal-header">
+                        <h3>Agents using ${mcpName}</h3>
+                        <button class="agents-modal-close" onclick="closeAgentsModal(this)">
+                            <svg viewBox="0 0 16 16">
+                                <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="agents-list">
+                        ${agents.length > 0 ? agents.map(item => `
+                            <div class="agent-card" data-bundle-id="${item.bundle.id}">
+                                <div class="agent-header">
+                                    <h4 class="agent-name">${item.agent.name}</h4>
+                                    <button class="bundle-details-toggle" onclick="toggleBundleDetails(this)">
+                                        <svg viewBox="0 0 256 256">
+                                            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/>
+                                        </svg>
+                                        Details
+                                    </button>
+                                </div>
+                                <p class="agent-description">${item.agent.description}</p>
+                                <div class="agent-meta">
+                                    <span style="font-size: 0.75rem; color: var(--color-text-secondary); display: block; margin-bottom: 0.5rem;">Bundle: ${item.bundle.name}</span>
+                                </div>
+                                <button class="agent-install-btn" onclick="installAgent('${item.bundle.id}')">
+                                    <span class="install-command">stn template install ${item.bundle.id}</span>
+                                    <svg viewBox="0 0 256 256" style="width: 14px; height: 14px;">
+                                        <path fill="currentColor" d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+                                    </svg>
+                                </button>
+                                <div class="bundle-details">
+                                    <div class="bundle-info-row">
+                                        <span class="bundle-info-label">Version</span>
+                                        <span class="bundle-info-value">${item.bundle.version}</span>
+                                    </div>
+                                    <div class="bundle-info-row">
+                                        <span class="bundle-info-label">Tags</span>
+                                        <div class="bundle-info-value">
+                                            <div class="bundle-tags">
+                                                ${item.bundle.tags.map(tag => `<span class="bundle-tag">${tag}</span>`).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bundle-info-row">
+                                        <span class="bundle-info-label">MCPs</span>
+                                        <div class="bundle-info-value">
+                                            <div class="bundle-mcps-list">
+                                                ${item.bundle.mcps.map(mcp => `
+                                                    <div class="bundle-mcp-item">
+                                                        <span class="bundle-mcp-name">${mcp.name}</span>
+                                                        <span class="bundle-mcp-desc">- ${mcp.description}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ${item.bundle.verified ? `
+                                    <div class="bundle-info-row">
+                                        <span class="bundle-info-label">Status</span>
+                                        <span class="bundle-info-value" style="color: #22c55e; font-weight: 500;">✓ Verified</span>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('') : '<p style="text-align: center; color: var(--color-text-secondary);">No agents currently use this MCP</p>'}
+                    </div>
+                </div>
+            `;
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeAgentsModal(modal.querySelector('.agents-modal-close'));
+                }
+            });
+            
+            document.body.appendChild(modal);
+        }
+
+        function closeAgentsModal(button) {
+            const modal = button.closest('.agents-modal');
+            modal.remove();
+        }
+
+        function toggleBundleDetails(button) {
+            const agentCard = button.closest('.agent-card');
+            agentCard.classList.toggle('expanded');
+        }
+
+        function installAgent(bundleId) {
+            const command = `stn template install ${bundleId}`;
+            navigator.clipboard.writeText(command).then(() => {
+                // Find the button that was clicked
+                const button = event.target.closest('.agent-install-btn');
+                const originalContent = button.innerHTML;
+                button.innerHTML = `
+                    <span class="install-command">Copied!</span>
+                    <svg viewBox="0 0 16 16" style="width: 14px; height: 14px;">
+                        <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                `;
+                button.style.background = '#d4edda';
+                button.style.borderColor = '#28a745';
+                button.style.color = '#155724';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+
         function initializeMcpCategories() {
             const categoryTabs = document.getElementById('mcpCategoryTabs');
             if (!categoryTabs || !mcpData || Object.keys(mcpData).length === 0) return;
@@ -1338,7 +1772,7 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', async function() {
-            await Promise.all([loadMcpData(), loadToolsDetailData()]);
+            await Promise.all([loadMcpData(), loadToolsDetailData(), loadBundlesData()]);
             initializeMcpCategories();
             
             // Add event listener for category tabs

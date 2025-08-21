@@ -1,14 +1,16 @@
 {
   "ship_cli_mcp_modules": {
-    "version": "1.0",
-    "generated_date": "2025-08-20",
-    "total_modules": 83,
-    "total_tools": 420,
+    "version": "2.0",
+    "generated_date": "2025-08-21",
+    "total_modules": 78,
+    "total_tools": 554,
     "installation_config_template": {
       "mcpServers": {
         "ship": {
           "command": "ship",
-          "args": ["mcp"],
+          "args": [
+            "mcp"
+          ],
           "env": {
             "SHIP_CONFIG_PATH": "~/.ship/config.yaml"
           }
@@ -20,117 +22,228 @@
         "description": "Security scanning, vulnerability detection, and compliance tools",
         "modules": [
           {
-            "name": "trivy",
-            "description": "Comprehensive vulnerability scanner",
-            "tool_count": 17,
+            "name": "actionlint",
+            "description": "GitHub Actions workflow linter",
+            "tool_count": 3,
             "tools": [
-              "trivy_scan_image",
-              "trivy_scan_filesystem", 
-              "trivy_scan_repository",
-              "trivy_scan_config",
-              "trivy_scan_sbom",
-              "trivy_scan_kubernetes",
-              "trivy_generate_sbom",
-              "trivy_scan_with_filters",
-              "trivy_database_operations",
-              "trivy_server_mode",
-              "trivy_client_scan",
-              "trivy_plugin_management",
-              "trivy_convert_sbom",
-              "trivy_get_version"
+              "actionlint_scan_workflows",
+              "actionlint_scan_with_external_tools",
+              "actionlint_get_version"
             ],
-            "github_url": "https://github.com/aquasecurity/trivy",
-            "stars": 28000,
-            "github_description": "Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more",
+            "github_url": "https://github.com/rhysd/actionlint",
+            "stars": 2800,
+            "github_description": "Static checker for GitHub Actions workflow files",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-trivy": {
+                "ship-actionlint": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "trivy"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "actionlint"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "nuclei",
-            "description": "Fast vulnerability scanner with community templates",
+            "name": "allstar",
+            "description": "Kubernetes security policy enforcement",
+            "tool_count": 1,
+            "tools": [
+              "allstar_info"
+            ],
+            "github_url": "https://github.com/ossf/allstar",
+            "stars": 1300,
+            "github_description": "GitHub App to monitor and maintain GitHub orgs and repositories for security best practices",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-allstar": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "allstar"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "check-ssl-cert",
+            "description": "SSL certificate validation",
             "tool_count": 6,
             "tools": [
-              "nuclei_scan_url",
-              "nuclei_scan_with_template",
-              "nuclei_scan_with_tags",
-              "nuclei_update_templates",
-              "nuclei_validate_template",
-              "nuclei_generate_report"
+              "check_ssl_cert_host",
+              "check_ssl_cert_file",
+              "check_ssl_cert_chain",
+              "check_ssl_cert_fingerprint",
+              "check_ssl_cert_all",
+              "check_ssl_cert_get_version"
             ],
-            "github_url": "https://github.com/projectdiscovery/nuclei",
-            "stars": 24400,
-            "github_description": "Nuclei is a fast, customizable vulnerability scanner powered by the global security community and built on a simple YAML-based DSL",
+            "github_url": "https://github.com/matteocorti/check_ssl_cert",
+            "stars": 750,
+            "github_description": "A shell script to check SSL certificate expiration",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-nuclei": {
+                "ship-check-ssl-cert": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "nuclei"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "check-ssl-cert"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "trufflehog",
-            "description": "Advanced secret scanning with verification",
-            "tool_count": 8,
+            "name": "checkov",
+            "description": "Infrastructure as code static analysis",
+            "tool_count": 10,
             "tools": [
-              "trufflehog_scan_filesystem",
-              "trufflehog_scan_git",
-              "trufflehog_scan_github",
-              "trufflehog_scan_docker",
-              "trufflehog_scan_s3",
-              "trufflehog_scan_jenkins",
-              "trufflehog_scan_confluence",
-              "trufflehog_get_version"
+              "checkov_scan_directory",
+              "checkov_scan_file",
+              "checkov_scan_with_checks",
+              "checkov_scan_docker_image",
+              "checkov_scan_packages",
+              "checkov_scan_secrets",
+              "checkov_scan_with_config",
+              "checkov_create_config",
+              "checkov_download_external_modules",
+              "checkov_get_version"
             ],
-            "github_url": "https://github.com/trufflesecurity/trufflehog",
-            "stars": 20200,
-            "github_description": "Find, verify, and analyze leaked credentials",
+            "github_url": "https://github.com/bridgecrewio/checkov",
+            "stars": 7800,
+            "github_description": "Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-trufflehog": {
+                "ship-checkov": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "trufflehog"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "checkov"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "zap",
-            "description": "OWASP ZAP web application scanner",
-            "tool_count": 12,
+            "name": "conftest",
+            "description": "OPA policy testing",
+            "tool_count": 6,
             "tools": [
-              "zap_baseline_scan",
-              "zap_full_scan",
-              "zap_api_scan",
-              "zap_scan_url",
-              "zap_spider_scan",
-              "zap_ajax_spider",
-              "zap_auth_scan",
-              "zap_passive_scan",
-              "zap_active_scan",
-              "zap_report_generation",
-              "zap_automation_framework",
-              "zap_get_version"
+              "conftest_validate",
+              "conftest_test",
+              "conftest_verify",
+              "conftest_parse",
+              "conftest_push",
+              "conftest_get_version"
             ],
-            "github_url": "https://github.com/zaproxy/zaproxy",
-            "stars": 14000,
-            "github_description": "The Zed Attack Proxy (ZAP) by Checkmarx is the world's most widely used web app scanner",
+            "github_url": "https://github.com/open-policy-agent/conftest",
+            "stars": 2900,
+            "github_description": "Write tests against structured configuration data using the Open Policy Agent Rego query language",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-zap": {
+                "ship-conftest": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "zap"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "conftest"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "container-registry",
+            "description": "Container registry operations",
+            "tool_count": 6,
+            "tools": [
+              "docker_login",
+              "docker_push",
+              "docker_pull",
+              "docker_images",
+              "docker_tag",
+              "docker_logout"
+            ],
+            "github_url": "https://github.com/distribution/distribution",
+            "stars": 9300,
+            "github_description": "The toolkit to pack, ship, store, and deliver container content",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-container-registry": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "container-registry"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "dockle",
+            "description": "Container image linter",
+            "tool_count": 4,
+            "tools": [
+              "dockle_scan_image",
+              "dockle_scan_tarball",
+              "dockle_scan_json",
+              "dockle_scan_tarball_json"
+            ],
+            "github_url": "https://github.com/goodwithtech/dockle",
+            "stars": 2800,
+            "github_description": "Container Image Linter for Security, Helping build the Best-Practice Docker Image",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-dockle": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "dockle"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "falco",
+            "description": "Runtime security monitoring",
+            "tool_count": 7,
+            "tools": [
+              "falco_start_monitoring",
+              "falco_validate_rules",
+              "falco_dry_run",
+              "falco_list_fields",
+              "falco_get_version",
+              "falco_list_rules",
+              "falco_describe_rule"
+            ],
+            "github_url": "https://github.com/falcosecurity/falco",
+            "stars": 8200,
+            "github_description": "Falco is a cloud native runtime security tool for Linux operating systems",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-falco": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "falco"
+                  ]
                 }
               }
             }
@@ -138,13 +251,15 @@
           {
             "name": "git-secrets",
             "description": "Git repository secret scanner",
-            "tool_count": 5,
+            "tool_count": 7,
             "tools": [
-              "git_secrets_scan",
-              "git_secrets_install",
+              "git_secrets_scan_repository",
+              "git_secrets_scan_history",
+              "git_secrets_install_hooks",
+              "git_secrets_add_pattern",
               "git_secrets_register_aws",
-              "git_secrets_add_provider",
-              "git_secrets_list"
+              "git_secrets_list_config",
+              "git_secrets_add_allowed"
             ],
             "github_url": "https://github.com/awslabs/git-secrets",
             "stars": 12900,
@@ -154,90 +269,96 @@
               "mcpServers": {
                 "ship-git-secrets": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "git-secrets"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "git-secrets"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "semgrep",
-            "description": "Static analysis for security",
-            "tool_count": 12,
+            "name": "github-admin",
+            "description": "GitHub administration tools",
+            "tool_count": 6,
             "tools": [
-              "semgrep_security_audit_scan",
-              "semgrep_language_specific_scan",
-              "semgrep_cicd_integration_scan",
-              "semgrep_custom_rule_management",
-              "semgrep_performance_optimized_scan",
-              "semgrep_scan_secrets",
-              "semgrep_scan_owasp_top10",
-              "semgrep_vulnerability_research",
-              "semgrep_compliance_scanning",
-              "semgrep_comprehensive_reporting",
-              "semgrep_get_version"
+              "github_admin_list_org_repos",
+              "github_admin_create_org_repo",
+              "github_admin_get_repo_info",
+              "github_admin_list_org_issues",
+              "github_admin_list_org_prs",
+              "github_admin_get_version"
             ],
-            "github_url": "https://github.com/semgrep/semgrep",
+            "github_url": "https://github.com/github/gh-ost",
             "stars": 12500,
-            "github_description": "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code",
-            "has_variables": false,
+            "github_description": "GitHub administration and management tools",
+            "has_variables": true,
             "config_example": {
               "mcpServers": {
-                "ship-semgrep": {
+                "ship-github-admin": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "semgrep"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "github-admin"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "hadolint",
-            "description": "Dockerfile linter",
-            "tool_count": 5,
+            "name": "github-packages",
+            "description": "GitHub Packages security",
+            "tool_count": 6,
             "tools": [
-              "hadolint_scan_dockerfile",
-              "hadolint_scan_directory",
-              "hadolint_scan_with_config",
-              "hadolint_scan_ignore_rules",
-              "hadolint_get_version"
+              "github_packages_list_packages",
+              "github_packages_audit_dependencies",
+              "github_packages_check_signatures",
+              "github_packages_enforce_policies",
+              "github_packages_generate_sbom",
+              "github_packages_get_version"
             ],
-            "github_url": "https://github.com/hadolint/hadolint",
-            "stars": 11500,
-            "github_description": "Dockerfile linter, validate inline bash, written in Haskell",
-            "has_variables": false,
+            "github_url": "https://github.com/github/packages",
+            "stars": 100,
+            "github_description": "GitHub Packages management",
+            "has_variables": true,
             "config_example": {
               "mcpServers": {
-                "ship-hadolint": {
+                "ship-github-packages": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "hadolint"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "github-packages"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "kubescape",
-            "description": "Kubernetes security scanner",
-            "tool_count": 10,
+            "name": "gitleaks",
+            "description": "Secret detection in code and git history",
+            "tool_count": 4,
             "tools": [
-              "kubescape_scan_cluster",
-              "kubescape_scan_yaml",
-              "kubescape_scan_framework",
-              "kubescape_scan_control",
-              "kubescape_list_frameworks",
-              "kubescape_list_controls",
-              "kubescape_download_artifacts",
-              "kubescape_update",
-              "kubescape_config",
-              "kubescape_version"
+              "gitleaks_git",
+              "gitleaks_dir",
+              "gitleaks_stdin",
+              "gitleaks_version"
             ],
-            "github_url": "https://github.com/kubescape/kubescape",
-            "stars": 11000,
-            "github_description": "Kubescape is an open-source Kubernetes security platform for your IDE, CI/CD pipelines, and clusters",
+            "github_url": "https://github.com/gitleaks/gitleaks",
+            "stars": 18500,
+            "github_description": "Protect and discover secrets using Gitleaks",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-kubescape": {
+                "ship-gitleaks": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "kubescape"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "gitleaks"
+                  ]
                 }
               }
             }
@@ -265,7 +386,126 @@
               "mcpServers": {
                 "ship-grype": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "grype"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "grype"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "hadolint",
+            "description": "Dockerfile linter",
+            "tool_count": 5,
+            "tools": [
+              "hadolint_scan_dockerfile",
+              "hadolint_scan_directory",
+              "hadolint_scan_with_config",
+              "hadolint_scan_ignore_rules",
+              "hadolint_get_version"
+            ],
+            "github_url": "https://github.com/hadolint/hadolint",
+            "stars": 11500,
+            "github_description": "Dockerfile linter, validate inline bash, written in Haskell",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-hadolint": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "hadolint"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "history-scrub",
+            "description": "Git history cleaning and secret removal",
+            "tool_count": 6,
+            "tools": [
+              "history_scrub_bfg_remove_large_files",
+              "history_scrub_bfg_replace_text",
+              "history_scrub_filter_repo_remove_path",
+              "history_scrub_search_history",
+              "history_scrub_backup_repository",
+              "history_scrub_git_cleanup"
+            ],
+            "github_url": "https://github.com/rtyley/bfg-repo-cleaner",
+            "stars": 11200,
+            "github_description": "Removes large or troublesome blobs from Git repo history",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-history-scrub": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "history-scrub"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "infrascan",
+            "description": "Infrastructure security scanning",
+            "tool_count": 3,
+            "tools": [
+              "infrascan_scan",
+              "infrascan_graph",
+              "infrascan_render"
+            ],
+            "github_url": "https://github.com/infracost/infrascan",
+            "stars": 100,
+            "github_description": "Infrastructure security scanning",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-infrascan": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "infrascan"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "license-detector",
+            "description": "Software license detection",
+            "tool_count": 9,
+            "tools": [
+              "license_detector_askalono_identify",
+              "license_detector_askalono_crawl",
+              "license_detector_scanner_file",
+              "license_detector_scanner_directory",
+              "license_detector_scanner_list",
+              "license_detector_go_detector",
+              "license_detector_licensefinder_scan",
+              "license_detector_licensefinder_report",
+              "license_detector_licensefinder_action_items"
+            ],
+            "github_url": "https://github.com/go-enry/go-license-detector",
+            "stars": 280,
+            "github_description": "Detects licenses in source code",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-license-detector": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "license-detector"
+                  ]
                 }
               }
             }
@@ -273,16 +513,19 @@
           {
             "name": "nikto",
             "description": "Web server security scanner",
-            "tool_count": 8,
+            "tool_count": 11,
             "tools": [
               "nikto_scan_host",
-              "nikto_scan_hosts_file",
-              "nikto_scan_with_options",
               "nikto_scan_ssl",
-              "nikto_scan_cgi",
-              "nikto_update_database",
-              "nikto_list_plugins",
-              "nikto_get_version"
+              "nikto_scan_tuning",
+              "nikto_scan_hosts_file",
+              "nikto_scan_auth",
+              "nikto_scan_proxy",
+              "nikto_scan_evasion",
+              "nikto_database_check",
+              "nikto_update",
+              "nikto_version",
+              "nikto_find_only"
             ],
             "github_url": "https://github.com/sullo/nikto",
             "stars": 9600,
@@ -292,89 +535,130 @@
               "mcpServers": {
                 "ship-nikto": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "nikto"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "nikto"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "falco",
-            "description": "Runtime security monitoring",
-            "tool_count": 9,
+            "name": "nmap",
+            "description": "Network exploration and security auditing",
+            "tool_count": 7,
             "tools": [
-              "falco_run",
-              "falco_test_rules",
-              "falco_list_rules",
-              "falco_print_ignored_events",
-              "falco_print_additional",
-              "falco_validate_rules",
-              "falco_list_plugins",
-              "falco_run_with_config",
-              "falco_version"
+              "nmap_scan_host",
+              "nmap_port_scan",
+              "nmap_service_detection",
+              "nmap_vulnerability_scan",
+              "nmap_network_discovery",
+              "nmap_script_scan",
+              "nmap_get_version"
             ],
-            "github_url": "https://github.com/falcosecurity/falco",
-            "stars": 8200,
-            "github_description": "Falco is a cloud native runtime security tool for Linux operating systems",
+            "github_url": "https://github.com/nmap/nmap",
+            "stars": 10200,
+            "github_description": "Nmap - the Network Mapper. Github mirror of official SVN repository",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-falco": {
+                "ship-nmap": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "falco"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "nmap"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "checkov",
-            "description": "Infrastructure as code static analysis",
-            "tool_count": 11,
-            "tools": [
-              "checkov_scan_directory",
-              "checkov_scan_file",
-              "checkov_scan_with_checks",
-              "checkov_scan_docker_image",
-              "checkov_scan_packages",
-              "checkov_scan_secrets",
-              "checkov_scan_with_config",
-              "checkov_create_config",
-              "checkov_download_external_modules",
-              "checkov_get_version"
-            ],
-            "github_url": "https://github.com/bridgecrewio/checkov",
-            "stars": 7800,
-            "github_description": "Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-checkov": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "checkov"]
-                }
-              }
-            }
-          },
-          {
-            "name": "kube-bench",
-            "description": "Kubernetes CIS benchmark",
+            "name": "nuclei",
+            "description": "Fast vulnerability scanner with community templates",
             "tool_count": 6,
             "tools": [
-              "kube_bench_run",
-              "kube_bench_run_checks",
-              "kube_bench_run_skip",
-              "kube_bench_run_custom_output",
-              "kube_bench_version",
-              "kube_bench_run_asff"
+              "nuclei_scan_url",
+              "nuclei_scan_with_template",
+              "nuclei_scan_with_tags",
+              "nuclei_update_templates",
+              "nuclei_validate_template",
+              "nuclei_generate_report"
             ],
-            "github_url": "https://github.com/aquasecurity/kube-bench",
-            "stars": 7700,
-            "github_description": "Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark",
+            "github_url": "https://github.com/projectdiscovery/nuclei",
+            "stars": 24400,
+            "github_description": "Nuclei is a fast, customizable vulnerability scanner powered by the global security community and built on a simple YAML-based DSL",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-kube-bench": {
+                "ship-nuclei": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "kube-bench"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "nuclei"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "openscap",
+            "description": "Security compliance scanning",
+            "tool_count": 10,
+            "tools": [
+              "openscap_xccdf_eval",
+              "openscap_oval_eval",
+              "openscap_xccdf_generate_report",
+              "openscap_xccdf_generate_guide",
+              "openscap_ds_validate",
+              "openscap_validate",
+              "openscap_info",
+              "openscap_xccdf_remediate",
+              "openscap_oval_generate_report",
+              "openscap_ds_split"
+            ],
+            "github_url": "https://github.com/OpenSCAP/openscap",
+            "stars": 1400,
+            "github_description": "NIST Certified SCAP 1.2 toolkit",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-openscap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "openscap"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "ossf-scorecard",
+            "description": "OSSF security scorecard",
+            "tool_count": 4,
+            "tools": [
+              "ossf_scorecard_score_repository",
+              "ossf_scorecard_score_checks",
+              "ossf_scorecard_list_checks",
+              "ossf_scorecard_get_version"
+            ],
+            "github_url": "https://github.com/ossf/scorecard",
+            "stars": 4600,
+            "github_description": "OpenSSF Scorecard - Security health metrics for Open Source",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-ossf-scorecard": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "ossf-scorecard"
+                  ]
                 }
               }
             }
@@ -382,15 +666,19 @@
           {
             "name": "osv-scanner",
             "description": "Open Source Vulnerability scanning",
-            "tool_count": 7,
+            "tool_count": 11,
             "tools": [
-              "osv_scanner_scan_directory",
+              "osv_scan",
+              "osv_scanner_scan_source",
+              "osv_scanner_scan_image",
               "osv_scanner_scan_lockfile",
+              "osv_scanner_scan_manifest",
+              "osv_scanner_license_scan",
+              "osv_scanner_offline_scan",
+              "osv_scanner_fix",
+              "osv_scanner_serve_report",
               "osv_scanner_scan_sbom",
-              "osv_scanner_scan_docker_image",
-              "osv_scanner_scan_commit",
-              "osv_scanner_database_dump",
-              "osv_scanner_get_version"
+              "osv_scanner_verbose_scan"
             ],
             "github_url": "https://github.com/google/osv-scanner",
             "stars": 7600,
@@ -400,7 +688,228 @@
               "mcpServers": {
                 "ship-osv-scanner": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "osv-scanner"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "osv-scanner"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "prowler",
+            "description": "Multi-cloud security assessment",
+            "tool_count": 8,
+            "tools": [
+              "prowler_aws",
+              "prowler_azure",
+              "prowler_gcp",
+              "prowler_kubernetes",
+              "prowler_list_checks",
+              "prowler_list_services",
+              "prowler_list_compliance",
+              "prowler_dashboard"
+            ],
+            "github_url": "https://github.com/prowler-cloud/prowler",
+            "stars": 12000,
+            "github_description": "Prowler is the Open Cloud Security platform for AWS, Azure, GCP, Kubernetes, M365 and more",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-prowler": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "prowler"
+                  ],
+                  "env": {
+                    "AWS_ACCESS_KEY_ID": "your-key",
+                    "AWS_SECRET_ACCESS_KEY": "your-secret"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "scancode",
+            "description": "License and copyright detection",
+            "tool_count": 3,
+            "tools": [
+              "scancode_licenses",
+              "scancode_help",
+              "scancode_version"
+            ],
+            "github_url": "https://github.com/aboutcode-org/scancode-toolkit",
+            "stars": 2400,
+            "github_description": "ScanCode detects licenses, copyrights, dependencies by scanning code",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-scancode": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "scancode"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "scout-suite",
+            "description": "Multi-cloud security auditing",
+            "tool_count": 5,
+            "tools": [
+              "scout_suite_scan_aws",
+              "scout_suite_scan_azure",
+              "scout_suite_scan_gcp",
+              "scout_suite_serve_report",
+              "scout_suite_help"
+            ],
+            "github_url": "https://github.com/nccgroup/ScoutSuite",
+            "stars": 7300,
+            "github_description": "Scout Suite is an open source multi-cloud security-auditing tool",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-scout-suite": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "scout-suite"
+                  ],
+                  "env": {
+                    "AWS_ACCESS_KEY_ID": "your-key",
+                    "AWS_SECRET_ACCESS_KEY": "your-secret"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "semgrep",
+            "description": "Static analysis for security",
+            "tool_count": 11,
+            "tools": [
+              "semgrep_security_audit_scan",
+              "semgrep_language_specific_scan",
+              "semgrep_cicd_integration_scan",
+              "semgrep_custom_rule_management",
+              "semgrep_performance_optimized_scan",
+              "semgrep_scan_secrets",
+              "semgrep_scan_owasp_top10",
+              "semgrep_vulnerability_research",
+              "semgrep_compliance_scanning",
+              "semgrep_comprehensive_reporting",
+              "semgrep_get_version"
+            ],
+            "github_url": "https://github.com/semgrep/semgrep",
+            "stars": 12500,
+            "github_description": "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-semgrep": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "semgrep"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "snyk",
+            "description": "Developer-first security platform",
+            "tool_count": 6,
+            "tools": [
+              "snyk_test_project",
+              "snyk_test_container",
+              "snyk_test_iac",
+              "snyk_test_code",
+              "snyk_generate_sbom",
+              "snyk_get_version"
+            ],
+            "github_url": "https://github.com/snyk/cli",
+            "stars": 4900,
+            "github_description": "Snyk CLI scans and monitors your projects for security vulnerabilities",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-snyk": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "snyk"
+                  ],
+                  "env": {
+                    "SNYK_TOKEN": "your-snyk-token"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "sops",
+            "description": "Secrets management",
+            "tool_count": 6,
+            "tools": [
+              "sops_encrypt_file",
+              "sops_decrypt_file",
+              "sops_update_keys",
+              "sops_edit_file",
+              "sops_version",
+              "sops_publish_keys"
+            ],
+            "github_url": "https://github.com/getsops/sops",
+            "stars": 17500,
+            "github_description": "Simple and flexible tool for managing secrets",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-sops": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "sops"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "step-ca",
+            "description": "Certificate authority operations",
+            "tool_count": 6,
+            "tools": [
+              "step_ca_init",
+              "step_ca_create_certificate",
+              "step_ca_renew_certificate",
+              "step_ca_add_provisioner",
+              "step_ca_revoke_certificate",
+              "step_ca_version"
+            ],
+            "github_url": "https://github.com/smallstep/certificates",
+            "stars": 6800,
+            "github_description": "A private certificate authority (X.509 & SSH) & ACME server",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-step-ca": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "step-ca"
+                  ]
                 }
               }
             }
@@ -408,7 +917,7 @@
           {
             "name": "syft",
             "description": "SBOM generation tool",
-            "tool_count": 15,
+            "tool_count": 12,
             "tools": [
               "syft_sbom",
               "syft_generate_sbom_directory",
@@ -431,67 +940,11 @@
               "mcpServers": {
                 "ship-syft": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "syft"]
-                }
-              }
-            }
-          },
-          {
-            "name": "scout-suite",
-            "description": "Multi-cloud security auditing",
-            "tool_count": 8,
-            "tools": [
-              "scout_suite_aws",
-              "scout_suite_azure",
-              "scout_suite_gcp",
-              "scout_suite_multi_cloud",
-              "scout_suite_generate_report",
-              "scout_suite_list_services",
-              "scout_suite_update_ip_ranges",
-              "scout_suite_get_version"
-            ],
-            "github_url": "https://github.com/nccgroup/ScoutSuite",
-            "stars": 7300,
-            "github_description": "Scout Suite is an open source multi-cloud security-auditing tool",
-            "has_variables": true,
-            "config_example": {
-              "mcpServers": {
-                "ship-scout-suite": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "scout-suite"],
-                  "env": {
-                    "AWS_ACCESS_KEY_ID": "your-key",
-                    "AWS_SECRET_ACCESS_KEY": "your-secret"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "name": "kyverno",
-            "description": "Kubernetes policy management",
-            "tool_count": 11,
-            "tools": [
-              "kyverno_apply",
-              "kyverno_test",
-              "kyverno_validate",
-              "kyverno_create",
-              "kyverno_jp",
-              "kyverno_create_user_info",
-              "kyverno_docs",
-              "kyverno_oci",
-              "kyverno_version",
-              "kyverno_completion"
-            ],
-            "github_url": "https://github.com/kyverno/kyverno",
-            "stars": 6600,
-            "github_description": "Cloud Native Policy Management",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-kyverno": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "kyverno"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "syft"
+                  ]
                 }
               }
             }
@@ -499,7 +952,7 @@
           {
             "name": "terrascan",
             "description": "IaC security scanner",
-            "tool_count": 18,
+            "tool_count": 15,
             "tools": [
               "terrascan_scan_directory",
               "terrascan_scan_terraform",
@@ -525,87 +978,147 @@
               "mcpServers": {
                 "ship-terrascan": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "terrascan"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "terrascan"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "tfsec",
-            "description": "Terraform security scanner",
-            "tool_count": 7,
+            "name": "trivy",
+            "description": "Comprehensive vulnerability scanner",
+            "tool_count": 14,
             "tools": [
-              "tfsec_scan_directory",
-              "tfsec_scan_with_severity",
-              "tfsec_scan_with_excludes",
-              "tfsec_scan_with_config",
-              "tfsec_validate_tfvars",
-              "tfsec_generate_report",
-              "tfsec_get_version"
+              "trivy_scan_image",
+              "trivy_scan_filesystem",
+              "trivy_scan_repository",
+              "trivy_scan_config",
+              "trivy_scan_sbom",
+              "trivy_scan_kubernetes",
+              "trivy_generate_sbom",
+              "trivy_scan_with_filters",
+              "trivy_database_operations",
+              "trivy_server_mode",
+              "trivy_client_scan",
+              "trivy_plugin_management",
+              "trivy_convert_sbom",
+              "trivy_get_version"
             ],
-            "github_url": "https://github.com/aquasecurity/tfsec",
-            "stars": 6700,
-            "github_description": "Security scanner for your Terraform code",
+            "github_url": "https://github.com/aquasecurity/trivy",
+            "stars": 28000,
+            "github_description": "Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-tfsec": {
+                "ship-trivy": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "tfsec"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "trivy"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "snyk",
-            "description": "Developer security platform",
+            "name": "trivy-golden",
+            "description": "Enhanced Trivy for golden images",
             "tool_count": 6,
             "tools": [
-              "snyk_test_project",
-              "snyk_test_container",
-              "snyk_test_iac",
-              "snyk_test_code",
-              "snyk_generate_sbom",
-              "snyk_get_version"
+              "trivy_golden_scan_image",
+              "trivy_golden_scan_filesystem",
+              "trivy_golden_scan_config",
+              "trivy_golden_generate_sbom",
+              "trivy_golden_scan_secrets",
+              "trivy_version"
             ],
-            "github_url": "https://github.com/snyk/cli",
-            "stars": 4900,
-            "github_description": "Snyk CLI scans and monitors your projects for security vulnerabilities",
-            "has_variables": true,
+            "github_url": "https://github.com/aquasecurity/trivy",
+            "stars": 28000,
+            "github_description": "Enhanced Trivy for golden images",
+            "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-snyk": {
+                "ship-trivy-golden": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "snyk"],
-                  "env": {
-                    "SNYK_TOKEN": "your-snyk-token"
-                  }
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "trivy-golden"
+                  ]
                 }
               }
             }
           },
           {
-            "name": "nmap",
-            "description": "Network discovery and security auditing",
-            "tool_count": 7,
+            "name": "trufflehog",
+            "description": "Advanced secret scanning with verification",
+            "tool_count": 18,
             "tools": [
-              "nmap_scan_host",
-              "nmap_port_scan",
-              "nmap_service_detection",
-              "nmap_vulnerability_scan",
-              "nmap_network_discovery",
-              "nmap_script_scan",
-              "nmap_get_version"
+              "trufflehog_scan_directory",
+              "trufflehog_scan_git_repo",
+              "trufflehog_scan_github",
+              "trufflehog_scan_github_org",
+              "trufflehog_scan_docker",
+              "trufflehog_scan_s3",
+              "trufflehog_scan_verified",
+              "trufflehog_scan_git_advanced",
+              "trufflehog_scan_filesystem_advanced",
+              "trufflehog_scan_docker_advanced",
+              "trufflehog_comprehensive_secret_detection",
+              "trufflehog_cloud_storage_scanning",
+              "trufflehog_custom_detector_management",
+              "trufflehog_enterprise_git_scanning",
+              "trufflehog_cicd_pipeline_integration",
+              "trufflehog_performance_optimization",
+              "trufflehog_comprehensive_reporting",
+              "trufflehog_get_version"
             ],
-            "github_url": "https://github.com/nmap/nmap",
-            "stars": 10200,
-            "github_description": "Nmap - the Network Mapper. Github mirror of official SVN repository",
+            "github_url": "https://github.com/trufflesecurity/trufflehog",
+            "stars": 20200,
+            "github_description": "Find, verify, and analyze leaked credentials",
             "has_variables": false,
             "config_example": {
               "mcpServers": {
-                "ship-nmap": {
+                "ship-trufflehog": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "nmap"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "trufflehog"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "zap",
+            "description": "OWASP ZAP web application scanner",
+            "tool_count": 6,
+            "tools": [
+              "zap_passive_scan",
+              "zap_active_scan",
+              "zap_spider_scan",
+              "zap_full_scan",
+              "zap_baseline_scan",
+              "zap_get_version"
+            ],
+            "github_url": "https://github.com/zaproxy/zaproxy",
+            "stars": 14000,
+            "github_description": "The Zed Attack Proxy (ZAP) by Checkmarx is the world's most widely used web app scanner",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-zap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "zap"
+                  ]
                 }
               }
             }
@@ -615,6 +1128,36 @@
       "terraform": {
         "description": "Terraform tools for linting, documentation, cost estimation, and visualization",
         "modules": [
+          {
+            "name": "iac-plan",
+            "description": "Infrastructure as code planning",
+            "tool_count": 7,
+            "tools": [
+              "iac_plan_terraform_plan",
+              "iac_plan_terraform_validate",
+              "iac_plan_terraform_format",
+              "iac_plan_terraform_show",
+              "iac_plan_terraform_workspace",
+              "iac_plan_terraform_graph",
+              "iac_plan_terraform_init"
+            ],
+            "github_url": "https://github.com/terraform-docs/terraform-plan",
+            "stars": 100,
+            "github_description": "Infrastructure as Code planning and validation",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-iac-plan": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "iac-plan"
+                  ]
+                }
+              }
+            }
+          },
           {
             "name": "infracost",
             "description": "Infrastructure cost estimation",
@@ -637,59 +1180,14 @@
               "mcpServers": {
                 "ship-infracost": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "infracost"],
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "infracost"
+                  ],
                   "env": {
                     "INFRACOST_API_KEY": "your-api-key"
                   }
-                }
-              }
-            }
-          },
-          {
-            "name": "tflint",
-            "description": "Terraform linter",
-            "tool_count": 6,
-            "tools": [
-              "tflint_lint",
-              "tflint_lint_with_rules",
-              "tflint_init",
-              "tflint_lint_with_var_file",
-              "tflint_lint_with_var",
-              "tflint_version"
-            ],
-            "github_url": "https://github.com/terraform-linters/tflint",
-            "stars": 5400,
-            "github_description": "A Pluggable Terraform Linter",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-tflint": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "tflint"]
-                }
-              }
-            }
-          },
-          {
-            "name": "terraform-docs",
-            "description": "Terraform documentation generator",
-            "tool_count": 5,
-            "tools": [
-              "terraform_docs_markdown",
-              "terraform_docs_json",
-              "terraform_docs_table",
-              "terraform_docs_with_config",
-              "terraform_docs_version"
-            ],
-            "github_url": "https://github.com/terraform-docs/terraform-docs",
-            "stars": 4500,
-            "github_description": "A utility to generate documentation from Terraform modules in various output formats",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-terraform-docs": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "terraform-docs"]
                 }
               }
             }
@@ -710,7 +1208,11 @@
               "mcpServers": {
                 "ship-inframap": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "inframap"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "inframap"
+                  ]
                 }
               }
             }
@@ -739,7 +1241,155 @@
               "mcpServers": {
                 "ship-openinfraquote": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "openinfraquote"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "openinfraquote"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "terraform-docs",
+            "description": "Terraform documentation generator",
+            "tool_count": 5,
+            "tools": [
+              "terraform_docs_markdown",
+              "terraform_docs_json",
+              "terraform_docs_table",
+              "terraform_docs_with_config",
+              "terraform_docs_version"
+            ],
+            "github_url": "https://github.com/terraform-docs/terraform-docs",
+            "stars": 4500,
+            "github_description": "A utility to generate documentation from Terraform modules in various output formats",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-terraform-docs": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "terraform-docs"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "terraformer",
+            "description": "Infrastructure import and management",
+            "tool_count": 4,
+            "tools": [
+              "terraformer_import",
+              "terraformer_list_resources",
+              "terraformer_plan",
+              "terraformer_version"
+            ],
+            "github_url": "https://github.com/GoogleCloudPlatform/terraformer",
+            "stars": 12700,
+            "github_description": "CLI tool to generate terraform files from existing infrastructure",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-terraformer": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "terraformer"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "tflint",
+            "description": "Terraform linter",
+            "tool_count": 6,
+            "tools": [
+              "tflint_lint",
+              "tflint_lint_with_rules",
+              "tflint_init",
+              "tflint_lint_with_var_file",
+              "tflint_lint_with_var",
+              "tflint_version"
+            ],
+            "github_url": "https://github.com/terraform-linters/tflint",
+            "stars": 5400,
+            "github_description": "A Pluggable Terraform Linter",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-tflint": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "tflint"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "tfsec",
+            "description": "Terraform-specific security scanner",
+            "tool_count": 7,
+            "tools": [
+              "tfsec_scan_directory",
+              "tfsec_scan_with_severity",
+              "tfsec_scan_with_excludes",
+              "tfsec_scan_with_config",
+              "tfsec_validate_tfvars",
+              "tfsec_generate_report",
+              "tfsec_get_version"
+            ],
+            "github_url": "https://github.com/aquasecurity/tfsec",
+            "stars": 6700,
+            "github_description": "Security scanner for your Terraform code",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-tfsec": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "tfsec"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "tfstate-reader",
+            "description": "Terraform state analysis",
+            "tool_count": 7,
+            "tools": [
+              "terraform_state_list",
+              "terraform_state_show",
+              "terraform_state_pull",
+              "terraform_show_json",
+              "tfstate_lookup_resource",
+              "tfstate_dump_all",
+              "tfstate_interactive"
+            ],
+            "github_url": "https://github.com/fujiwara/tfstate-lookup",
+            "stars": 200,
+            "github_description": "Lookup resource attributes in tfstate",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-tfstate-reader": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "tfstate-reader"
+                  ]
                 }
               }
             }
@@ -752,17 +1402,15 @@
           {
             "name": "cert-manager",
             "description": "Certificate management",
-            "tool_count": 9,
+            "tool_count": 7,
             "tools": [
-              "cert_manager_check_api",
-              "cert_manager_create_issuer",
-              "cert_manager_create_certificate",
-              "cert_manager_inspect_secret",
-              "cert_manager_status_certificate",
+              "cert_manager_install",
+              "cert_manager_check_installation",
+              "cert_manager_create_certificate_request",
+              "cert_manager_list_certificates",
               "cert_manager_renew_certificate",
-              "cert_manager_logs",
-              "cert_manager_approve_certificaterequest",
-              "cert_manager_version"
+              "cert_manager_status",
+              "cert_manager_get_version"
             ],
             "github_url": "https://github.com/cert-manager/cert-manager",
             "stars": 13100,
@@ -772,69 +1420,11 @@
               "mcpServers": {
                 "ship-cert-manager": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "cert-manager"]
-                }
-              }
-            }
-          },
-          {
-            "name": "velero",
-            "description": "Kubernetes backup and restore",
-            "tool_count": 15,
-            "tools": [
-              "velero_backup_create",
-              "velero_backup_get",
-              "velero_backup_describe",
-              "velero_backup_delete",
-              "velero_backup_logs",
-              "velero_restore_create",
-              "velero_restore_get",
-              "velero_restore_describe",
-              "velero_restore_delete",
-              "velero_restore_logs",
-              "velero_schedule_create",
-              "velero_schedule_get",
-              "velero_install",
-              "velero_uninstall",
-              "velero_version"
-            ],
-            "github_url": "https://github.com/vmware-tanzu/velero",
-            "stars": 9400,
-            "github_description": "Backup and migrate Kubernetes applications and their persistent volumes",
-            "has_variables": true,
-            "config_example": {
-              "mcpServers": {
-                "ship-velero": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "velero"],
-                  "env": {
-                    "KUBECONFIG": "~/.kube/config"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "name": "goldilocks",
-            "description": "Kubernetes resource recommendations",
-            "tool_count": 6,
-            "tools": [
-              "goldilocks_dashboard",
-              "goldilocks_controller",
-              "goldilocks_create_verticalpodautoscaler",
-              "goldilocks_summary",
-              "goldilocks_update",
-              "goldilocks_version"
-            ],
-            "github_url": "https://github.com/FairwindsOps/goldilocks",
-            "stars": 2900,
-            "github_description": "Get your resource requests 'Just Right'",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-goldilocks": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "goldilocks"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cert-manager"
+                  ]
                 }
               }
             }
@@ -842,16 +1432,14 @@
           {
             "name": "fleet",
             "description": "GitOps for Kubernetes",
-            "tool_count": 8,
+            "tool_count": 6,
             "tools": [
-              "fleet_apply",
-              "fleet_clusters_list",
-              "fleet_gitrepos_list",
-              "fleet_bundles_list",
-              "fleet_status",
-              "fleet_target",
-              "fleet_test",
-              "fleet_cleanup"
+              "fleet_apply_gitrepo",
+              "fleet_get_gitrepos",
+              "fleet_get_bundles",
+              "fleet_get_bundledeployments",
+              "fleet_describe_gitrepo",
+              "fleet_install"
             ],
             "github_url": "https://github.com/rancher/fleet",
             "stars": 1600,
@@ -861,7 +1449,347 @@
               "mcpServers": {
                 "ship-fleet": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "fleet"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "fleet"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "gatekeeper",
+            "description": "OPA Gatekeeper policy validation",
+            "tool_count": 7,
+            "tools": [
+              "gatekeeper_install",
+              "gatekeeper_uninstall",
+              "gatekeeper_apply_constraint_template",
+              "gatekeeper_apply_constraint",
+              "gatekeeper_get_constraint_templates",
+              "gatekeeper_get_constraints",
+              "gatekeeper_get_status"
+            ],
+            "github_url": "https://github.com/open-policy-agent/gatekeeper",
+            "stars": 3700,
+            "github_description": "Policy Controller for Kubernetes",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-gatekeeper": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "gatekeeper"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "goldilocks",
+            "description": "Kubernetes resource recommendations",
+            "tool_count": 5,
+            "tools": [
+              "goldilocks_install_helm",
+              "goldilocks_enable_namespace",
+              "goldilocks_dashboard",
+              "goldilocks_get_recommendations",
+              "goldilocks_uninstall"
+            ],
+            "github_url": "https://github.com/FairwindsOps/goldilocks",
+            "stars": 2900,
+            "github_description": "Get your resource requests 'Just Right'",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-goldilocks": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "goldilocks"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "k8s-network-policy",
+            "description": "Kubernetes network policy management",
+            "tool_count": 6,
+            "tools": [
+              "k8s_network_policy_kubectl",
+              "k8s_network_policy_netfetch_scan",
+              "k8s_network_policy_netfetch_dash",
+              "k8s_network_policy_netpol_eval",
+              "k8s_network_policy_netpol_list",
+              "k8s_network_policy_netpol_diff"
+            ],
+            "github_url": "https://github.com/ahmetb/kubernetes-network-policy-recipes",
+            "stars": 5700,
+            "github_description": "Kubernetes Network Policy Recipes",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-k8s-network-policy": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "k8s-network-policy"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kube-bench",
+            "description": "Kubernetes CIS benchmark",
+            "tool_count": 6,
+            "tools": [
+              "kube_bench_run",
+              "kube_bench_run_checks",
+              "kube_bench_run_skip",
+              "kube_bench_run_custom_output",
+              "kube_bench_version",
+              "kube_bench_run_asff"
+            ],
+            "github_url": "https://github.com/aquasecurity/kube-bench",
+            "stars": 7700,
+            "github_description": "Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kube-bench": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kube-bench"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kube-hunter",
+            "description": "Kubernetes penetration testing",
+            "tool_count": 6,
+            "tools": [
+              "kube_hunter_remote_scan",
+              "kube_hunter_cidr_scan",
+              "kube_hunter_interface_scan",
+              "kube_hunter_pod_scan",
+              "kube_hunter_list_tests",
+              "kube_hunter_custom_hunters"
+            ],
+            "github_url": "https://github.com/aquasecurity/kube-hunter",
+            "stars": 4700,
+            "github_description": "Hunt for security weaknesses in Kubernetes clusters",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kube-hunter": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kube-hunter"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kubescape",
+            "description": "Kubernetes security scanner",
+            "tool_count": 3,
+            "tools": [
+              "kubescape_scan_cluster",
+              "kubescape_scan_manifests",
+              "kubescape_get_version"
+            ],
+            "github_url": "https://github.com/kubescape/kubescape",
+            "stars": 11000,
+            "github_description": "Kubescape is an open-source Kubernetes security platform for your IDE, CI/CD pipelines, and clusters",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kubescape": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kubescape"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kuttl",
+            "description": "Kubernetes testing framework",
+            "tool_count": 4,
+            "tools": [
+              "kuttl_test",
+              "kuttl_test_kind",
+              "kuttl_version",
+              "kuttl_help"
+            ],
+            "github_url": "https://github.com/kudobuilder/kuttl",
+            "stars": 700,
+            "github_description": "KUbernetes Test TooL (kuttl)",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kuttl": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kuttl"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kyverno",
+            "description": "Kubernetes policy management",
+            "tool_count": 9,
+            "tools": [
+              "kyverno_install",
+              "kyverno_apply",
+              "kyverno_test",
+              "kyverno_create_cluster_role",
+              "kyverno_version",
+              "kyverno_list_policies",
+              "kyverno_apply_policy_file",
+              "kyverno_get_policy_reports",
+              "kyverno_status"
+            ],
+            "github_url": "https://github.com/kyverno/kyverno",
+            "stars": 6600,
+            "github_description": "Cloud Native Policy Management",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kyverno": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kyverno"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "kyverno-multitenant",
+            "description": "Multi-tenant Kyverno policies",
+            "tool_count": 6,
+            "tools": [
+              "kyverno_multitenant_create_namespace",
+              "kyverno_multitenant_namespace_isolation",
+              "kyverno_multitenant_create_quota",
+              "kyverno_multitenant_generate_policy",
+              "kyverno_multitenant_list_namespaces",
+              "kyverno_multitenant_get_policies"
+            ],
+            "github_url": "https://github.com/kyverno/policies",
+            "stars": 300,
+            "github_description": "Kyverno policies for multi-tenant clusters",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-kyverno-multitenant": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "kyverno-multitenant"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "litmus",
+            "description": "Chaos engineering for Kubernetes",
+            "tool_count": 12,
+            "tools": [
+              "litmus_install",
+              "litmus_connect_chaos_infra",
+              "litmus_create_project",
+              "litmus_create_chaos_experiment",
+              "litmus_run_chaos_experiment",
+              "litmus_get_projects",
+              "litmus_get_chaos_experiments",
+              "litmus_get_chaos_infra",
+              "litmus_config_set_account",
+              "litmus_version",
+              "litmus_apply_chaos_experiment",
+              "litmus_get_chaos_results"
+            ],
+            "github_url": "https://github.com/litmuschaos/litmus",
+            "stars": 4400,
+            "github_description": "Litmus helps SREs and developers practice chaos engineering",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-litmus": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "litmus"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "velero",
+            "description": "Kubernetes backup and restore",
+            "tool_count": 16,
+            "tools": [
+              "velero_install",
+              "velero_create_schedule",
+              "velero_backup_create",
+              "velero_restore_create",
+              "velero_backup_get",
+              "velero_backup_describe",
+              "velero_restore_get",
+              "velero_restore_describe",
+              "velero_schedule_get",
+              "velero_backup_delete",
+              "velero_schedule_delete",
+              "velero_backup_location_create",
+              "velero_backup_location_get",
+              "velero_version",
+              "velero_backup_logs",
+              "velero_restore_logs"
+            ],
+            "github_url": "https://github.com/vmware-tanzu/velero",
+            "stars": 9400,
+            "github_description": "Backup and migrate Kubernetes applications and their persistent volumes",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-velero": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "velero"
+                  ],
+                  "env": {
+                    "KUBECONFIG": "~/.kube/config"
+                  }
                 }
               }
             }
@@ -874,20 +1802,18 @@
           {
             "name": "cloudquery",
             "description": "Cloud asset inventory",
-            "tool_count": 12,
+            "tool_count": 10,
             "tools": [
               "cloudquery_sync",
-              "cloudquery_tables",
-              "cloudquery_test_connection",
               "cloudquery_migrate",
-              "cloudquery_install_plugin",
-              "cloudquery_list_plugins",
-              "cloudquery_plugin_docs",
-              "cloudquery_validate",
-              "cloudquery_schema",
-              "cloudquery_download",
-              "cloudquery_serve",
-              "cloudquery_version"
+              "cloudquery_init",
+              "cloudquery_validate_config",
+              "cloudquery_test_connection",
+              "cloudquery_tables",
+              "cloudquery_login",
+              "cloudquery_logout",
+              "cloudquery_plugin_install",
+              "cloudquery_switch"
             ],
             "github_url": "https://github.com/cloudquery/cloudquery",
             "stars": 6200,
@@ -897,11 +1823,11 @@
               "mcpServers": {
                 "ship-cloudquery": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "cloudquery"],
-                  "env": {
-                    "AWS_ACCESS_KEY_ID": "your-key",
-                    "AWS_SECRET_ACCESS_KEY": "your-secret"
-                  }
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cloudquery"
+                  ]
                 }
               }
             }
@@ -909,17 +1835,15 @@
           {
             "name": "custodian",
             "description": "Cloud governance engine",
-            "tool_count": 10,
+            "tool_count": 8,
             "tools": [
-              "custodian_run",
-              "custodian_validate",
+              "custodian_run_policy",
+              "custodian_dry_run",
+              "custodian_validate_policy",
               "custodian_schema",
-              "custodian_logs",
+              "custodian_get_version",
               "custodian_report",
-              "custodian_dryrun",
-              "custodian_version",
-              "custodian_mu_deploy",
-              "custodian_mu_status",
+              "custodian_logs",
               "custodian_metrics"
             ],
             "github_url": "https://github.com/cloud-custodian/cloud-custodian",
@@ -930,11 +1854,107 @@
               "mcpServers": {
                 "ship-custodian": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "custodian"],
-                  "env": {
-                    "AWS_ACCESS_KEY_ID": "your-key",
-                    "AWS_SECRET_ACCESS_KEY": "your-secret"
-                  }
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "custodian"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "packer",
+            "description": "Machine image building",
+            "tool_count": 10,
+            "tools": [
+              "packer_build",
+              "packer_validate",
+              "packer_inspect",
+              "packer_fix",
+              "packer_console",
+              "packer_fmt",
+              "packer_init",
+              "packer_plugins",
+              "packer_hcl2_upgrade",
+              "packer_version"
+            ],
+            "github_url": "https://github.com/hashicorp/packer",
+            "stars": 15300,
+            "github_description": "Packer is a tool for creating identical machine images for multiple platforms",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-packer": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "packer"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "powerpipe",
+            "description": "Infrastructure benchmarking",
+            "tool_count": 7,
+            "tools": [
+              "powerpipe_benchmark_run",
+              "powerpipe_benchmark_list",
+              "powerpipe_query_run",
+              "powerpipe_query_list",
+              "powerpipe_server",
+              "powerpipe_dashboard_list",
+              "powerpipe_version"
+            ],
+            "github_url": "https://github.com/turbot/powerpipe",
+            "stars": 1100,
+            "github_description": "Dashboards & benchmarks as code. Use SQL to visualize your cloud data",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-powerpipe": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "powerpipe"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "steampipe",
+            "description": "Cloud asset querying with SQL",
+            "tool_count": 10,
+            "tools": [
+              "steampipe_query",
+              "steampipe_query_interactive",
+              "steampipe_plugin_list",
+              "steampipe_plugin_install",
+              "steampipe_plugin_update",
+              "steampipe_plugin_uninstall",
+              "steampipe_service_start",
+              "steampipe_service_status",
+              "steampipe_service_stop",
+              "steampipe_version"
+            ],
+            "github_url": "https://github.com/turbot/steampipe",
+            "stars": 7100,
+            "github_description": "Zero-ETL, infinite possibilities. Live query APIs, code & more with SQL",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-steampipe": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "steampipe"
+                  ]
                 }
               }
             }
@@ -949,18 +1969,18 @@
             "description": "Container signing and verification",
             "tool_count": 12,
             "tools": [
-              "cosign_sign",
-              "cosign_verify",
-              "cosign_generate_key_pair",
-              "cosign_sign_blob",
-              "cosign_verify_blob",
+              "cosign_sign_image",
+              "cosign_verify_image",
+              "cosign_generate_key",
               "cosign_attest",
               "cosign_verify_attestation",
-              "cosign_copy",
-              "cosign_clean",
-              "cosign_tree",
-              "cosign_dockerfile_verify",
-              "cosign_version"
+              "cosign_sign_blob",
+              "cosign_verify_blob",
+              "cosign_upload_blob",
+              "cosign_upload_wasm",
+              "cosign_copy_image",
+              "cosign_sign_wasm",
+              "cosign_get_version"
             ],
             "github_url": "https://github.com/sigstore/cosign",
             "stars": 5100,
@@ -970,7 +1990,45 @@
               "mcpServers": {
                 "ship-cosign": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "cosign"],
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cosign"
+                  ],
+                  "env": {
+                    "COSIGN_PRIVATE_KEY": "path/to/private.key"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "cosign-advanced",
+            "description": "Advanced cosign workflows with real CLI features",
+            "tool_count": 8,
+            "tools": [
+              "cosign_advanced_sign_keyless",
+              "cosign_advanced_verify_identity",
+              "cosign_advanced_upload_ebpf",
+              "cosign_advanced_attest_type",
+              "cosign_advanced_verify_attestation",
+              "cosign_advanced_verify_offline",
+              "cosign_advanced_triangulate",
+              "cosign_advanced_clean"
+            ],
+            "github_url": "",
+            "stars": 0,
+            "github_description": "Advanced cosign workflows with real CLI features",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-cosign-advanced": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cosign-advanced"
+                  ],
                   "env": {
                     "COSIGN_PRIVATE_KEY": "path/to/private.key"
                   }
@@ -981,16 +2039,11 @@
           {
             "name": "dependency-track",
             "description": "OWASP Dependency-Track SBOM analysis",
-            "tool_count": 8,
+            "tool_count": 3,
             "tools": [
               "dependency_track_upload_bom",
-              "dependency_track_get_project",
-              "dependency_track_create_project",
-              "dependency_track_get_findings",
-              "dependency_track_get_metrics",
-              "dependency_track_export_bom",
-              "dependency_track_policy_violation",
-              "dependency_track_health_check"
+              "dependency_track_upload_bom_api",
+              "dependency_track_generate_bom"
             ],
             "github_url": "https://github.com/DependencyTrack/dependency-track",
             "stars": 3200,
@@ -1000,7 +2053,11 @@
               "mcpServers": {
                 "ship-dependency-track": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "dependency-track"],
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "dependency-track"
+                  ],
                   "env": {
                     "DEPENDENCY_TRACK_URL": "https://your-dt-instance.com",
                     "DEPENDENCY_TRACK_API_KEY": "your-api-key"
@@ -1012,17 +2069,14 @@
           {
             "name": "guac",
             "description": "Graph for Understanding Artifact Composition",
-            "tool_count": 9,
+            "tool_count": 6,
             "tools": [
-              "guac_ingest",
+              "guac_collect",
+              "guac_certify",
               "guac_query",
-              "guac_server",
-              "guac_collect_sub",
-              "guac_csub_server",
-              "guac_gql_playground",
-              "guac_nats_server",
-              "guac_osv_certifier",
-              "guac_version"
+              "guac_start_graphql",
+              "guac_ingest",
+              "guac_collector_subscriber"
             ],
             "github_url": "https://github.com/guacsec/guac",
             "stars": 1400,
@@ -1032,34 +2086,11 @@
               "mcpServers": {
                 "ship-guac": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "guac"]
-                }
-              }
-            }
-          },
-          {
-            "name": "rekor",
-            "description": "Transparency log",
-            "tool_count": 8,
-            "tools": [
-              "rekor_upload",
-              "rekor_get",
-              "rekor_search",
-              "rekor_verify",
-              "rekor_loginfo",
-              "rekor_ping",
-              "rekor_minisign",
-              "rekor_version"
-            ],
-            "github_url": "https://github.com/sigstore/rekor",
-            "stars": 994,
-            "github_description": "Software Supply Chain Transparency Log",
-            "has_variables": false,
-            "config_example": {
-              "mcpServers": {
-                "ship-rekor": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "rekor"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "guac"
+                  ]
                 }
               }
             }
@@ -1067,15 +2098,12 @@
           {
             "name": "in-toto",
             "description": "Supply chain attestation",
-            "tool_count": 7,
+            "tool_count": 4,
             "tools": [
-              "in_toto_run",
-              "in_toto_record_start",
-              "in_toto_record_stop",
+              "in_toto_run_step",
               "in_toto_verify",
-              "in_toto_sign",
-              "in_toto_match_products",
-              "in_toto_version"
+              "in_toto_record",
+              "in_toto_sign"
             ],
             "github_url": "https://github.com/in-toto/in-toto",
             "stars": 940,
@@ -1085,7 +2113,73 @@
               "mcpServers": {
                 "ship-in-toto": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "in-toto"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "in-toto"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "rekor",
+            "description": "Transparency log",
+            "tool_count": 7,
+            "tools": [
+              "rekor_upload_artifact",
+              "rekor_search_log",
+              "rekor_get_by_uuid",
+              "rekor_get_by_index",
+              "rekor_verify_by_uuid",
+              "rekor_verify_by_index",
+              "rekor_verify_artifact"
+            ],
+            "github_url": "https://github.com/sigstore/rekor",
+            "stars": 994,
+            "github_description": "Software Supply Chain Transparency Log",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-rekor": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "rekor"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "sigstore-policy-controller",
+            "description": "Sigstore policy enforcement",
+            "tool_count": 9,
+            "tools": [
+              "sigstore_test_policy",
+              "sigstore_tester_version",
+              "sigstore_create_policy",
+              "sigstore_list_policies",
+              "sigstore_delete_policy",
+              "sigstore_enable_namespace",
+              "sigstore_disable_namespace",
+              "sigstore_get_namespace_status",
+              "sigstore_describe_policy"
+            ],
+            "github_url": "https://github.com/sigstore/policy-controller",
+            "stars": 200,
+            "github_description": "Sigstore Policy Controller for Kubernetes",
+            "has_variables": false,
+            "config_example": {
+              "mcpServers": {
+                "ship-sigstore-policy-controller": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "sigstore-policy-controller"
+                  ]
                 }
               }
             }
@@ -1108,7 +2202,11 @@
               "mcpServers": {
                 "ship-slsa-verifier": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "slsa-verifier"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "slsa-verifier"
+                  ]
                 }
               }
             }
@@ -1119,30 +2217,30 @@
         "description": "AWS-specific security, IAM analysis, and cloud assessment tools",
         "modules": [
           {
-            "name": "prowler",
-            "description": "Multi-cloud security assessment",
-            "tool_count": 10,
+            "name": "aws-iam-rotation",
+            "description": "AWS IAM credential rotation",
+            "tool_count": 6,
             "tools": [
-              "prowler_aws",
-              "prowler_azure",
-              "prowler_gcp",
-              "prowler_kubernetes",
-              "prowler_compliance",
-              "prowler_checklist",
-              "prowler_security_hub",
-              "prowler_output_formats",
-              "prowler_exclude_checks",
-              "prowler_version"
+              "aws_iam_list_access_keys",
+              "aws_iam_create_access_key",
+              "aws_iam_update_access_key",
+              "aws_iam_delete_access_key",
+              "aws_iam_get_access_key_last_used",
+              "aws_iam_get_version"
             ],
-            "github_url": "https://github.com/prowler-cloud/prowler",
-            "stars": 12000,
-            "github_description": "Prowler is the Open Cloud Security platform for AWS, Azure, GCP, Kubernetes, M365 and more",
+            "github_url": "https://github.com/aws-samples/aws-iam-rotation-terraform",
+            "stars": 50,
+            "github_description": "AWS IAM credential rotation management",
             "has_variables": true,
             "config_example": {
               "mcpServers": {
-                "ship-prowler": {
+                "ship-aws-iam-rotation": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "prowler"],
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "aws-iam-rotation"
+                  ],
                   "env": {
                     "AWS_ACCESS_KEY_ID": "your-key",
                     "AWS_SECRET_ACCESS_KEY": "your-secret"
@@ -1152,53 +2250,28 @@
             }
           },
           {
-            "name": "policy-sentry",
-            "description": "AWS IAM policy generator",
-            "tool_count": 6,
+            "name": "aws-pricing",
+            "description": "AWS pricing and cost calculator",
+            "tool_count": 4,
             "tools": [
-              "policy_sentry_write_policy",
-              "policy_sentry_query",
-              "policy_sentry_create_template",
-              "policy_sentry_analyze_policy",
-              "policy_sentry_initialize",
-              "policy_sentry_version"
+              "aws_pricing_describe_services",
+              "aws_pricing_get_attribute_values",
+              "aws_pricing_get_products",
+              "aws_pricing_get_version"
             ],
-            "github_url": "https://github.com/salesforce/policy_sentry",
-            "stars": 2100,
-            "github_description": "IAM Least Privilege Policy Generator",
+            "github_url": "https://github.com/aws/aws-sdk-go",
+            "stars": 9800,
+            "github_description": "AWS SDK for the Go programming language",
             "has_variables": true,
             "config_example": {
               "mcpServers": {
-                "ship-policy-sentry": {
+                "ship-aws-pricing": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "policy-sentry"]
-                }
-              }
-            }
-          },
-          {
-            "name": "pmapper",
-            "description": "AWS IAM privilege escalation analysis",
-            "tool_count": 8,
-            "tools": [
-              "pmapper_graph_create",
-              "pmapper_query_create",
-              "pmapper_query_can_i",
-              "pmapper_query_who_can",
-              "pmapper_argquery_preset",
-              "pmapper_visualize",
-              "pmapper_repl",
-              "pmapper_analysis"
-            ],
-            "github_url": "https://github.com/nccgroup/PMapper",
-            "stars": 1500,
-            "github_description": "A tool for quickly evaluating IAM permissions in AWS",
-            "has_variables": true,
-            "config_example": {
-              "mcpServers": {
-                "ship-pmapper": {
-                  "command": "ship",
-                  "args": ["mcp", "--tools", "pmapper"],
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "aws-pricing"
+                  ],
                   "env": {
                     "AWS_ACCESS_KEY_ID": "your-key",
                     "AWS_SECRET_ACCESS_KEY": "your-secret"
@@ -1210,13 +2283,14 @@
           {
             "name": "cfn-nag",
             "description": "CloudFormation security linter",
-            "tool_count": 5,
+            "tool_count": 6,
             "tools": [
               "cfn_nag_scan",
-              "cfn_nag_rules",
-              "cfn_nag_to_junit",
-              "cfn_nag_print_suppression",
-              "cfn_nag_version"
+              "cfn_nag_scan_with_profile",
+              "cfn_nag_scan_with_parameters",
+              "cfn_nag_list_rules",
+              "cfn_nag_spcm_scan",
+              "cfn_nag_get_version"
             ],
             "github_url": "https://github.com/stelligent/cfn_nag",
             "stars": 1300,
@@ -1226,7 +2300,40 @@
               "mcpServers": {
                 "ship-cfn-nag": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "cfn-nag"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cfn-nag"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "cloudsplaining",
+            "description": "AWS IAM policy scanner",
+            "tool_count": 6,
+            "tools": [
+              "cloudsplaining_download",
+              "cloudsplaining_scan",
+              "cloudsplaining_scan_policy_file",
+              "cloudsplaining_create_exclusions_file",
+              "cloudsplaining_create_multi_account_config",
+              "cloudsplaining_scan_multi_account"
+            ],
+            "github_url": "https://github.com/salesforce/cloudsplaining",
+            "stars": 2000,
+            "github_description": "AWS IAM Security Assessment tool that identifies violations of least privilege",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-cloudsplaining": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "cloudsplaining"
+                  ]
                 }
               }
             }
@@ -1234,12 +2341,17 @@
           {
             "name": "parliament",
             "description": "AWS IAM policy linter",
-            "tool_count": 4,
+            "tool_count": 9,
             "tools": [
-              "parliament_analyze_policy_file",
-              "parliament_analyze_policy_string",
-              "parliament_test_policies",
-              "parliament_version"
+              "parliament_lint_file",
+              "parliament_lint_directory",
+              "parliament_lint_string",
+              "parliament_lint_community",
+              "parliament_lint_private",
+              "parliament_lint_aws_managed",
+              "parliament_lint_auth_details",
+              "parliament_comprehensive_analysis",
+              "parliament_batch_directory_analysis"
             ],
             "github_url": "https://github.com/duo-labs/parliament",
             "stars": 1100,
@@ -1249,7 +2361,70 @@
               "mcpServers": {
                 "ship-parliament": {
                   "command": "ship",
-                  "args": ["mcp", "--tools", "parliament"]
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "parliament"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "pmapper",
+            "description": "AWS IAM privilege escalation analysis",
+            "tool_count": 6,
+            "tools": [
+              "pmapper_graph_create",
+              "pmapper_query",
+              "pmapper_query_privesc",
+              "pmapper_visualize",
+              "pmapper_query_who_can",
+              "pmapper_argquery"
+            ],
+            "github_url": "https://github.com/nccgroup/PMapper",
+            "stars": 1500,
+            "github_description": "A tool for quickly evaluating IAM permissions in AWS",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-pmapper": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "pmapper"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "policy-sentry",
+            "description": "AWS IAM policy generator",
+            "tool_count": 7,
+            "tools": [
+              "policy_sentry_create_template",
+              "policy_sentry_write_policy",
+              "policy_sentry_initialize",
+              "policy_sentry_query_action_table",
+              "policy_sentry_query_condition_table",
+              "policy_sentry_query_arn_table",
+              "policy_sentry_query_service_table"
+            ],
+            "github_url": "https://github.com/salesforce/policy_sentry",
+            "stars": 2100,
+            "github_description": "IAM Least Privilege Policy Generator",
+            "has_variables": true,
+            "config_example": {
+              "mcpServers": {
+                "ship-policy-sentry": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "--tools",
+                    "policy-sentry"
+                  ]
                 }
               }
             }
@@ -1259,8 +2434,8 @@
     },
     "summary": {
       "total_categories": 6,
-      "total_modules": 60,
-      "total_tools": 400,
+      "total_modules": 78,
+      "total_tools": 554,
       "most_popular_tools": [
         {
           "name": "trivy",
@@ -1268,7 +2443,12 @@
           "category": "security"
         },
         {
-          "name": "nuclei", 
+          "name": "trivy-golden",
+          "stars": 28000,
+          "category": "security"
+        },
+        {
+          "name": "nuclei",
           "stars": 24400,
           "category": "security"
         },
@@ -1276,6 +2456,21 @@
           "name": "trufflehog",
           "stars": 20200,
           "category": "security"
+        },
+        {
+          "name": "gitleaks",
+          "stars": 18500,
+          "category": "security"
+        },
+        {
+          "name": "sops",
+          "stars": 17500,
+          "category": "security"
+        },
+        {
+          "name": "packer",
+          "stars": 15300,
+          "category": "cloud"
         },
         {
           "name": "zap",
@@ -1286,15 +2481,20 @@
           "name": "cert-manager",
           "stars": 13100,
           "category": "kubernetes"
+        },
+        {
+          "name": "git-secrets",
+          "stars": 12900,
+          "category": "security"
         }
       ],
       "tools_by_category": {
-        "security": 21,
-        "terraform": 5,
-        "kubernetes": 4,
-        "cloud": 2,
-        "supply-chain": 6,
-        "aws": 5
+        "security": 36,
+        "terraform": 9,
+        "kubernetes": 13,
+        "cloud": 5,
+        "supply-chain": 8,
+        "aws": 7
       }
     }
   }
