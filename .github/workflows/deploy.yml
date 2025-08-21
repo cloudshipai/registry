@@ -32,7 +32,6 @@ jobs:
         # Copy docs to _site for GitHub Pages
         mkdir -p _site
         cp -r docs/* _site/
-        cp index.json _site/
         
         # Update timestamps in index.json
         sed -i "s/\"last_updated\": \".*\"/\"last_updated\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"/" _site/index.json
