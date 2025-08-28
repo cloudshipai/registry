@@ -3286,7 +3286,7 @@
                                     </svg>
                                     <span class="btn-text">Copy URL</span>
                                 </button>
-                                <button class="btn btn-secondary copy-install-btn" onclick="copyInstallCommand('${bundle.install_command}', this)" title="Copy Station API install command" data-original-text="Copy Install">
+                                <button class="btn btn-secondary copy-install-btn" data-install-command="${bundle.install_command}" onclick="copyInstallCommandFromData(this)" title="Copy Station API install command" data-original-text="Copy Install">
                                     <svg class="copy-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,7A2,2 0 0,0 7,9A2,2 0 0,0 9,11A2,2 0 0,0 11,9A2,2 0 0,0 9,7M9,14C11.67,14 17,15.34 17,18V20H1V18C1,15.34 6.33,14 9,14Z"/>
                                     </svg>
@@ -3542,6 +3542,12 @@
                 nav.classList.remove('scrolled');
             }
         });
+
+        // Copy install command from data attribute
+        function copyInstallCommandFromData(button) {
+            const command = button.getAttribute('data-install-command');
+            copyInstallCommand(command, button);
+        }
 
         // Enhanced copy install command function
         function copyInstallCommand(command, button) {
