@@ -1433,9 +1433,11 @@
         
         async function loadToolsDetailData() {
             try {
-                const response = await fetch('./mcp_tools_complete.json');
+                const response = await fetch('./mcp_tools_complete.json?v=' + Date.now());
                 const data = await response.json();
+                console.log('Loaded JSON data:', data);
                 toolsDetailData = data.ship_mcp_tools || data.mcp_tools_documentation?.modules || {};
+                console.log('Assigned toolsDetailData:', toolsDetailData);
                 return true;
             } catch (error) {
                 console.error('Failed to load tools detail data:', error);
@@ -1514,6 +1516,7 @@
                 } else {
                     tools = toolsDetailData.categories[category]?.tools || [];
                 }
+                console.log(`Rendering ${category} tools:`, tools.slice(0, 3));
             } else {
                 // Fallback to old structure if needed
                 if (category === 'all') {
