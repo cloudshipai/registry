@@ -1,7 +1,7 @@
 {
   "ship_mcp_tools": {
     "version": "2.0.0",
-    "generated_date": "2025-01-28", 
+    "generated_date": "2025-01-28",
     "description": "Ship CLI - Comprehensive DevOps toolkit with 63 essential infrastructure tools through AI-enabled MCP servers",
     "repository": "https://github.com/cloudshipai/ship",
     "total_tools": 63,
@@ -22,28 +22,96 @@
             "description": "Terraform linter for syntax and best practices",
             "usage": "ship mcp tflint",
             "variables": false,
-            "tags": ["terraform", "linting", "iac"]
+            "tags": [
+              "terraform",
+              "linting",
+              "iac"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-tflint": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "tflint"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Terraform linter integrated through Ship CLI containerized execution"
           },
           {
-            "name": "terraform-docs", 
+            "name": "terraform-docs",
             "description": "Terraform documentation generator",
             "usage": "ship mcp terraform-docs",
             "variables": false,
-            "tags": ["terraform", "documentation", "iac"]
+            "tags": [
+              "terraform",
+              "documentation",
+              "iac"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-terraform-docs": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "terraform-docs"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Terraform documentation generator - Containerized execution through Ship CLI"
           },
           {
             "name": "inframap",
             "description": "Infrastructure visualization and diagramming",
-            "usage": "ship mcp inframap", 
+            "usage": "ship mcp inframap",
             "variables": false,
-            "tags": ["terraform", "visualization", "diagrams"]
+            "tags": [
+              "terraform",
+              "visualization",
+              "diagrams"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-inframap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "inframap"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure visualization and diagramming - Containerized execution through Ship CLI"
           },
           {
             "name": "iac-plan",
             "description": "Infrastructure as code planning and analysis",
             "usage": "ship mcp iac-plan",
             "variables": false,
-            "tags": ["terraform", "planning", "iac"]
+            "tags": [
+              "terraform",
+              "planning",
+              "iac"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-iac-plan": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "iac-plan"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure as code planning and analysis - Containerized execution through Ship CLI"
           },
           {
             "name": "terraformer",
@@ -55,27 +123,88 @@
               "ship mcp terraformer --var AWS_PROFILE=production"
             ],
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["terraform", "import", "cloud"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "terraform",
+              "import",
+              "cloud"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-terraformer": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "terraformer"
+                  ],
+                  "env": {
+                    "AWS_PROFILE": "your_aws_profile"
+                  }
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure import and management - Containerized execution through Ship CLI"
           },
           {
-            "name": "tfstate-reader", 
+            "name": "tfstate-reader",
             "description": "Terraform state analysis and inspection",
             "usage": "ship mcp tfstate-reader",
             "variables": false,
-            "tags": ["terraform", "state", "analysis"]
+            "tags": [
+              "terraform",
+              "state",
+              "analysis"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-tfstate-reader": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "tfstate-reader"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Terraform state analysis and inspection - Containerized execution through Ship CLI"
           },
           {
             "name": "openinfraquote",
-            "description": "Infrastructure cost estimation and FinOps integration", 
+            "description": "Infrastructure cost estimation and FinOps integration",
             "usage": "ship mcp openinfraquote --var API_KEY={{.API_KEY}}",
             "usage_examples": [
               "ship mcp openinfraquote --var API_KEY={{.API_KEY}}",
               "ship mcp openinfraquote --var API_KEY=your_api_key_here"
             ],
             "variables": true,
-            "required_vars": ["API_KEY"],
-            "tags": ["terraform", "cost", "finops"]
+            "required_vars": [
+              "API_KEY"
+            ],
+            "tags": [
+              "terraform",
+              "cost",
+              "finops"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-openinfraquote": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "openinfraquote"
+                  ],
+                  "env": {
+                    "API_KEY": "your_api_key"
+                  }
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure cost estimation and FinOps integration - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -89,49 +218,170 @@
             "description": "Universal vulnerability scanner for containers, filesystems, and git repositories",
             "usage": "ship mcp trivy",
             "variables": false,
-            "tags": ["security", "vulnerability", "scanning", "containers"]
+            "tags": [
+              "security",
+              "vulnerability",
+              "scanning",
+              "containers"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-trivy": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "trivy"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Universal vulnerability scanner for containers, filesystems, and git repositories - Containerized execution through Ship CLI"
           },
           {
             "name": "grype",
             "description": "Container vulnerability scanner with SBOM support",
-            "usage": "ship mcp grype", 
+            "usage": "ship mcp grype",
             "variables": false,
-            "tags": ["security", "containers", "sbom", "vulnerability"]
+            "tags": [
+              "security",
+              "containers",
+              "sbom",
+              "vulnerability"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-grype": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "grype"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Container vulnerability scanner with SBOM support - Containerized execution through Ship CLI"
           },
           {
             "name": "syft",
             "description": "SBOM (Software Bill of Materials) generation",
             "usage": "ship mcp syft",
             "variables": false,
-            "tags": ["security", "sbom", "supply-chain"]
+            "tags": [
+              "security",
+              "sbom",
+              "supply-chain"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-syft": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "syft"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "SBOM (Software Bill of Materials) generation - Containerized execution through Ship CLI"
           },
           {
             "name": "checkov",
             "description": "Infrastructure as Code static analysis for security",
             "usage": "ship mcp checkov",
             "variables": false,
-            "tags": ["security", "iac", "static-analysis"]
+            "tags": [
+              "security",
+              "iac",
+              "static-analysis"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-checkov": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "checkov"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure as Code static analysis for security - Containerized execution through Ship CLI"
           },
           {
             "name": "terrascan",
             "description": "Infrastructure as Code security scanner",
             "usage": "ship mcp terrascan",
-            "variables": false, 
-            "tags": ["security", "iac", "terraform"]
+            "variables": false,
+            "tags": [
+              "security",
+              "iac",
+              "terraform"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-terrascan": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "terrascan"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure as Code security scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "tfsec",
             "description": "Terraform-specific security scanner",
             "usage": "ship mcp tfsec",
             "variables": false,
-            "tags": ["security", "terraform", "iac"]
+            "tags": [
+              "security",
+              "terraform",
+              "iac"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-tfsec": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "tfsec"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Terraform-specific security scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "semgrep",
             "description": "Static analysis for security (SAST)",
             "usage": "ship mcp semgrep",
             "variables": false,
-            "tags": ["security", "sast", "static-analysis"]
+            "tags": [
+              "security",
+              "sast",
+              "static-analysis"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-semgrep": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "semgrep"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Static analysis for security (SAST) - Containerized execution through Ship CLI"
           },
           {
             "name": "snyk",
@@ -142,113 +392,404 @@
               "ship mcp snyk --var SNYK_TOKEN=your_actual_token"
             ],
             "variables": true,
-            "required_vars": ["SNYK_TOKEN"],
-            "tags": ["security", "vulnerability", "developer"]
+            "required_vars": [
+              "SNYK_TOKEN"
+            ],
+            "tags": [
+              "security",
+              "vulnerability",
+              "developer"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-snyk": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "snyk"
+                  ],
+                  "env": {
+                    "SNYK_TOKEN": "your_snyk_token"
+                  }
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Developer-first security platform - Containerized execution through Ship CLI"
           },
           {
             "name": "actionlint",
             "description": "GitHub Actions workflow linter for security",
             "usage": "ship mcp actionlint",
             "variables": false,
-            "tags": ["security", "github", "cicd", "workflows"]
+            "tags": [
+              "security",
+              "github",
+              "cicd",
+              "workflows"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-actionlint": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "actionlint"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "GitHub Actions workflow linter for security - Containerized execution through Ship CLI"
           },
           {
-            "name": "hadolint", 
+            "name": "hadolint",
             "description": "Dockerfile linter for best practices",
             "usage": "ship mcp hadolint",
             "variables": false,
-            "tags": ["security", "docker", "containers", "linting"]
+            "tags": [
+              "security",
+              "docker",
+              "containers",
+              "linting"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-hadolint": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "hadolint"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Dockerfile linter for best practices - Containerized execution through Ship CLI"
           },
           {
             "name": "conftest",
             "description": "OPA policy testing for infrastructure",
-            "usage": "ship mcp conftest", 
+            "usage": "ship mcp conftest",
             "variables": false,
-            "tags": ["security", "policy", "opa", "testing"]
+            "tags": [
+              "security",
+              "policy",
+              "opa",
+              "testing"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-conftest": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "conftest"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "OPA policy testing for infrastructure - Containerized execution through Ship CLI"
           },
           {
             "name": "kube-bench",
             "description": "Kubernetes CIS benchmark security testing",
             "usage": "ship mcp kube-bench",
             "variables": false,
-            "tags": ["security", "kubernetes", "compliance", "cis"]
+            "tags": [
+              "security",
+              "kubernetes",
+              "compliance",
+              "cis"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kube-bench": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kube-bench"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes CIS benchmark security testing - Containerized execution through Ship CLI"
           },
           {
             "name": "kube-hunter",
             "description": "Kubernetes penetration testing",
-            "usage": "ship mcp kube-hunter", 
+            "usage": "ship mcp kube-hunter",
             "variables": false,
-            "tags": ["security", "kubernetes", "penetration-testing"]
+            "tags": [
+              "security",
+              "kubernetes",
+              "penetration-testing"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kube-hunter": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kube-hunter"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes penetration testing - Containerized execution through Ship CLI"
           },
           {
             "name": "falco",
             "description": "Runtime security monitoring for Kubernetes",
             "usage": "ship mcp falco",
             "variables": false,
-            "tags": ["security", "kubernetes", "runtime", "monitoring"]
+            "tags": [
+              "security",
+              "kubernetes",
+              "runtime",
+              "monitoring"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-falco": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "falco"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Runtime security monitoring for Kubernetes - Containerized execution through Ship CLI"
           },
           {
             "name": "nikto",
             "description": "Web server security scanner",
             "usage": "ship mcp nikto",
             "variables": false,
-            "tags": ["security", "web", "scanning", "servers"]
+            "tags": [
+              "security",
+              "web",
+              "scanning",
+              "servers"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-nikto": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "nikto"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Web server security scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "nuclei",
             "description": "Fast vulnerability scanner with community templates",
             "usage": "ship mcp nuclei",
             "variables": false,
-            "tags": ["security", "vulnerability", "scanning", "templates"]
+            "tags": [
+              "security",
+              "vulnerability",
+              "scanning",
+              "templates"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-nuclei": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "nuclei"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Fast vulnerability scanner with community templates - Containerized execution through Ship CLI"
           },
           {
             "name": "zap",
-            "description": "OWASP ZAP web application security scanner", 
+            "description": "OWASP ZAP web application security scanner",
             "usage": "ship mcp zap",
             "variables": false,
-            "tags": ["security", "web", "owasp", "application"]
+            "tags": [
+              "security",
+              "web",
+              "owasp",
+              "application"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-zap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "zap"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "OWASP ZAP web application security scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "nmap",
             "description": "Network exploration and security auditing",
             "usage": "ship mcp nmap",
             "variables": false,
-            "tags": ["security", "network", "scanning", "auditing"]
+            "tags": [
+              "security",
+              "network",
+              "scanning",
+              "auditing"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-nmap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "nmap"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Network exploration and security auditing - Containerized execution through Ship CLI"
           },
           {
             "name": "git-secrets",
             "description": "Git repository secret scanner (AWS-focused)",
             "usage": "ship mcp git-secrets",
             "variables": false,
-            "tags": ["security", "secrets", "git", "aws"]
+            "tags": [
+              "security",
+              "secrets",
+              "git",
+              "aws"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-git-secrets": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "git-secrets"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Git repository secret scanner (AWS-focused) - Containerized execution through Ship CLI"
           },
           {
             "name": "trufflehog",
-            "description": "Advanced secret scanning with verification", 
+            "description": "Advanced secret scanning with verification",
             "usage": "ship mcp trufflehog",
             "variables": false,
-            "tags": ["security", "secrets", "scanning", "verification"]
+            "tags": [
+              "security",
+              "secrets",
+              "scanning",
+              "verification"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-trufflehog": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "trufflehog"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Advanced secret scanning with verification - Containerized execution through Ship CLI"
           },
           {
             "name": "gitleaks",
             "description": "Fast secret scanning for git repositories",
             "usage": "ship mcp gitleaks",
             "variables": false,
-            "tags": ["security", "secrets", "git", "cicd"]
+            "tags": [
+              "security",
+              "secrets",
+              "git",
+              "cicd"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-gitleaks": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "gitleaks"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Fast secret scanning for git repositories - Containerized execution through Ship CLI"
           },
           {
             "name": "kubescape",
             "description": "Kubernetes security platform and scanner",
             "usage": "ship mcp kubescape",
             "variables": false,
-            "tags": ["security", "kubernetes", "platform", "scanning"]
+            "tags": [
+              "security",
+              "kubernetes",
+              "platform",
+              "scanning"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kubescape": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kubescape"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes security platform and scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "dockle",
             "description": "Container image security linter",
             "usage": "ship mcp dockle",
             "variables": false,
-            "tags": ["security", "containers", "docker", "linting"]
+            "tags": [
+              "security",
+              "containers",
+              "docker",
+              "linting"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-dockle": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "dockle"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Container image security linter - Containerized execution through Ship CLI"
           },
           {
             "name": "sops",
@@ -261,105 +802,374 @@
               "ship mcp sops --var GPG_KEY=your_gpg_key_id"
             ],
             "variables": true,
-            "required_vars": ["AWS_PROFILE or GPG_KEY"],
-            "tags": ["security", "secrets", "encryption", "management"]
+            "required_vars": [
+              "AWS_PROFILE or GPG_KEY"
+            ],
+            "tags": [
+              "security",
+              "secrets",
+              "encryption",
+              "management"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-sops": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "sops"
+                  ],
+                  "env": {
+                    "AWS_PROFILE": "your_aws_profile"
+                  }
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Secrets management with encryption - Containerized execution through Ship CLI"
           },
           {
             "name": "ossf-scorecard",
             "description": "OSSF security scorecard for open source projects",
             "usage": "ship mcp ossf-scorecard",
             "variables": false,
-            "tags": ["security", "ossf", "scorecard", "open-source"]
+            "tags": [
+              "security",
+              "ossf",
+              "scorecard",
+              "open-source"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-ossf-scorecard": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "ossf-scorecard"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "OSSF security scorecard for open source projects - Containerized execution through Ship CLI"
           },
           {
             "name": "scancode",
             "description": "License and copyright detection scanner",
             "usage": "ship mcp scancode",
             "variables": false,
-            "tags": ["security", "license", "copyright", "compliance"]
+            "tags": [
+              "security",
+              "license",
+              "copyright",
+              "compliance"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-scancode": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "scancode"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "License and copyright detection scanner - Containerized execution through Ship CLI"
           },
           {
             "name": "steampipe",
             "description": "Cloud asset querying with SQL",
             "usage": "ship mcp steampipe --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["security", "cloud", "querying", "sql"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "security",
+              "cloud",
+              "querying",
+              "sql"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-steampipe": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "steampipe"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Cloud asset querying with SQL - Containerized execution through Ship CLI"
           },
           {
             "name": "cfn-nag",
             "description": "CloudFormation security linter",
             "usage": "ship mcp cfn-nag",
             "variables": false,
-            "tags": ["security", "aws", "cloudformation", "linting"]
+            "tags": [
+              "security",
+              "aws",
+              "cloudformation",
+              "linting"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-cfn-nag": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "cfn-nag"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "CloudFormation security linter - Containerized execution through Ship CLI"
           },
           {
             "name": "gatekeeper",
             "description": "OPA Gatekeeper policy validation",
             "usage": "ship mcp gatekeeper",
             "variables": false,
-            "tags": ["security", "kubernetes", "opa", "policy"]
+            "tags": [
+              "security",
+              "kubernetes",
+              "opa",
+              "policy"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-gatekeeper": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "gatekeeper"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "OPA Gatekeeper policy validation - Containerized execution through Ship CLI"
           },
           {
             "name": "license-detector",
             "description": "Software license detection and compliance",
             "usage": "ship mcp license-detector",
             "variables": false,
-            "tags": ["security", "license", "compliance", "detection"]
+            "tags": [
+              "security",
+              "license",
+              "compliance",
+              "detection"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-license-detector": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "license-detector"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Software license detection and compliance - Containerized execution through Ship CLI"
           },
           {
             "name": "openscap",
             "description": "Security compliance scanning with SCAP",
             "usage": "ship mcp openscap",
             "variables": false,
-            "tags": ["security", "compliance", "scap", "scanning"]
+            "tags": [
+              "security",
+              "compliance",
+              "scap",
+              "scanning"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-openscap": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "openscap"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Security compliance scanning with SCAP - Containerized execution through Ship CLI"
           },
           {
             "name": "osv-scanner",
             "description": "Open Source Vulnerability scanning",
             "usage": "ship mcp osv-scanner",
             "variables": false,
-            "tags": ["security", "vulnerability", "open-source", "scanning"]
+            "tags": [
+              "security",
+              "vulnerability",
+              "open-source",
+              "scanning"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-osv-scanner": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "osv-scanner"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Open Source Vulnerability scanning - Containerized execution through Ship CLI"
           },
           {
             "name": "scout-suite",
             "description": "Multi-cloud security auditing platform",
             "usage": "ship mcp scout-suite --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["security", "multi-cloud", "auditing", "aws"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "security",
+              "multi-cloud",
+              "auditing",
+              "aws"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-scout-suite": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "scout-suite"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Multi-cloud security auditing platform - Containerized execution through Ship CLI"
           },
           {
             "name": "powerpipe",
             "description": "Infrastructure benchmarking and compliance",
             "usage": "ship mcp powerpipe --var AWS_PROFILE=default",
-            "variables": true, 
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["security", "benchmarking", "compliance", "infrastructure"]
+            "variables": true,
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "security",
+              "benchmarking",
+              "compliance",
+              "infrastructure"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-powerpipe": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "powerpipe"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure benchmarking and compliance - Containerized execution through Ship CLI"
           },
           {
             "name": "infrascan",
             "description": "Infrastructure security scanning",
             "usage": "ship mcp infrascan --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["security", "infrastructure", "scanning", "cloud"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "security",
+              "infrastructure",
+              "scanning",
+              "cloud"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-infrascan": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "infrascan"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Infrastructure security scanning - Containerized execution through Ship CLI"
           },
           {
             "name": "github-admin",
             "description": "GitHub administration and security tools",
             "usage": "ship mcp github-admin --var GITHUB_TOKEN=your_token",
             "variables": true,
-            "required_vars": ["GITHUB_TOKEN"],
-            "tags": ["security", "github", "administration", "management"]
+            "required_vars": [
+              "GITHUB_TOKEN"
+            ],
+            "tags": [
+              "security",
+              "github",
+              "administration",
+              "management"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-github-admin": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "github-admin"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "GitHub administration and security tools - Containerized execution through Ship CLI"
           },
           {
             "name": "github-packages",
             "description": "GitHub Packages security and management",
             "usage": "ship mcp github-packages --var GITHUB_TOKEN=your_token",
             "variables": true,
-            "required_vars": ["GITHUB_TOKEN"],
-            "tags": ["security", "github", "packages", "management"]
+            "required_vars": [
+              "GITHUB_TOKEN"
+            ],
+            "tags": [
+              "security",
+              "github",
+              "packages",
+              "management"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-github-packages": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "github-packages"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "GitHub Packages security and management - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -373,64 +1183,227 @@
             "description": "Kubernetes backup and disaster recovery",
             "usage": "ship mcp velero --var KUBECONFIG=/path/to/kubeconfig",
             "variables": true,
-            "required_vars": ["KUBECONFIG"],
-            "tags": ["kubernetes", "backup", "disaster-recovery"]
+            "required_vars": [
+              "KUBECONFIG"
+            ],
+            "tags": [
+              "kubernetes",
+              "backup",
+              "disaster-recovery"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-velero": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "velero"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes backup and disaster recovery - Containerized execution through Ship CLI"
           },
           {
             "name": "goldilocks",
             "description": "Kubernetes resource recommendations for cost optimization",
             "usage": "ship mcp goldilocks",
             "variables": false,
-            "tags": ["kubernetes", "cost", "optimization", "resources"]
+            "tags": [
+              "kubernetes",
+              "cost",
+              "optimization",
+              "resources"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-goldilocks": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "goldilocks"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes resource recommendations for cost optimization - Containerized execution through Ship CLI"
           },
           {
             "name": "fleet",
             "description": "GitOps for Kubernetes cluster management",
             "usage": "ship mcp fleet",
             "variables": false,
-            "tags": ["kubernetes", "gitops", "management", "cluster"]
+            "tags": [
+              "kubernetes",
+              "gitops",
+              "management",
+              "cluster"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-fleet": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "fleet"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "GitOps for Kubernetes cluster management - Containerized execution through Ship CLI"
           },
           {
             "name": "kuttl",
             "description": "Kubernetes testing framework",
             "usage": "ship mcp kuttl",
             "variables": false,
-            "tags": ["kubernetes", "testing", "framework", "validation"]
+            "tags": [
+              "kubernetes",
+              "testing",
+              "framework",
+              "validation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kuttl": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kuttl"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes testing framework - Containerized execution through Ship CLI"
           },
           {
             "name": "litmus",
             "description": "Chaos engineering for Kubernetes",
             "usage": "ship mcp litmus",
             "variables": false,
-            "tags": ["kubernetes", "chaos", "engineering", "testing"]
+            "tags": [
+              "kubernetes",
+              "chaos",
+              "engineering",
+              "testing"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-litmus": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "litmus"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Chaos engineering for Kubernetes - Containerized execution through Ship CLI"
           },
           {
             "name": "cert-manager",
             "description": "Certificate management for Kubernetes",
             "usage": "ship mcp cert-manager",
             "variables": false,
-            "tags": ["kubernetes", "certificates", "tls", "management"]
+            "tags": [
+              "kubernetes",
+              "certificates",
+              "tls",
+              "management"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-cert-manager": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "cert-manager"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Certificate management for Kubernetes - Containerized execution through Ship CLI"
           },
           {
             "name": "k8s-network-policy",
             "description": "Kubernetes network policy management",
             "usage": "ship mcp k8s-network-policy",
             "variables": false,
-            "tags": ["kubernetes", "network", "policy", "security"]
+            "tags": [
+              "kubernetes",
+              "network",
+              "policy",
+              "security"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-k8s-network-policy": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "k8s-network-policy"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes network policy management - Containerized execution through Ship CLI"
           },
           {
             "name": "kyverno",
             "description": "Kubernetes policy management engine",
             "usage": "ship mcp kyverno",
             "variables": false,
-            "tags": ["kubernetes", "policy", "management", "governance"]
+            "tags": [
+              "kubernetes",
+              "policy",
+              "management",
+              "governance"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kyverno": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kyverno"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Kubernetes policy management engine - Containerized execution through Ship CLI"
           },
           {
             "name": "kyverno-multitenant",
             "description": "Multi-tenant Kyverno policies for Kubernetes",
             "usage": "ship mcp kyverno-multitenant",
             "variables": false,
-            "tags": ["kubernetes", "multitenant", "policy", "isolation"]
+            "tags": [
+              "kubernetes",
+              "multitenant",
+              "policy",
+              "isolation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-kyverno-multitenant": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "kyverno-multitenant"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Multi-tenant Kyverno policies for Kubernetes - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -444,24 +1417,84 @@
             "description": "Cloud asset inventory and analysis",
             "usage": "ship mcp cloudquery --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["cloud", "inventory", "analysis", "multi-cloud"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "cloud",
+              "inventory",
+              "analysis",
+              "multi-cloud"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-cloudquery": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "cloudquery"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Cloud asset inventory and analysis - Containerized execution through Ship CLI"
           },
           {
             "name": "custodian",
             "description": "Cloud governance and policy engine",
-            "usage": "ship mcp custodian --var AWS_PROFILE=default", 
+            "usage": "ship mcp custodian --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["cloud", "governance", "policy", "automation"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "cloud",
+              "governance",
+              "policy",
+              "automation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-custodian": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "custodian"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Cloud governance and policy engine - Containerized execution through Ship CLI"
           },
           {
             "name": "packer",
             "description": "Machine image building for multiple clouds",
             "usage": "ship mcp packer --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["cloud", "images", "building", "automation"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "cloud",
+              "images",
+              "building",
+              "automation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-packer": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "packer"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Machine image building for multiple clouds - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -475,56 +1508,196 @@
             "description": "AWS IAM policy security assessment",
             "usage": "ship mcp cloudsplaining --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "iam", "security", "assessment"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "iam",
+              "security",
+              "assessment"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-cloudsplaining": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "cloudsplaining"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS IAM policy security assessment - Containerized execution through Ship CLI"
           },
           {
             "name": "parliament",
             "description": "AWS IAM policy linter and validator",
             "usage": "ship mcp parliament --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"], 
-            "tags": ["aws", "iam", "linting", "validation"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "iam",
+              "linting",
+              "validation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-parliament": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "parliament"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS IAM policy linter and validator - Containerized execution through Ship CLI"
           },
           {
             "name": "pmapper",
             "description": "AWS IAM privilege escalation analysis",
             "usage": "ship mcp pmapper --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "iam", "privilege", "escalation"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "iam",
+              "privilege",
+              "escalation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-pmapper": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "pmapper"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS IAM privilege escalation analysis - Containerized execution through Ship CLI"
           },
           {
             "name": "policy-sentry",
             "description": "AWS IAM policy generator for least privilege",
             "usage": "ship mcp policy-sentry --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "iam", "generator", "least-privilege"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "iam",
+              "generator",
+              "least-privilege"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-policy-sentry": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "policy-sentry"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS IAM policy generator for least privilege - Containerized execution through Ship CLI"
           },
           {
             "name": "prowler",
             "description": "Multi-cloud security assessment (AWS/GCP/Azure)",
             "usage": "ship mcp prowler --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "security", "multi-cloud", "assessment"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "security",
+              "multi-cloud",
+              "assessment"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-prowler": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "prowler"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Multi-cloud security assessment (AWS/GCP/Azure) - Containerized execution through Ship CLI"
           },
           {
             "name": "aws-iam-rotation",
             "description": "AWS IAM credential rotation automation",
             "usage": "ship mcp aws-iam-rotation --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "iam", "rotation", "automation"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "iam",
+              "rotation",
+              "automation"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-aws-iam-rotation": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "aws-iam-rotation"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS IAM credential rotation automation - Containerized execution through Ship CLI"
           },
           {
             "name": "aws-pricing",
             "description": "AWS pricing and cost calculator",
             "usage": "ship mcp aws-pricing --var AWS_PROFILE=default",
             "variables": true,
-            "required_vars": ["AWS_PROFILE"],
-            "tags": ["aws", "pricing", "cost", "calculator"]
+            "required_vars": [
+              "AWS_PROFILE"
+            ],
+            "tags": [
+              "aws",
+              "pricing",
+              "cost",
+              "calculator"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-aws-pricing": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "aws-pricing"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AWS pricing and cost calculator - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -538,16 +1711,56 @@
             "description": "Container signing and verification",
             "usage": "ship mcp cosign --var COSIGN_KEY=/path/to/key",
             "variables": true,
-            "required_vars": ["COSIGN_KEY"],
-            "tags": ["supply-chain", "signing", "containers", "verification"]
+            "required_vars": [
+              "COSIGN_KEY"
+            ],
+            "tags": [
+              "supply-chain",
+              "signing",
+              "containers",
+              "verification"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-cosign": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "cosign"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "Container signing and verification - Containerized execution through Ship CLI"
           },
           {
             "name": "dependency-track",
             "description": "OWASP Dependency-Track SBOM analysis platform",
             "usage": "ship mcp dependency-track --var SERVER_URL=https://dt.company.com",
             "variables": true,
-            "required_vars": ["SERVER_URL"],
-            "tags": ["supply-chain", "sbom", "analysis", "owasp"]
+            "required_vars": [
+              "SERVER_URL"
+            ],
+            "tags": [
+              "supply-chain",
+              "sbom",
+              "analysis",
+              "owasp"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-dependency-track": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "dependency-track"
+                  ]
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "OWASP Dependency-Track SBOM analysis platform - Containerized execution through Ship CLI"
           }
         ]
       },
@@ -567,8 +1780,31 @@
               "ship mcp opencode --var ANTHROPIC_API_KEY=your_anthropic_key"
             ],
             "variables": true,
-            "required_vars": ["API_KEY (OpenAI, Anthropic, etc.)"],
-            "tags": ["development", "ai", "coding", "assistant"]
+            "required_vars": [
+              "API_KEY (OpenAI, Anthropic, etc.)"
+            ],
+            "tags": [
+              "development",
+              "ai",
+              "coding",
+              "assistant"
+            ],
+            "config_example": {
+              "mcpServers": {
+                "ship-opencode": {
+                  "command": "ship",
+                  "args": [
+                    "mcp",
+                    "opencode"
+                  ],
+                  "env": {
+                    "OPENAI_API_KEY": "your_openai_api_key"
+                  }
+                }
+              }
+            },
+            "github_url": "https://github.com/cloudshipai/ship",
+            "github_description": "AI-powered coding assistant with multiple model support - Containerized execution through Ship CLI"
           }
         ]
       }
@@ -581,134 +1817,486 @@
           "name": "filesystem",
           "description": "Filesystem operations MCP server",
           "usage": "ship mcp filesystem --var FILESYSTEM_ROOT=/workspace",
-          "variables": ["FILESYSTEM_ROOT"],
-          "provider": "ModelContextProtocol Official"
+          "variables": [
+            "FILESYSTEM_ROOT"
+          ],
+          "provider": "ModelContextProtocol Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-filesystem": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "filesystem"
+                ],
+                "env": {
+                  "FILESYSTEM_ROOT": "your_filesystem_root"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Filesystem operations MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "memory",
-          "description": "Memory/knowledge storage MCP server", 
+          "description": "Memory/knowledge storage MCP server",
           "usage": "ship mcp memory --var MEMORY_STORAGE_PATH=/tmp/memory",
-          "variables": ["MEMORY_STORAGE_PATH", "MEMORY_MAX_SIZE"],
-          "provider": "ModelContextProtocol Official"
+          "variables": [
+            "MEMORY_STORAGE_PATH",
+            "MEMORY_MAX_SIZE"
+          ],
+          "provider": "ModelContextProtocol Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-memory": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "memory"
+                ],
+                "env": {
+                  "MEMORY_STORAGE_PATH": "your_memory_storage_path",
+                  "MEMORY_MAX_SIZE": "your_memory_max_size"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Memory/knowledge storage MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "brave-search",
           "description": "Brave search MCP server",
           "usage": "ship mcp brave-search --var BRAVE_API_KEY=your_key",
-          "variables": ["BRAVE_API_KEY"],
-          "provider": "ModelContextProtocol Official"
+          "variables": [
+            "BRAVE_API_KEY"
+          ],
+          "provider": "ModelContextProtocol Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-brave-search": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "brave-search"
+                ],
+                "env": {
+                  "BRAVE_API_KEY": "your_brave_api_key"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Brave search MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "slack",
           "description": "Slack workspace operations MCP server",
           "usage": "ship mcp slack --var SLACK_MCP_XOXC_TOKEN=your_token",
-          "variables": ["SLACK_MCP_XOXC_TOKEN"],
-          "provider": "ModelContextProtocol Official"
+          "variables": [
+            "SLACK_MCP_XOXC_TOKEN"
+          ],
+          "provider": "ModelContextProtocol Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-slack": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "slack"
+                ],
+                "env": {
+                  "SLACK_MCP_XOXC_TOKEN": "your_slack_mcp_xoxc_token"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Slack workspace operations MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "github",
           "description": "GitHub operations MCP server",
-          "usage": "ship mcp github --var GITHUB_PERSONAL_ACCESS_TOKEN=your_token", 
-          "variables": ["GITHUB_PERSONAL_ACCESS_TOKEN"],
-          "provider": "ModelContextProtocol Official"
+          "usage": "ship mcp github --var GITHUB_PERSONAL_ACCESS_TOKEN=your_token",
+          "variables": [
+            "GITHUB_PERSONAL_ACCESS_TOKEN"
+          ],
+          "provider": "ModelContextProtocol Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-github": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "github"
+                ],
+                "env": {
+                  "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_personal_access_token"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "GitHub operations MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "desktop-commander",
           "description": "Desktop operations MCP server",
           "usage": "ship mcp desktop-commander",
-          "variables": ["ROOT", "SAFE_MODE"],
-          "provider": "Third-party"
+          "variables": [
+            "ROOT",
+            "SAFE_MODE"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-desktop-commander": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "desktop-commander"
+                ],
+                "env": {
+                  "ROOT": "your_root",
+                  "SAFE_MODE": "your_safe_mode"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Desktop operations MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "grafana",
           "description": "Grafana monitoring integration MCP server",
           "usage": "ship mcp grafana --var GRAFANA_URL=https://grafana.company.com --var GRAFANA_API_KEY=your_key",
-          "variables": ["GRAFANA_URL", "GRAFANA_API_KEY"],
-          "provider": "Third-party Docker"
+          "variables": [
+            "GRAFANA_URL",
+            "GRAFANA_API_KEY"
+          ],
+          "provider": "Third-party Docker",
+          "config_example": {
+            "mcpServers": {
+              "ship-grafana": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "grafana"
+                ],
+                "env": {
+                  "GRAFANA_URL": "your_grafana_url",
+                  "GRAFANA_API_KEY": "your_grafana_api_key"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Grafana monitoring integration MCP server - External MCP server proxied through Ship CLI"
         },
         {
           "name": "bitbucket",
           "description": "Atlassian Bitbucket repository management",
           "usage": "ship mcp bitbucket --var USERNAME=user --var APP_PASSWORD=pass",
-          "variables": ["USERNAME", "APP_PASSWORD", "WORKSPACE"],
-          "provider": "Third-party"
+          "variables": [
+            "USERNAME",
+            "APP_PASSWORD",
+            "WORKSPACE"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-bitbucket": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "bitbucket"
+                ],
+                "env": {
+                  "USERNAME": "your_username",
+                  "APP_PASSWORD": "your_app_password",
+                  "WORKSPACE": "your_workspace"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Atlassian Bitbucket repository management - External MCP server proxied through Ship CLI"
         },
         {
           "name": "trello",
           "description": "Trello project management integration",
           "usage": "ship mcp trello --var API_KEY=key --var TOKEN=token",
-          "variables": ["API_KEY", "TOKEN"],
-          "provider": "Third-party"
+          "variables": [
+            "API_KEY",
+            "TOKEN"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-trello": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "trello"
+                ],
+                "env": {
+                  "API_KEY": "your_api_key",
+                  "TOKEN": "your_token"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Trello project management integration - External MCP server proxied through Ship CLI"
         },
         {
           "name": "playwright",
           "description": "Browser automation and testing",
           "usage": "ship mcp playwright",
-          "variables": ["BROWSER", "HEADLESS"],
-          "provider": "Third-party"
+          "variables": [
+            "BROWSER",
+            "HEADLESS"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-playwright": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "playwright"
+                ],
+                "env": {
+                  "BROWSER": "your_browser",
+                  "HEADLESS": "your_headless"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Browser automation and testing - External MCP server proxied through Ship CLI"
         },
         {
           "name": "supabase",
           "description": "Supabase backend-as-a-service integration",
           "usage": "ship mcp supabase --var ACCESS_TOKEN=token --var PROJECT_REF=ref",
-          "variables": ["ACCESS_TOKEN", "PROJECT_REF"],
-          "provider": "Third-party"
+          "variables": [
+            "ACCESS_TOKEN",
+            "PROJECT_REF"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-supabase": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "supabase"
+                ],
+                "env": {
+                  "ACCESS_TOKEN": "your_access_token",
+                  "PROJECT_REF": "your_project_ref"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "Supabase backend-as-a-service integration - External MCP server proxied through Ship CLI"
         },
         {
           "name": "postgresql",
           "description": "PostgreSQL database operations",
           "usage": "ship mcp postgresql --var CONNECTION_STRING=postgresql://user:pass@host:5432/db",
-          "variables": ["CONNECTION_STRING"],
-          "provider": "Third-party"
+          "variables": [
+            "CONNECTION_STRING"
+          ],
+          "provider": "Third-party",
+          "config_example": {
+            "mcpServers": {
+              "ship-postgresql": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "postgresql"
+                ],
+                "env": {
+                  "CONNECTION_STRING": "your_connection_string"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/modelcontextprotocol/servers",
+          "github_description": "PostgreSQL database operations - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-core",
           "description": "AWS core operations and general services",
           "usage": "ship mcp aws-core --var AWS_PROFILE=default",
-          "variables": ["AWS_PROFILE", "AWS_REGION"],
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-core": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-core"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS core operations and general services - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-iam",
           "description": "AWS IAM operations and identity management",
           "usage": "ship mcp aws-iam --var AWS_REGION=us-west-2",
-          "variables": ["AWS_PROFILE", "AWS_REGION"], 
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-iam": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-iam"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS IAM operations and identity management - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-pricing",
           "description": "AWS pricing and cost estimation",
           "usage": "ship mcp aws-pricing",
-          "variables": ["AWS_PROFILE", "AWS_REGION"],
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-pricing": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-pricing"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS pricing and cost estimation - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-eks",
           "description": "AWS EKS and Kubernetes operations",
           "usage": "ship mcp aws-eks --var AWS_PROFILE=production",
-          "variables": ["AWS_PROFILE", "AWS_REGION"],
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-eks": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-eks"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS EKS and Kubernetes operations - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-ec2",
-          "description": "AWS EC2 compute operations", 
+          "description": "AWS EC2 compute operations",
           "usage": "ship mcp aws-ec2 --var AWS_REGION=eu-west-1",
-          "variables": ["AWS_PROFILE", "AWS_REGION"],
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-ec2": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-ec2"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS EC2 compute operations - External MCP server proxied through Ship CLI"
         },
         {
           "name": "aws-s3",
           "description": "AWS S3 storage operations",
           "usage": "ship mcp aws-s3",
-          "variables": ["AWS_PROFILE", "AWS_REGION"],
-          "provider": "AWS Labs Official"
+          "variables": [
+            "AWS_PROFILE",
+            "AWS_REGION"
+          ],
+          "provider": "AWS Labs Official",
+          "config_example": {
+            "mcpServers": {
+              "ship-aws-s3": {
+                "command": "ship",
+                "args": [
+                  "mcp",
+                  "aws-s3"
+                ],
+                "env": {
+                  "AWS_PROFILE": "your_aws_profile",
+                  "AWS_REGION": "your_aws_region"
+                }
+              }
+            }
+          },
+          "github_url": "https://github.com/aws-samples/mcp-server-aws",
+          "github_description": "AWS S3 storage operations - External MCP server proxied through Ship CLI"
         }
       ]
     },
     "usage_examples": {
       "individual_tools": [
         "ship mcp tflint",
-        "ship mcp grype", 
+        "ship mcp grype",
         "ship mcp nuclei",
         "ship mcp kubescape"
       ],
@@ -728,30 +2316,49 @@
         "individual": {
           "ship-tflint": {
             "command": "ship",
-            "args": ["mcp", "tflint"]
+            "args": [
+              "mcp",
+              "tflint"
+            ]
           },
           "ship-grype": {
-            "command": "ship", 
-            "args": ["mcp", "grype"]
+            "command": "ship",
+            "args": [
+              "mcp",
+              "grype"
+            ]
           }
         },
         "categories": {
           "ship-terraform": {
             "command": "ship",
-            "args": ["mcp", "terraform"],
+            "args": [
+              "mcp",
+              "terraform"
+            ],
             "env": {
               "AWS_PROFILE": "your-profile"
             }
           },
           "ship-security": {
             "command": "ship",
-            "args": ["mcp", "security"]
+            "args": [
+              "mcp",
+              "security"
+            ]
           }
         },
         "external": {
           "ship-grafana": {
             "command": "ship",
-            "args": ["mcp", "grafana", "--var", "GRAFANA_URL=https://grafana.company.com", "--var", "GRAFANA_API_KEY=your_key"]
+            "args": [
+              "mcp",
+              "grafana",
+              "--var",
+              "GRAFANA_URL=https://grafana.company.com",
+              "--var",
+              "GRAFANA_API_KEY=your_key"
+            ]
           }
         }
       }
@@ -759,7 +2366,7 @@
     "key_features": [
       "63 essential DevOps tools in containerized environments",
       "Individual tool servers (lightweight)",
-      "Tool category servers (grouped by function)", 
+      "Tool category servers (grouped by function)",
       "All tools server (comprehensive)",
       "16 external MCP server proxies",
       "Environment variable support via --var flag",
