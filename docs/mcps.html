@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCP Tools - CloudShip Station Registry</title>
-    <meta name="description" content="Popular open source DevOps tools converted to MCPs for Station and universal use">
+    <title>Ship CLI MCP Tools - 63 Essential DevOps Tools</title>
+    <meta name="description" content="Ship CLI - Comprehensive DevOps toolkit with 63 essential infrastructure tools through AI-enabled MCP servers. Individual tools, categories, or all tools available.">
     <style>
         :root {
             --color-primary: #000000;
@@ -573,6 +573,120 @@
             width: 14px;
             height: 14px;
             fill: currentColor;
+        }
+
+        .mcp-variables-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            color: var(--color-warning);
+            border-radius: var(--radius-md);
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mcp-usage {
+            margin: 0.75rem 0;
+            padding: 0.5rem;
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+
+        .mcp-usage-command {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text);
+            background: transparent;
+            border: none;
+            padding: 0;
+            word-break: break-all;
+        }
+
+        .mcp-copy-usage-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mcp-usage:hover .mcp-copy-usage-btn {
+            opacity: 1;
+        }
+
+        .mcp-copy-usage-btn:hover {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .mcp-usage {
+            position: relative;
+        }
+
+        .mcp-usage-examples {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mcp-usage-example {
+            position: relative;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mcp-usage-example code {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text);
+            background: transparent;
+            border: none;
+            padding: 0;
+            word-break: break-all;
+            flex: 1;
+        }
+
+        .mcp-copy-example-btn {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            opacity: 0.7;
+        }
+
+        .mcp-copy-example-btn:hover {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            opacity: 1;
         }
 
         .agents-modal {
@@ -1280,8 +1394,8 @@
                 </svg>
                 Back to Registry
             </a>
-            <h1 class="header-title">Individual MCP Tools</h1>
-            <p class="header-subtitle">We've converted the most popular open source DevOps tools into MCPs for you to use in Station or anywhere you want</p>
+            <h1 class="header-title">Ship CLI MCP Tools</h1>
+            <p class="header-subtitle">63 essential DevOps tools available as individual MCP servers, tool categories, or comprehensive collection. Run lightweight individual tools or complete DevOps toolkit.</p>
             
             <div class="install-section">
                 <h3 class="install-title">All MCPs under 1 binary</h3>
@@ -1321,7 +1435,7 @@
             try {
                 const response = await fetch('./mcp_tools_complete.json');
                 const data = await response.json();
-                toolsDetailData = data.mcp_tools_documentation.modules;
+                toolsDetailData = data.ship_mcp_tools || data.mcp_tools_documentation?.modules || {};
                 return true;
             } catch (error) {
                 console.error('Failed to load tools detail data:', error);
@@ -1379,53 +1493,74 @@
             const mcpGrid = document.getElementById('mcpGrid');
             let tools = [];
             
-            // Safety check for mcpData
-            if (!mcpData || Object.keys(mcpData).length === 0) {
-                mcpGrid.innerHTML = '<div class="loading-card">Loading MCP tools...</div>';
+            // Safety check for toolsDetailData (Ship MCP tools)
+            if (!toolsDetailData || Object.keys(toolsDetailData).length === 0) {
+                mcpGrid.innerHTML = '<div class="loading-card">Loading Ship MCP tools...</div>';
                 return;
             }
             
-            if (category === 'all') {
-                // Combine all tools from all categories
-                Object.values(mcpData).forEach(categoryData => {
-                    if (categoryData.modules) {
-                        tools = tools.concat(categoryData.modules);
-                    }
-                });
+            // Check if we have Ship MCP data structure
+            if (toolsDetailData.categories) {
+                if (category === 'all') {
+                    // Combine all tools from all categories
+                    Object.values(toolsDetailData.categories).forEach(categoryData => {
+                        if (categoryData.tools) {
+                            tools = tools.concat(categoryData.tools.map(tool => ({
+                                ...tool,
+                                category_name: categoryData.name
+                            })));
+                        }
+                    });
+                } else {
+                    tools = toolsDetailData.categories[category]?.tools || [];
+                }
             } else {
-                tools = mcpData[category]?.modules || [];
+                // Fallback to old structure if needed
+                if (category === 'all') {
+                    Object.values(mcpData).forEach(categoryData => {
+                        if (categoryData.modules) {
+                            tools = tools.concat(categoryData.modules);
+                        }
+                    });
+                } else {
+                    tools = mcpData[category]?.modules || [];
+                }
             }
             
             mcpGrid.innerHTML = tools.map(tool => `
                 <div class="mcp-card">
                     <div class="mcp-card-inner">
                         <div class="mcp-card-front">
-                            ${(() => {
-                                const agentCount = mcpToAgentsMap[tool.name.toLowerCase()]?.length || 0;
-                                if (agentCount > 0) {
-                                    return `
-                                        <button class="mcp-agent-count" onclick="event.stopPropagation(); openAgentsModal('${tool.name}')">
-                                            <svg viewBox="0 0 256 256">
-                                                <path d="M232,120h-8V88a16,16,0,0,0-16-16H136V64a40,40,0,0,0-80,0v8H48A16,16,0,0,0,32,88v32h-8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16h56v8a40,40,0,0,0,80,0v-8h24a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM72,64a24,24,0,0,1,48,0v8H72ZM48,88H208v32H48Zm72,104a24,24,0,0,1-48,0v-8h48Zm88-24H48V136H208Z"/>
-                                            </svg>
-                                            ${agentCount}
-                                        </button>
-                                    `;
-                                }
-                                return '';
-                            })()}
+                            ${tool.variables ? `
+                                <div class="mcp-variables-badge" title="Requires environment variables">
+                                    <svg viewBox="0 0 16 16" style="width: 12px; height: 12px; fill: currentColor;">
+                                        <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+                                    </svg>
+                                    Vars Required
+                                </div>
+                            ` : ''}
                             <div class="mcp-card-header">
                                 <div class="mcp-repo-info">
-                                    <a href="${tool.github_url}" target="_blank" class="mcp-repo-name">${tool.name}</a>
+                                    <div class="mcp-repo-name">${tool.name}</div>
                                     <div class="mcp-repo-description">${tool.description}</div>
                                 </div>
+                            </div>
+                            <div class="mcp-usage">
+                                <code class="mcp-usage-command">${tool.usage || `ship mcp ${tool.name}`}</code>
+                                ${tool.variables ? `<button class="mcp-copy-usage-btn" onclick="event.stopPropagation(); copyToClipboard('${tool.usage || `ship mcp ${tool.name}`}', this)" title="Copy command">
+                                    <svg viewBox="0 0 16 16" width="12" height="12">
+                                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                                    </svg>
+                                </button>` : ''}
                             </div>
                             <div class="mcp-meta">
                                 <div class="mcp-meta-item">
                                     <svg viewBox="0 0 16 16">
-                                        <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+                                        <path d="M1.5 2.75a.75.75 0 01.75-.75h12a.75.75 0 110 1.5H2.5v10a.75.75 0 01-1.5 0V2.75z"/>
+                                        <path d="M4.5 5.25a.75.75 0 01.75-.75h6a.75.75 0 110 1.5h-6a.75.75 0 01-.75-.75zM5.25 8a.75.75 0 000 1.5h4a.75.75 0 000-1.5h-4z"/>
                                     </svg>
-                                    ${(tool.stars / 1000).toFixed(1)}k
+                                    Ship CLI
                                 </div>
                                 <div class="mcp-meta-item">
                                     <svg viewBox="0 0 16 16">
@@ -1457,6 +1592,25 @@
                                 </div>
                                 <div class="mcp-github-desc">${tool.github_description}</div>
                             </div>
+                            
+                            ${tool.usage_examples ? `
+                            <div class="mcp-config-section">
+                                <h4>Usage Examples</h4>
+                                <div class="mcp-usage-examples">
+                                    ${tool.usage_examples.map((example, index) => `
+                                        <div class="mcp-usage-example">
+                                            <code>${example}</code>
+                                            <button class="mcp-copy-example-btn" onclick="event.stopPropagation(); copyToClipboard('${example}', this)" title="Copy command">
+                                                <svg viewBox="0 0 16 16" width="12" height="12">
+                                                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
+                                                    <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            ` : ''}
                             
                             <div class="mcp-config-section">
                                 <h4>Configuration</h4>
@@ -1510,6 +1664,22 @@
                         </svg>
                     `;
                 }, 2000);
+            });
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalContent = button.innerHTML;
+                button.innerHTML = `
+                    <svg viewBox="0 0 16 16" width="12" height="12">
+                        <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                    </svg>
+                `;
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
             });
         }
 
@@ -1730,17 +1900,34 @@
 
         function initializeMcpCategories() {
             const categoryTabs = document.getElementById('mcpCategoryTabs');
-            if (!categoryTabs || !mcpData || Object.keys(mcpData).length === 0) return;
+            if (!categoryTabs) return;
             
-            // Create category tabs based on loaded data
-            const categories = [
-                { key: 'all', name: 'All', count: Object.values(mcpData).reduce((total, cat) => total + (cat.modules?.length || 0), 0) },
-                ...Object.entries(mcpData).map(([key, category]) => ({
-                    key,
-                    name: key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' '),
-                    count: category.modules?.length || 0
-                }))
-            ];
+            let categories = [];
+            
+            // Check if we have Ship MCP data structure
+            if (toolsDetailData && toolsDetailData.categories) {
+                const totalTools = Object.values(toolsDetailData.categories).reduce((total, cat) => total + (cat.tools?.length || 0), 0);
+                categories = [
+                    { key: 'all', name: 'All Ship Tools', count: totalTools },
+                    ...Object.entries(toolsDetailData.categories).map(([key, category]) => ({
+                        key,
+                        name: category.name || key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' '),
+                        count: category.tools?.length || 0
+                    }))
+                ];
+            } else if (mcpData && Object.keys(mcpData).length > 0) {
+                // Fallback to old structure
+                categories = [
+                    { key: 'all', name: 'All', count: Object.values(mcpData).reduce((total, cat) => total + (cat.modules?.length || 0), 0) },
+                    ...Object.entries(mcpData).map(([key, category]) => ({
+                        key,
+                        name: key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' '),
+                        count: category.modules?.length || 0
+                    }))
+                ];
+            } else {
+                categories = [{ key: 'all', name: 'Loading...', count: 0 }];
+            }
             
             categoryTabs.innerHTML = categories.map(cat => `
                 <button class="mcp-category-tab ${cat.key === 'all' ? 'active' : ''}" data-category="${cat.key}">
