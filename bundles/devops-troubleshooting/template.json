@@ -1,0 +1,14 @@
+{
+  "name": "devops-troubleshooting",
+  "description": "DevOps troubleshooting tools with filesystem access for log analysis",
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y", 
+        "@modelcontextprotocol/server-filesystem@latest",
+        "{{ .PROJECT_ROOT }}"
+      ]
+    }
+  }
+}

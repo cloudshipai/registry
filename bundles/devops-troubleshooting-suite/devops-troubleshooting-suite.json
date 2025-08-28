@@ -1,0 +1,59 @@
+{
+  "name": "DevOps Troubleshooting Suite",
+  "description": "Intelligent agents for debugging and troubleshooting across Local Development, CICD, and Server environments",
+  "version": "1.0.0",
+  "author": "cloudshipai",
+  "license": "MIT", 
+  "tags": ["devops", "troubleshooting", "Local Development", "CICD", "Server"],
+  "station_version": ">=0.2.6",
+  "download_url": "./devops-troubleshooting-suite.tar.gz",
+  "file_size": 4435,
+  "checksum": "",
+  "created_at": "2025-08-27T15:30:00Z",
+  "updated_at": "2025-08-27T15:30:00Z",
+  "variables": {
+    "PROJECT_ROOT": {
+      "type": "string",
+      "description": "Root path of your project for log analysis and file inspection",
+      "required": true,
+      "default": "/workspace"
+    }
+  },
+  "mcp_servers": [
+    {
+      "name": "filesystem",
+      "description": "MCP filesystem server for comprehensive file operations and log analysis",
+      "command": "npx -y @modelcontextprotocol/server-filesystem@latest"
+    }
+  ],
+  "agents": [
+    {
+      "name": "Environment Troubleshooter",
+      "description": "Local Development - Investigates 'it works on my machine' issues by comparing environment configurations",
+      "model": "gpt-4o-mini",
+      "max_steps": 8,
+      "tags": ["Local Development"],
+      "capabilities": ["environment-debugging", "dependency-analysis", "configuration-comparison", "troubleshooting", "root-cause-analysis"]
+    },
+    {
+      "name": "Deployment Diagnosis Agent",
+      "description": "CICD - Analyzes failed deployments by correlating logs, configs, and recent changes",
+      "model": "gpt-4o-mini", 
+      "max_steps": 10,
+      "tags": ["CICD"],
+      "capabilities": ["deployment-analysis", "pipeline-debugging", "log-correlation", "failure-analysis", "ci-cd-optimization"]
+    },
+    {
+      "name": "Server Performance Monitor",
+      "description": "Server - Identifies performance bottlenecks by analyzing server logs, metrics, and resource usage patterns",
+      "model": "gpt-4o-mini",
+      "max_steps": 12,
+      "tags": ["Server"], 
+      "capabilities": ["performance-analysis", "bottleneck-identification", "server-optimization", "resource-monitoring", "scalability-assessment"]
+    }
+  ],
+  "tools_provided": [
+    "__read_text_file", "__list_directory", "__directory_tree",
+    "__search_files", "__get_file_info"
+  ]
+}

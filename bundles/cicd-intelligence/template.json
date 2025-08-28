@@ -1,0 +1,14 @@
+{
+  "name": "cicd-intelligence",
+  "description": "CI/CD intelligence tools with project repository access",
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@latest", 
+        "{{ .PROJECT_ROOT }}"
+      ]
+    }
+  }
+}

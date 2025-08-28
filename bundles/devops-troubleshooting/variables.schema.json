@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "PROJECT_ROOT": {
+      "type": "string",
+      "description": "Root path of your project for log analysis and file inspection",
+      "default": "/workspace"
+    },
+    "LOG_DIRECTORY": {
+      "type": "string", 
+      "description": "Directory containing application logs",
+      "default": "/var/log"
+    },
+    "SLACK_WEBHOOK_URL": {
+      "type": "string",
+      "description": "Slack webhook for incident notifications (optional)",
+      "default": ""
+    }
+  },
+  "required": ["PROJECT_ROOT"]
+}

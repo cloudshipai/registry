@@ -1,0 +1,14 @@
+{
+  "name": "security-operations",
+  "description": "Security operations tools with project and log access",
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@latest",
+        "{{ .PROJECT_ROOT }}"
+      ]
+    }
+  }
+}
