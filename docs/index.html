@@ -3277,23 +3277,23 @@
                                 </div>
                             </div>
                             <div class="bundle-actions">
-                                <button class="btn btn-primary copy-install-btn" onclick="copyInstallCommand('${bundle.raw_install_url || bundle.download_url}', this)" title="Copy raw bundle URL for direct download" data-original-text="Copy Bundle URL">
-                                    <svg class="copy-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                    </svg>
-                                    <svg class="check-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
-                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                                    </svg>
-                                    <span class="btn-text">Copy URL</span>
-                                </button>
-                                <button class="btn btn-secondary copy-install-btn" data-install-command="${bundle.install_command}" onclick="copyInstallCommandFromData(this)" title="Copy Station API install command" data-original-text="Copy Install">
+                                <button class="btn btn-primary copy-install-btn" onclick="copyInstallCommand('${bundle.raw_install_url || bundle.download_url}', this)" title="Copy bundle URL for Station UI installation" data-original-text="Copy for Station UI">
                                     <svg class="copy-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,7A2,2 0 0,0 7,9A2,2 0 0,0 9,11A2,2 0 0,0 11,9A2,2 0 0,0 9,7M9,14C11.67,14 17,15.34 17,18V20H1V18C1,15.34 6.33,14 9,14Z"/>
                                     </svg>
                                     <svg class="check-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
                                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                     </svg>
-                                    <span class="btn-text">Copy Install</span>
+                                    <span class="btn-text">Copy for Station UI</span>
+                                </button>
+                                <button class="btn btn-secondary copy-install-btn" onclick="copyInstallCommand('${bundle.raw_install_url || bundle.download_url}', this)" title="Copy raw bundle URL for Station UI" data-original-text="Copy Bundle URL">
+                                    <svg class="copy-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                                    </svg>
+                                    <svg class="check-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                    </svg>
+                                    <span class="btn-text">Copy Bundle URL</span>
                                 </button>
                                 <a href="${bundle.source_url}" class="btn btn-secondary" target="_blank" title="View Source">
                                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
