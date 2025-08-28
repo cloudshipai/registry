@@ -48,11 +48,14 @@ jobs:
             done
           fi
           
-          # Check for standalone bundles (like devops-security-bundle)
+          # Check for API-compatible bundles (directories with environment structure)
           for bundle_dir in */; do
-            if [ -d "$bundle_dir" ] && [ -f "$bundle_dir/manifest.json" ] && [[ "$bundle_dir" != "bundles/"* ]] && [[ "$bundle_dir" != ".github/"* ]] && [[ "$bundle_dir" != "docs/"* ]] && [[ "$bundle_dir" != "scripts/"* ]] && [[ "$bundle_dir" != "site/"* ]]; then
-              bundle_name=$(basename "$bundle_dir")
-              bundles+=("$bundle_name")
+            bundle_name=$(basename "$bundle_dir")
+            if [ -d "$bundle_dir" ] && [[ "$bundle_dir" != "bundles/"* ]] && [[ "$bundle_dir" != ".github/"* ]] && [[ "$bundle_dir" != "docs/"* ]] && [[ "$bundle_dir" != "scripts/"* ]] && [[ "$bundle_dir" != "site/"* ]]; then
+              # Check if it's an API-compatible bundle (has agents/ or MCP configs, no template.json)
+              if ([ -d "$bundle_dir/agents" ] || [ -f "$bundle_dir"*.json ]) && [ ! -f "$bundle_dir/template.json" ]; then
+                bundles+=("$bundle_name")
+              fi
             fi
           done
           
@@ -104,15 +107,21 @@ jobs:
           bundle_path="${{ matrix.bundle }}"
           echo "Validating bundle: $bundle_path"
           
-          # Check required files
-          if [ ! -f "$bundle_path/manifest.json" ]; then
-            echo "❌ Missing manifest.json in $bundle_path"
-            exit 1
-          fi
-          
-          if [ ! -f "$bundle_path/template.json" ]; then
-            echo "❌ Missing template.json in $bundle_path"
-            exit 1
+          # Check if it's template bundle or API-compatible bundle
+          if [ -f "$bundle_path/template.json" ]; then
+            echo "📦 Validating template bundle structure"
+            # Template bundle validation
+            if [ ! -f "$bundle_path/manifest.json" ]; then
+              echo "❌ Template bundle missing manifest.json"
+              exit 1
+            fi
+          else
+            echo "🎯 Validating API-compatible bundle structure"
+            # API-compatible bundle validation - needs agents/ or MCP configs
+            if [ ! -d "$bundle_path/agents" ] && [ ! -f "$bundle_path"/*.json ]; then
+              echo "❌ API-compatible bundle needs agents/ directory or .json MCP configs"
+              exit 1
+            fi
           fi
           
           echo "✅ Bundle structure is valid"
@@ -122,10 +131,15 @@ jobs:
           bundle_path="${{ matrix.bundle }}"
           echo "Validating bundle with Station CLI: $bundle_path"
           
-          # Run Station template validation
-          stn template validate "$bundle_path" || {
-            echo "⚠️ Bundle validation had issues, but continuing with packaging..."
-          }
+          # Only validate template bundles with Station CLI
+          if [ -f "$bundle_path/template.json" ]; then
+            echo "📦 Running Station template validation"
+            stn template validate "$bundle_path" || {
+              echo "⚠️ Bundle validation had issues, but continuing with packaging..."
+            }
+          else
+            echo "🎯 API-compatible bundle - skipping Station CLI validation"
+          fi
 
       - name: Package bundle
         run: |
@@ -134,8 +148,14 @@ jobs:
           
           echo "Packaging bundle: $bundle_name from $bundle_path"
           
-          # Use unified bundle command (API-compatible)
-          stn bundle "$bundle_name" --output "${bundle_name}.tar.gz"
+          # Check if it's a template bundle or API-compatible bundle
+          if [ -f "$bundle_path/template.json" ]; then
+            echo "📦 Template bundle detected, using stn template bundle"
+            stn template bundle "$bundle_path" --output "${bundle_name}.tar.gz"
+          else
+            echo "🎯 API-compatible bundle detected, creating tar.gz directly"
+            tar -czf "${bundle_name}.tar.gz" -C "$bundle_path" .
+          fi
           
           # Verify package was created
           if [ ! -f "${bundle_name}.tar.gz" ]; then
@@ -167,11 +187,28 @@ jobs:
         run: |
           bundle_path="${{ matrix.bundle }}"
           
-          # Extract metadata from manifest.json
-          name=$(jq -r '.name // "Unknown"' "$bundle_path/manifest.json")
-          version=$(jq -r '.version // "1.0.0"' "$bundle_path/manifest.json")
-          description=$(jq -r '.description // "No description"' "$bundle_path/manifest.json")
-          author=$(jq -r '.author // "Unknown"' "$bundle_path/manifest.json")
+          # Extract metadata based on bundle type
+          if [ -f "$bundle_path/manifest.json" ]; then
+            echo "📦 Extracting metadata from manifest.json"
+            name=$(jq -r '.name // "Unknown"' "$bundle_path/manifest.json")
+            version=$(jq -r '.version // "1.0.0"' "$bundle_path/manifest.json")
+            description=$(jq -r '.description // "No description"' "$bundle_path/manifest.json")
+            author=$(jq -r '.author // "Unknown"' "$bundle_path/manifest.json")
+          else
+            echo "🎯 Generating metadata for API-compatible bundle"
+            name="${BUNDLE_NAME}"
+            version="1.0.0"
+            case "${BUNDLE_NAME}" in
+              "devops-security-bundle")
+                description="DevOps Security automation bundle with Checkov, TFLint agents and 80+ Ship CLI security tools"
+                author="CloudShip AI"
+                ;;
+              *)
+                description="Station environment bundle for AI agent deployment"
+                author="Station Community"
+                ;;
+            esac
+          fi
           
           # Create metadata file
           cat > "${BUNDLE_NAME}-metadata.json" << EOF
