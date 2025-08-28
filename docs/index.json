@@ -2,14 +2,14 @@
   "registry_name": "CloudShip Station Registry",
   "description": "Official registry for Station DevOps Security automation bundles - tested and verified for CI/CD integration.",
   "version": "1.0.0",
-  "last_updated": "2025-08-28T20:05:00Z",
+  "last_updated": "2025-08-28T20:15:00Z",
   "base_url": "https://github.com/cloudshipai/registry/raw/main",
   "site_url": "https://cloudshipai.github.io/registry",
   "bundles": [
     {
       "id": "devops-security-bundle",
       "name": "DevOps Security Automation Bundle",
-      "description": "DevOps Security automation bundle with Checkov, TFLint agents and 80+ Ship CLI security tools for comprehensive infrastructure analysis and CI/CD integration. Successfully tested in agents-cicd workflows.",
+      "description": "DevOps Security automation bundle with Checkov and TFLint agents for infrastructure security scanning and Terraform validation. Uses Ship CLI MCP integrations for comprehensive code analysis and CI/CD integration. Successfully tested in agents-cicd workflows.",
       "version": "1.0.0",
       "author": "CloudShip AI",
       "tags": ["devops", "security", "checkov", "terraform", "cicd"],
@@ -19,11 +19,12 @@
       "file_size": 1514,
       "created_at": "2025-08-28T19:49:57Z",
       "mcps": [
-        {"name": "ship-security", "description": "80+ security tools including Checkov, TFLint, Semgrep, OWASP ZAP, and more", "tools": ["checkov", "tflint", "semgrep", "bandit", "safety", "hadolint", "trivy"]}
+        {"name": "ship-checkov", "description": "Ship CLI Checkov integration for security vulnerability scanning", "tools": ["__checkov_get_version", "__checkov_scan_directory", "__checkov_scan_file", "__checkov_scan_secrets"]},
+        {"name": "ship-tflint", "description": "Ship CLI TFLint integration for Terraform validation and best practices", "tools": ["__tflint_check", "__tflint_init"]}
       ],
       "agents": [
-        {"name": "Security Scanner", "description": "Comprehensive security analysis using Checkov for infrastructure code scanning and policy compliance", "capabilities": ["iac_security", "policy_check", "compliance_report"]},
-        {"name": "Terraform Auditor", "description": "Terraform-specific security and best practices validation using TFLint", "capabilities": ["terraform_lint", "security_rules", "best_practices"]}
+        {"name": "Security Scanner", "description": "Scans repositories for security vulnerabilities using checkov security tools", "capabilities": ["__checkov_get_version", "__checkov_scan_directory", "__checkov_scan_file", "__checkov_scan_secrets"]},
+        {"name": "Terraform Auditor", "description": "Analyzes Terraform infrastructure as code using tflint for validation and best practices", "capabilities": ["__tflint_check", "__tflint_init"]}
       ],
       "verified": true,
       "popular": true,
