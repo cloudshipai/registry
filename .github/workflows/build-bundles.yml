@@ -4,12 +4,10 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'bundles/**'
       - 'devops-security-bundle/**'
   pull_request:
     branches: [main, develop]
     paths:
-      - 'bundles/**'
       - 'devops-security-bundle/**'
   workflow_dispatch:
     inputs:
@@ -38,26 +36,11 @@ jobs:
         run: |
           bundles=()
           
-          # Check for bundles in bundles/ directory
-          if [ -d "bundles" ]; then
-            for bundle_dir in bundles/*/; do
-              if [ -d "$bundle_dir" ] && [ -f "$bundle_dir/manifest.json" ]; then
-                bundle_name=$(basename "$bundle_dir")
-                bundles+=("bundles/$bundle_name")
-              fi
-            done
+          # Only check for our real API-compatible bundle
+          if [ -d "devops-security-bundle" ] && [ -d "devops-security-bundle/agents" ]; then
+            bundles+=("devops-security-bundle")
+            echo "Found devops-security-bundle"
           fi
-          
-          # Check for API-compatible bundles (directories with environment structure)
-          for bundle_dir in */; do
-            bundle_name=$(basename "$bundle_dir")
-            if [ -d "$bundle_dir" ] && [[ "$bundle_dir" != "bundles/"* ]] && [[ "$bundle_dir" != ".github/"* ]] && [[ "$bundle_dir" != "docs/"* ]] && [[ "$bundle_dir" != "scripts/"* ]] && [[ "$bundle_dir" != "site/"* ]]; then
-              # Check if it's an API-compatible bundle (has agents/ or MCP configs, no template.json)
-              if ([ -d "$bundle_dir/agents" ] || [ -f "$bundle_dir"*.json ]) && [ ! -f "$bundle_dir/template.json" ]; then
-                bundles+=("$bundle_name")
-              fi
-            fi
-          done
           
           # If specific bundle requested, filter to just that one
           if [ -n "${{ github.event.inputs.bundle_name }}" ]; then
