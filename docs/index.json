@@ -2,10 +2,33 @@
   "registry_name": "CloudShipAI Station Registry",
   "description": "A collection of curated MCP and agent bundles for Station — turnkey, open-source security/finops/devops automations with human-readable guardrails and CI/CD gating.",
   "version": "1.0.0",
-  "last_updated": "2025-08-19T12:00:00Z",
+  "last_updated": "2025-08-28T19:51:00Z",
   "base_url": "https://github.com/cloudshipai/registry/raw/main",
   "site_url": "https://cloudshipai.github.io/registry",
   "bundles": [
+    {
+      "id": "devops-security-bundle",
+      "name": "DevOps Security Automation Bundle",
+      "description": "DevOps Security automation bundle with Checkov, TFLint agents and 80+ Ship CLI security tools for comprehensive infrastructure analysis and CI/CD integration.",
+      "version": "1.0.0",
+      "author": "CloudShip AI",
+      "tags": ["devops", "security", "checkov", "terraform", "cicd"],
+      "download_url": "https://github.com/cloudshipai/registry/releases/latest/download/devops-security-bundle.tar.gz",
+      "metadata_url": "https://github.com/cloudshipai/registry/actions/runs/17306359440/artifacts/3877206925",
+      "source_url": "https://github.com/cloudshipai/registry/tree/main/devops-security-bundle",
+      "file_size": 1514,
+      "created_at": "2025-08-28T19:49:57Z",
+      "mcps": [
+        {"name": "ship-security", "description": "80+ security tools including Checkov, TFLint, Semgrep, OWASP ZAP, and more", "tools": ["checkov", "tflint", "semgrep", "bandit", "safety", "hadolint", "trivy"]}
+      ],
+      "agents": [
+        {"name": "Security Scanner", "description": "Comprehensive security analysis using Checkov for infrastructure code scanning and policy compliance", "capabilities": ["iac_security", "policy_check", "compliance_report"]},
+        {"name": "Terraform Auditor", "description": "Terraform-specific security and best practices validation using TFLint", "capabilities": ["terraform_lint", "security_rules", "best_practices"]}
+      ],
+      "verified": true,
+      "popular": true,
+      "install_command": "curl -X POST http://localhost:8080/bundles/install -H \"Content-Type: application/json\" -d '{\"bundle_location\": \"https://github.com/cloudshipai/registry/releases/latest/download/devops-security-bundle.tar.gz\", \"environment_name\": \"security-env\", \"source\": \"remote\"}'"
+    },
     {
       "id": "ci-guardrails-bundle",
       "name": "CI Pipeline Guardrails (Code + Pipelines)",
@@ -547,6 +570,7 @@
     }
   ],
   "categories": {
+    "devops-security": ["devops-security-bundle"],
     "ci-cd": ["ci-guardrails-bundle", "terraform-preplan-lint-bundle", "dast-preprod-bundle"],
     "sbom-and-licenses": ["dep-lic-sbom-bundle", "sbom-lifecycle-dtrack-bundle", "provenance-artifact-trust-bundle"],
     "iac-and-cloud-policy": ["iac-guardrails-bundle", "iac-live-drift-bundle", "serverless-least-priv-bundle", "aws-misconfig-sweep-bundle"],
@@ -558,10 +582,10 @@
     "identity-and-iam": ["cloud-identity-least-priv-bundle"]
   },
   "featured_bundles": [
+    "devops-security-bundle",
     "openinfraquote-cost-gate-bundle",
     "k8s-multitenant-guardrails-bundle",
     "github-org-security-bundle",
-    "ci-guardrails-bundle",
-    "registry-hygiene-bundle"
+    "ci-guardrails-bundle"
   ]
 }
