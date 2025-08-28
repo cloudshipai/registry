@@ -3545,6 +3545,11 @@
 
         // Enhanced copy install command function
         function copyInstallCommand(command, button) {
+            console.log('Copying command:', command);
+            if (!command || command.trim() === '') {
+                console.error('Empty command provided');
+                return;
+            }
             navigator.clipboard.writeText(command).then(() => {
                 const originalText = button.getAttribute('data-original-text');
                 const btnText = button.querySelector('.btn-text');
