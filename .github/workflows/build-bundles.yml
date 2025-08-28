@@ -68,7 +68,11 @@ jobs:
           fi
           
           # Convert to JSON array
-          bundle_json=$(printf '%s\n' "${bundles[@]}" | jq -R . | jq -s .)
+          if [ ${#bundles[@]} -eq 0 ]; then
+            bundle_json="[]"
+          else
+            bundle_json=$(printf '%s\n' "${bundles[@]}" | jq -R . | jq -s . | tr -d '\n')
+          fi
           echo "bundles=$bundle_json" >> $GITHUB_OUTPUT
           
           echo "Found bundles:"
