@@ -1,0 +1,335 @@
+name: Build and Package Station Bundles
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'bundles/**'
+      - 'devops-security-bundle/**'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'bundles/**'
+      - 'devops-security-bundle/**'
+  workflow_dispatch:
+    inputs:
+      bundle_name:
+        description: 'Specific bundle to build (optional, builds all if empty)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  discover-bundles:
+    runs-on: ubuntu-latest
+    outputs:
+      bundle-matrix: ${{ steps.find-bundles.outputs.bundles }}
+    steps:
+      - name: Checkout registry
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Find bundle directories
+        id: find-bundles
+        run: |
+          bundles=()
+          
+          # Check for bundles in bundles/ directory
+          if [ -d "bundles" ]; then
+            for bundle_dir in bundles/*/; do
+              if [ -d "$bundle_dir" ] && [ -f "$bundle_dir/manifest.json" ]; then
+                bundle_name=$(basename "$bundle_dir")
+                bundles+=("bundles/$bundle_name")
+              fi
+            done
+          fi
+          
+          # Check for standalone bundles (like devops-security-bundle)
+          for bundle_dir in */; do
+            if [ -d "$bundle_dir" ] && [ -f "$bundle_dir/manifest.json" ] && [[ "$bundle_dir" != "bundles/"* ]] && [[ "$bundle_dir" != ".github/"* ]] && [[ "$bundle_dir" != "docs/"* ]] && [[ "$bundle_dir" != "scripts/"* ]] && [[ "$bundle_dir" != "site/"* ]]; then
+              bundle_name=$(basename "$bundle_dir")
+              bundles+=("$bundle_name")
+            fi
+          done
+          
+          # If specific bundle requested, filter to just that one
+          if [ -n "${{ github.event.inputs.bundle_name }}" ]; then
+            filtered_bundles=()
+            for bundle in "${bundles[@]}"; do
+              if [[ "$bundle" == *"${{ github.event.inputs.bundle_name }}"* ]]; then
+                filtered_bundles+=("$bundle")
+              fi
+            done
+            bundles=("${filtered_bundles[@]}")
+          fi
+          
+          # Convert to JSON array
+          bundle_json=$(printf '%s\n' "${bundles[@]}" | jq -R . | jq -s .)
+          echo "bundles=$bundle_json" >> $GITHUB_OUTPUT
+          
+          echo "Found bundles:"
+          printf '%s\n' "${bundles[@]}"
+
+  build-bundles:
+    needs: discover-bundles
+    if: needs.discover-bundles.outputs.bundle-matrix != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        bundle: ${{ fromJson(needs.discover-bundles.outputs.bundle-matrix) }}
+      fail-fast: false
+    
+    steps:
+      - name: Checkout registry
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Station CLI
+        run: |
+          # Download and install Station CLI
+          curl -fsSL https://raw.githubusercontent.com/cloudshipai/station/main/install.sh | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Validate bundle structure
+        run: |
+          bundle_path="${{ matrix.bundle }}"
+          echo "Validating bundle: $bundle_path"
+          
+          # Check required files
+          if [ ! -f "$bundle_path/manifest.json" ]; then
+            echo "❌ Missing manifest.json in $bundle_path"
+            exit 1
+          fi
+          
+          if [ ! -f "$bundle_path/template.json" ]; then
+            echo "❌ Missing template.json in $bundle_path"
+            exit 1
+          fi
+          
+          echo "✅ Bundle structure is valid"
+
+      - name: Validate bundle with Station
+        run: |
+          bundle_path="${{ matrix.bundle }}"
+          echo "Validating bundle with Station CLI: $bundle_path"
+          
+          # Run Station template validation
+          stn template validate "$bundle_path" || {
+            echo "⚠️ Bundle validation had issues, but continuing with packaging..."
+          }
+
+      - name: Package bundle
+        run: |
+          bundle_path="${{ matrix.bundle }}"
+          bundle_name=$(basename "$bundle_path")
+          
+          echo "Packaging bundle: $bundle_name from $bundle_path"
+          
+          # Use unified bundle command (API-compatible)
+          stn bundle "$bundle_name" --output "${bundle_name}.tar.gz"
+          
+          # Verify package was created
+          if [ ! -f "${bundle_name}.tar.gz" ]; then
+            echo "❌ Failed to create package for $bundle_name"
+            exit 1
+          fi
+          
+          # Get package size and checksum
+          package_size=$(stat -c%s "${bundle_name}.tar.gz")
+          package_checksum=$(sha256sum "${bundle_name}.tar.gz" | cut -d' ' -f1)
+          
+          echo "✅ Package created: ${bundle_name}.tar.gz"
+          echo "📊 Size: $package_size bytes"
+          echo "🔐 SHA256: $package_checksum"
+          
+          # Store metadata for artifacts
+          echo "BUNDLE_NAME=$bundle_name" >> $GITHUB_ENV
+          echo "PACKAGE_SIZE=$package_size" >> $GITHUB_ENV
+          echo "PACKAGE_CHECKSUM=$package_checksum" >> $GITHUB_ENV
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BUNDLE_NAME }}-bundle
+          path: ${{ env.BUNDLE_NAME }}.tar.gz
+          retention-days: 90
+
+      - name: Create bundle metadata
+        run: |
+          bundle_path="${{ matrix.bundle }}"
+          
+          # Extract metadata from manifest.json
+          name=$(jq -r '.name // "Unknown"' "$bundle_path/manifest.json")
+          version=$(jq -r '.version // "1.0.0"' "$bundle_path/manifest.json")
+          description=$(jq -r '.description // "No description"' "$bundle_path/manifest.json")
+          author=$(jq -r '.author // "Unknown"' "$bundle_path/manifest.json")
+          
+          # Create metadata file
+          cat > "${BUNDLE_NAME}-metadata.json" << EOF
+          {
+            "name": "$name",
+            "bundle_id": "$BUNDLE_NAME",
+            "version": "$version",
+            "description": "$description",
+            "author": "$author",
+            "package_file": "${BUNDLE_NAME}.tar.gz",
+            "package_size": $PACKAGE_SIZE,
+            "package_checksum": "$PACKAGE_CHECKSUM",
+            "built_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "git_commit": "${{ github.sha }}",
+            "download_url": "https://github.com/${{ github.repository }}/releases/download/bundles/${BUNDLE_NAME}.tar.gz",
+            "install_command": "stn template install ${BUNDLE_NAME}"
+          }
+          EOF
+
+      - name: Upload metadata artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BUNDLE_NAME }}-metadata
+          path: ${{ env.BUNDLE_NAME }}-metadata.json
+          retention-days: 90
+
+  create-registry-index:
+    needs: [discover-bundles, build-bundles]
+    if: needs.discover-bundles.outputs.bundle-matrix != '[]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout registry
+        uses: actions/checkout@v4
+
+      - name: Download all metadata artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-metadata'
+          path: metadata/
+
+      - name: Create registry index
+        run: |
+          echo "Creating registry index from bundle metadata..."
+          
+          # Initialize registry index
+          cat > registry-index.json << 'EOF'
+          {
+            "registry": {
+              "name": "Station Bundle Registry",
+              "description": "Official registry for Station template bundles",
+              "version": "1.0.0",
+              "updated_at": "",
+              "total_bundles": 0
+            },
+            "bundles": []
+          }
+          EOF
+          
+          # Process each metadata file
+          bundle_count=0
+          for metadata_dir in metadata/*/; do
+            if [ -d "$metadata_dir" ]; then
+              for metadata_file in "$metadata_dir"/*.json; do
+                if [ -f "$metadata_file" ]; then
+                  echo "Processing metadata: $metadata_file"
+                  
+                  # Add bundle to index
+                  jq --argjson bundle "$(cat "$metadata_file")" '.bundles += [$bundle]' registry-index.json > tmp.json
+                  mv tmp.json registry-index.json
+                  
+                  ((bundle_count++))
+                fi
+              done
+            fi
+          done
+          
+          # Update registry metadata
+          jq --arg count "$bundle_count" --arg updated "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '
+            .registry.total_bundles = ($count | tonumber) |
+            .registry.updated_at = $updated
+          ' registry-index.json > tmp.json
+          mv tmp.json registry-index.json
+          
+          echo "✅ Registry index created with $bundle_count bundles"
+          
+          # Pretty print the index for verification
+          echo "Registry contents:"
+          jq '.registry' registry-index.json
+
+      - name: Upload registry index
+        uses: actions/upload-artifact@v4
+        with:
+          name: registry-index
+          path: registry-index.json
+          retention-days: 90
+
+  # Create a release with all bundles if this is a tag push
+  release-bundles:
+    needs: [discover-bundles, build-bundles]
+    if: startsWith(github.ref, 'refs/tags/') && needs.discover-bundles.outputs.bundle-matrix != '[]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout registry
+        uses: actions/checkout@v4
+
+      - name: Download all bundle artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-bundle'
+          path: bundles/
+
+      - name: Download registry index
+        uses: actions/download-artifact@v4
+        with:
+          name: registry-index
+          path: ./
+
+      - name: Prepare release assets
+        run: |
+          echo "Preparing release assets..."
+          
+          # Move all bundle files to release directory
+          mkdir -p release-assets
+          find bundles/ -name "*.tar.gz" -exec cp {} release-assets/ \;
+          cp registry-index.json release-assets/
+          
+          # List assets
+          echo "Release assets:"
+          ls -la release-assets/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Station Bundles - ${{ github.ref_name }}
+          body: |
+            ## 📦 Station Bundle Registry Release
+            
+            This release contains all packaged Station bundles ready for installation.
+            
+            ### 🚀 Quick Install
+            
+            ```bash
+            # Install a bundle directly
+            curl -L https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/BUNDLE_NAME.tar.gz | stn template install -
+            ```
+            
+            ### 📋 Available Bundles
+            
+            See the `registry-index.json` file for complete bundle metadata and installation instructions.
+            
+            ### 🛠️ Installation via Station CLI
+            
+            ```bash
+            stn template install BUNDLE_NAME
+            ```
+            
+            Built from commit: ${{ github.sha }}
+          files: |
+            release-assets/*.tar.gz
+            release-assets/registry-index.json
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

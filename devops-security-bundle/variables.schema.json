@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "JSON Schema for template bundle variables",
+  "properties": {},
+  "required": [],
+  "title": "Template Variables Schema",
+  "type": "object"
+}
