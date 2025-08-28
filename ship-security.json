@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "ship-tflint": {
+      "command": "ship",
+      "args": [
+        "mcp",
+        "tflint"
+      ]
+    },
+    "ship-checkov": {
+      "command": "ship",
+      "args": [
+        "mcp",
+        "checkov"
+      ]
+    }
+  }
+}
